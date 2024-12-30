@@ -3,7 +3,7 @@ import mysql from 'mysql2/promise';
 const pool = mysql.createPool({
   host: 'localhost',
   user: 'root',
-  password: '',
+  password: 'Kil@123456',
   port: '3306',
   database: 'spectrum',
   waitForConnections: true, // Enable queueing
