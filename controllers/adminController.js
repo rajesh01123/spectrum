@@ -123,7 +123,7 @@ const Profile= async(req,res,next)=>{
 }
 
 
-const ProfilePost= async(req,res,next)=>{    console.log(req.file)
+const ProfilePost= async(req,res,next)=>{    
   
   const con = await connection(); 
 try {
@@ -133,6 +133,8 @@ try {
  if (req.file) {
    image =  req.file.filename ;
    imagePath=  req.file.path ;   
+
+   console.log(image);
 }
 
 console.log(image)

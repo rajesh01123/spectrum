@@ -8,7 +8,7 @@ const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null,'public/uploads/'); // Destination folder for uploaded images
   },
-  filename: function (req, file, cb) { console.log("kilupload api Hited")
+  filename: function (req, file, cb) { console.log("shree api Hited")
 
     const img = file.originalname;
     const timestamp = Date.now();
