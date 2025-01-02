@@ -1,8 +1,20 @@
+<style>
+    .nav-link.active {
+        font-weight: bold;
+        color: #007bff; /* Adjust color as needed */
+    }
+    
+    .nav-link:hover {
+        text-decoration: underline;
+    }
+    
+</style>
+
 <header class="top-navbar">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
             <a class="navbar-brand" href="index">
-                <img src="admin_assets\images\logo.png" style="height: 85px; padding: 10px 0px;" alt="" />
+                <img src="admin_assets/images/logo.png" style="height: 85px; padding: 10px 0px;" alt="" />
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbars-host"
                 aria-controls="navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation">
@@ -12,19 +24,76 @@
             </button>
             <div class="collapse navbar-collapse" id="navbars-host">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item active"><a class="nav-link" href="index">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="about">About Us</a></li>
-                    <li class="nav-item"><a class="nav-link" href="games">Game</a></li>
-                    
-                    
-                    <li class="nav-item"><a class="nav-link" href="blog">blog</a></li>
+                    <li class="nav-item"><a class="nav-link" href="games">Games</a></li>
+                    <li class="nav-item"><a class="nav-link" href="blog">Blog</a></li>
                     <li class="nav-item"><a class="nav-link" href="contact">Contact</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a class="hover-btn-new log orange" href="#" data-toggle="modal"
-                            data-target="#login"><span>login</span></a></li>
+                    <li><a class="hover-btn-new log orange" href="#" data-toggle="modal" data-target="#login"><span>Login</span></a></li>
                 </ul>
             </div>
         </div>
     </nav>
 </header>
+
+
+<script>
+    function highlightActiveLink() {
+        const currentPath = window.location.pathname; // Get the current path
+
+        // Normalize paths for comparison
+        const normalizePath = (path) => {
+            if (path.startsWith("/")) return path.substring(1); // Remove leading slash
+            return path;
+        };
+
+        document.querySelectorAll('.nav-item').forEach((item) => {
+            const link = item.querySelector('.nav-link'); // Get the link inside the nav-item
+            if (!link) return;
+
+            const linkPath = normalizePath(link.getAttribute('href')); // Normalize link path
+            const currentPathNormalized = normalizePath(currentPath); // Normalize current path
+
+            // Remove active class from all nav-items
+            item.classList.remove('active');
+
+            // Add active class if the paths match
+            if (linkPath === currentPathNormalized) {
+                item.classList.add('active');
+            }
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        highlightActiveLink();
+
+        // Add click event listener to update immediately
+        document.querySelectorAll('.nav-link').forEach((link) => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault(); // Prevent default navigation for testing
+
+                // Save to localStorage
+                const linkPath = link.getAttribute('href');
+                localStorage.setItem('activePath', linkPath);
+
+                // Update the active state immediately
+                document.querySelectorAll('.nav-item').forEach((item) => item.classList.remove('active'));
+                link.closest('.nav-item').classList.add('active');
+
+                // Simulate navigation (for real-world use, remove this)
+                console.log(`Navigating to: ${linkPath}`);
+                window.history.pushState({}, "", linkPath); // Simulates navigation
+                highlightActiveLink();
+            });
+        });
+    });
+</script>
+
+
+
+
+
+
+
