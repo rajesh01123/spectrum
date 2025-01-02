@@ -41,7 +41,7 @@
 }
 
 .timeline__item:after {
-	background-color: #e7544a;
+	background-color: #3e4095;
 	border: 2px solid #eea412;
 	border-radius: 6px;
 	content: '';

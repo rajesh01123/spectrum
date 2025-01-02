@@ -9,13 +9,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <!-- Site Metas -->
-<title>game</title>
+<title>Spectrum Sports</title>
 <meta name="keywords" content="">
 <meta name="description" content="">
 <meta name="author" content="">
 
 <!-- Site Icons -->
-<link rel='shortcut icon' type='image/x-icon' href='admin_assets/images/rajesh143.png' />
+<link rel='shortcut icon' type='image/x-icon' href='admin_assets/images/apple-touch-icon.png' />
 <link rel="apple-touch-icon" href="admin_assets/images/apple-touch-icon.png">
 
 <!-- Bootstrap CSS -->
@@ -201,6 +201,7 @@
     <%- include ("header.ejs") %>
     <!-- End header -->
 
+    <!-- Slider -->
     <div id="carouselExampleControls" class="carousel slide bs-slider box-slider" data-ride="carousel"
         data-pause="hover" data-interval="false">
         <!-- Indicators -->
@@ -208,64 +209,22 @@
             <li data-target="#carouselExampleControls" data-slide-to="0" class="active"></li>
             <li data-target="#carouselExampleControls" data-slide-to="1"></li>
             <li data-target="#carouselExampleControls" data-slide-to="2"></li>
+            <li data-target="#carouselExampleControls" data-slide-to="3"></li>
         </ol>
         <div class="carousel-inner" role="listbox">
+            <!-- Slide 1: Ludo -->
             <div class="carousel-item active">
-                <div id="home" class="first-section" style="background-image:url('admin_assets/images/4415552.jpg');"
-                    style="opacity: 0.5;">
-                    <div class="dtab">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-md-12 col-sm-12 text-right">
-                                    <div class="big-tagline">
-                                        <h2><strong> Spectrum </strong> Sports </h2>
-                                        <!-- <p class="lead">With Landigoo responsive landing page template, you can promote
-                                            your all hosting, domain and email services. </p> -->
-                                        <a href="#" class="hover-btn-new"><span>Contact Us</span></a>
-                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <a href="#" class="hover-btn-new"><span>Read More</span></a>
-                                    </div>
-                                </div>
-                            </div><!-- end row -->
-                        </div><!-- end container -->
-                    </div>
-                </div><!-- end section -->
-            </div>
-            <div class="carousel-item">
-                <div id="home" class="first-section" style="background-image:url('admin_assets/images/table-tanic1216516.jpg');"
-                    style="opacity: 0.5;">
-                    <div class="dtab">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-md-12 col-sm-12 text-left">
-                                    <div class="big-tagline">
-                                        <h2><strong> Spectrum </strong> Sports</h2>
-                                        <!-- <p class="lead">With Landigoo responsive landing page template, you can promote
-                                            your all hosting, domain and email services. </p> -->
-                                        <a href="#" class="hover-btn-new"><span>Contact Us</span></a>
-                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <a href="#" class="hover-btn-new"><span>Read More</span></a>
-                                    </div>
-                                </div>
-                            </div><!-- end row -->
-                        </div><!-- end container -->
-                    </div>
-                </div><!-- end section -->
-            </div>
-            <div class="carousel-item">
-                <div id="home" class="first-section" style="background-image:url('admin_assets/images/game121114.webp');"
+                <div id="home" class="first-section" style="background-image:url('admin_assets/images/ludo.webp');"
                     style="opacity: 0.5;">
                     <div class="dtab">
                         <div class="container">
                             <div class="row">
                                 <div class="col-md-12 col-sm-12 text-center">
                                     <div class="big-tagline">
-                                        <h2><strong> Spectrum </strong> Sports</h2>
-                                        <!-- <p class="lead">With Landigoo responsive landing page template, you can promote
-                                            your all hosting, domain and email services. </p> -->
-                                        <a href="#" class="hover-btn-new"><span>Contact Us</span></a>
+                                        <h2><strong>Ludo </strong>Games</h2>
+                                        <a href="#" data-toggle="modal" data-target="#login" class="hover-btn-new"><span>Play Now</span></a>
                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <a href="#" class="hover-btn-new"><span>Read More</span></a>
+                                        <a href="#" class="hover-btn-new"><span>Learn More</span></a>
                                     </div>
                                 </div>
                             </div><!-- end row -->
@@ -273,25 +232,86 @@
                     </div>
                 </div><!-- end section -->
             </div>
-            <!-- Left Control -->
-            <a class="new-effect carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-                <span class="fa fa-angle-left" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-            </a>
-
-            <!-- Right Control -->
-            <a class="new-effect carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-                <span class="fa fa-angle-right" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-            </a>
+            <!-- Slide 2: Draught -->
+            <div class="carousel-item">
+                <div id="home" class="first-section" style="background-image:url('admin_assets/images/draught.webp');"
+                    style="opacity: 0.5;">
+                    <div class="dtab">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12 text-center">
+                                    <div class="big-tagline">
+                                        <h2><strong>Draught </strong>Games</h2>
+                                        <a href="#" data-toggle="modal" data-target="#login" class="hover-btn-new"><span>Play Now</span></a>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <a href="#" class="hover-btn-new"><span>Learn More</span></a>
+                                    </div>
+                                </div>
+                            </div><!-- end row -->
+                        </div><!-- end container -->
+                    </div>
+                </div><!-- end section -->
+            </div>
+            <!-- Slide 3: Whot -->
+            <div class="carousel-item">
+                <div id="home" class="first-section" style="background-image:url('admin_assets/images/Whot.webp');"
+                    style="opacity: 0.5;">
+                    <div class="dtab">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12 text-center">
+                                    <div class="big-tagline">
+                                        <h2><strong>Whot </strong>Card Game</h2>
+                                        <a href="#" data-toggle="modal" data-target="#login" class="hover-btn-new"><span>Play Now</span></a>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <a href="#" class="hover-btn-new"><span>Learn More</span></a>
+                                    </div>
+                                </div>
+                            </div><!-- end row -->
+                        </div><!-- end container -->
+                    </div>
+                </div><!-- end section -->
+            </div>
+            <!-- Slide 4: Table Tennis -->
+            <div class="carousel-item">
+                <div id="home" class="first-section" style="background-image:url('admin_assets/images/table_tennis.jpg');"
+                    style="opacity: 0.5;">
+                    <div class="dtab">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12 text-center">
+                                    <div class="big-tagline">
+                                        <h2><strong>Table Tennis </strong>Sports</h2>
+                                        <a href="#" data-toggle="modal" data-target="#login" class="hover-btn-new"><span>Play Now</span></a>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <a href="#" class="hover-btn-new"><span>Learn More</span></a>
+                                    </div>
+                                </div>
+                            </div><!-- end row -->
+                        </div><!-- end container -->
+                    </div>
+                </div><!-- end section -->
+            </div>
         </div>
+        <!-- Left Control -->
+        <a class="new-effect carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+            <span class="fa fa-angle-left" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <!-- Right Control -->
+        <a class="new-effect carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+            <span class="fa fa-angle-right" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
     </div>
+    <!-- Slider -->
 
+    <!-- About -->
     <div id="overviews" class="section wb">
         <div class="container">
             <div class="section-title row text-center">
                 <div class="col-md-8 offset-md-2">
-                    <h3>About us</h3>
+                    <h2 style="text-transform: capitalize;font-size: 36px;color: #3e4095;font-weight: bold;text-decoration: underline;">About us</h2>
                     <!-- <p class="lead">Lorem Ipsum dolroin gravida nibh vel velit auctor aliquet. Aenean sollicitudin,
                         lorem quis bibendum auctor, nisi elit consequat ipsum, nec sagittis sem!</p> -->
                 </div>
@@ -300,65 +320,60 @@
             <div class="row align-items-center">
                 <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
                     <div class="message-box">
-                        <h4>about us</h4>
-
-                        <p>Cricket is a bat-and-ball game played between two teams of eleven players on a field, at the
-                            centre of which is a 22-yard (20-metre; 66-foot) pitch with a wicket at each end, each
-                            comprising two bails (small sticks) balanced on three stumps. Two players from the batting
-                            team, the striker and nonstriker, stand in front of either wicket holding bats, while one
-                            player from the fielding team, the bowler, bowls the ball toward the striker's wicket from
-                            the opposite end of the pitch. The striker's goal is to hit the bowled ball with the bat and
-                            then switch places with the nonstriker, with the batting team scoring one run for each of
-                            these exchanges. Runs are also scored when the ball reaches the boundary of the field or
-                            when the ball is bowled illegally. </p>
-
-                        <a href="#" class="hover-btn-new orange"><span>Learn More</span></a>
+                        <h4 style="text-transform: capitalize;font-size: 24px;">Who We Are</h4>
+                        <p style="text-align: justify;font-size: 16px;">Spectrum Sports is your ultimate destination for 
+                            fun, strategy, and high-energy competition. We specialize in bringing together players from 
+                            all walks of life to enjoy games that spark creativity, teamwork, and friendly rivalry. 
+                            Whether you’re a fan of the classic board game Ludo, a strategic Draughts player, a quick-thinking 
+                            Whot card enthusiast, or a Table Tennis pro, Spectrum Sports has something tailored for you. <br><br>
+                            Our mission: Create unforgettable moments through games that are as engaging as they are entertaining.
+                            We believe in the power of games to connect people, foster relationships, and provide an outlet for 
+                            stress and creativity. Each of our featured games has been selected for its universal appeal and the 
+                            joy it brings to players of all ages.</p>
+                        <!-- <a href="#" class="hover-btn-new orange"><span>Learn More</span></a> -->
                     </div><!-- end messagebox -->
                 </div><!-- end col -->
-
+            
                 <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
                     <div class="post-media wow fadeIn">
-                        <img src="admin_assets\images\game121114.webp"
-                            style="height: 400px;" alt="" class="img-fluid img-rounded">
+                        <img src="admin_assets/images/about-us.png" style="height: 400px;" alt="Spectrum Sports" class="img-fluid img-rounded">
                     </div><!-- end media -->
                 </div><!-- end col -->
             </div>
+            
             <div class="row align-items-center">
                 <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
                     <div class="post-media wow fadeIn">
-                        <img src="admin_assets\images\4415552.jpg"
-                            style="height: 400px;" alt="" class="img-fluid img-rounded">
+                        <img src="admin_assets/images/ludo2.jpg" style="height: 400px;" alt="Game Collection" class="img-fluid img-rounded">
                     </div><!-- end media -->
                 </div><!-- end col -->
-
+            
                 <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
                     <div class="message-box">
-                        <h2 style="text-transform: uppercase;">how it all started</h2>
-                        <p>Traditionally, Western playing cards are made of rectangular layers of paper or thin
-                            cardboard pasted together to form a flat, semirigid material. They are uniform in shape and
-                            size and small enough for several to be held together in one hand, frequently fanned out so
-                            that the identifying marks on each card can be seen. One side of each card—its front, or
-                            face—is marked so as to render it identifiable and distinguishable from its fellows, while
-                            the back, or reverse, is either blank or bears a pattern common to all. The corners are
-                            usually slightly rounded to prevent fraying. In the second half of the 20th century, it
-                            became common to add a plastic coating to resist wear and even to produce all-plastic cards.
-                        </p>
-
-                        <a href="#" class="hover-btn-new orange"><span>Learn More</span></a>
+                        <h4 style="text-transform: capitalize;font-size: 24px;">The Beginning of Spectrum Sports</h4>
+                        <p style="text-align: justify;font-size: 16px;">The story of Spectrum Sports began with a group of passionate game 
+                            lovers who saw the power of games to bring joy and excitement into people’s lives. Starting with traditional 
+                            favorites like Ludo and Draughts, we have grown into a platform that also embraces the fast-paced world of 
+                            Table Tennis and the tactical genius of Whot.<br><br>
+                            Our vision: to provide a space where everyone, regardless of age or background, can find a game that resonates
+                            with them. Over the years, we’ve built a community of players who share our love for competition and 
+                            camaraderie. Each game at Spectrum Sports tells its own story, whether it’s the timeless battles of Draughts
+                            or the vibrant energy of a Table Tennis match.</p>
+                        <!-- <a href="#" class="hover-btn-new orange"><span>Learn More</span></a> -->
                     </div><!-- end messagebox -->
                 </div><!-- end col -->
-
             </div><!-- end row -->
         </div><!-- end container -->
-    </div><!-- end section -->
+    </div>
+    <!-- About -->
 
+    <!-- Our Story -->
     <section class="section lb page-section">
         <div class="container">
             <div class="section-title row text-center">
                 <div class="col-md-8 offset-md-2">
-                    <h3>Our history</h3>
-                    <p class="lead">Lorem Ipsum dolroin gravida nibh vel velit auctor aliquet. Aenean sollicitudin,
-                        lorem quis bibendum auctor, nisi elit consequat ipsum, nec sagittis sem!</p>
+                    <h3 style="color: #3e4095;font-weight: bold;text-decoration: underline;">Our Journey Through the Years</h3>
+                    <p class="lead">Experience the milestones that shaped Spectrum Sports into a hub of exciting games like Ludo, Draughts, Whot, and Table Tennis.</p>
                 </div>
             </div><!-- end title -->
             <div class="timeline">
@@ -366,65 +381,58 @@
                     <div class="timeline__items">
                         <div class="timeline__item">
                             <div class="timeline__content img-bg-01">
-                                <h2>2018</h2>
-                                <img src="admin_assets\images\spots-log05.png"
-                                    style="width: 100%; height: 150px;">
+                                <h2>2022</h2>
+                                <p>Spectrum Sports expanded its offerings to include vibrant tournaments and online challenges for Whot and Draughts players, creating a platform for global enthusiasts.</p>
                             </div>
                         </div>
                         <div class="timeline__item">
                             <div class="timeline__content img-bg-02">
-                                <h2>2015</h2>
-                                <p>The India men's national cricket team, colloquially Team India, represents India in
-                                    men's international cricket. It is governed by the Board of </p>
+                                <h2>2020</h2>
+                                <p>The introduction of a dedicated Table Tennis arena allowed players to engage in thrilling matches, blending athleticism with strategy.</p>
                             </div>
                         </div>
                         <div class="timeline__item">
                             <div class="timeline__content img-bg-03">
-                                <h2>2014</h2>
-                                <p>Short Biography Of Suryakumar Yadav & Life Style, Career etc. During Writing This
-                                    Book No Character, No Religion & No Caste Are Harmed. It's Only</p>
+                                <h2>2018</h2>
+                                <p>Ludo tournaments were launched to bring families and friends together, rekindling love for this timeless board game.</p>
                             </div>
                         </div>
                         <div class="timeline__item">
                             <div class="timeline__content img-bg-04">
-                                <h2>2012</h2>
-                                <img src="admin_assets\images\4415552.jpg"
-                                    style="width: 100%; height: auto;">
+                                <h2>2015</h2>
+                                <p>Spectrum Sports hosted its first major event, a celebration of board games that drew participants from across the region.</p>
                             </div>
                         </div>
                         <div class="timeline__item">
                             <div class="timeline__content img-bg-01">
-                                <h2>2010</h2>
-                                <img src="admin_assets\images\game121114.webp"
-                                    style="width: 100%; height: 150px;">
+                                <h2>2012</h2>
+                                <p>The concept of Spectrum Sports was born—a vision to bring various games under one roof and inspire a spirit of healthy competition.</p>
                             </div>
                         </div>
                         <div class="timeline__item">
                             <div class="timeline__content img-bg-02">
-                                <h2>2007</h2>
-                                <p>The India national football team represents India in men's international football and
-                                    is governed by the All India Football Federation.</p>
+                                <h2>2010</h2>
+                                <p>Table Tennis started gaining popularity as a part of our game portfolio, attracting players with its fast-paced excitement.</p>
                             </div>
                         </div>
                         <div class="timeline__item">
                             <div class="timeline__content img-bg-03">
-                                <h2>2004</h2>
-                                <p>Table tennis is a racket sport derived from tennis but distinguished by its playing
-                                    surface being atop a stationary table, rather than the court on which ...</p>
+                                <h2>2008</h2>
+                                <p>The idea of hosting community games like Draughts and Whot gained traction, fostering interaction and teamwork among players.</p>
                             </div>
                         </div>
                         <div class="timeline__item">
                             <div class="timeline__content img-bg-04">
-                                <h2>2002</h2>
-                                <img src="admin_assets\images\table-tanic121.avif"
-                                    style="width: 100%; height: 150px;">
+                                <h2>2005</h2>
+                                <p>Spectrum Sports began its journey by promoting table games and building a community of enthusiasts passionate about friendly competition.</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </section>    
+    <!-- Our Story -->
 
     <div class="section cl">
         <div class="container">
@@ -432,14 +440,14 @@
                 <div class="col-md-4 col-sm-4 col-xs-12">
                     <span data-scroll class="global-radius icon_wrap effect-1 alignleft"><i
                             class="flaticon-study"></i></span>
-                    <p class="stat_count">1200</p>
+                    <p class="stat_count">100</p>
                     <h3>client</h3>
                 </div><!-- end col -->
 
                 <div class="col-md-4 col-sm-4 col-xs-12">
                     <span data-scroll class="global-radius icon_wrap effect-1 alignleft"><i
                             class="flaticon-online"></i></span>
-                    <p class="stat_count">240</p>
+                    <p class="stat_count">20</p>
                     <h3>game</h3>
                 </div><!-- end col -->
 
@@ -618,10 +626,10 @@
         style="background-image:url('images/parallax_04.jpg');">
         <div class="container">
             <div class="section-title text-center">
-                <h3>Testimonials</h3>
-                <p>Lorem ipsum dolor sit aet, consectetur adipisicing lit sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. </p>
+                <h3 style="font-weight: bold;text-decoration: underline;">What Our Users Say</h3>
+                <p class="lead">Discover how our platform has made a difference in the lives of our users. <br>Hear their stories of trust, excellence, and satisfaction.</p>
             </div><!-- end title -->
+
 
             <div class="row">
                 <div class="col-md-12 col-sm-12">
@@ -629,84 +637,62 @@
                         <div class="testimonial clearfix">
                             <div class="testi-meta">
                                 <img src="admin_assets/images/testi_01.png" alt="" class="img-fluid">
-                                <h4>James Fernando </h4>
+                                <h4>Michael Johnson</h4>
                             </div>
                             <div class="desc">
-                                <h3><i class="fa fa-quote-left"></i> Wonderful Support!</h3>
-                                <p class="lead">They have got my project on time with the competition with a sed highly
-                                    skilled, and experienced & professional team.</p>
+                                <h3><i class="fa fa-quote-left"></i> Exceptional Experience!</h3>
+                                <p class="lead">"Using this platform has been a game-changer for me. The seamless interface and top-notch customer support made it incredibly easy to achieve my goals."</p>
                             </div>
-                            <!-- end testi-meta -->
                         </div>
                         <!-- end testimonial -->
-
+    
                         <div class="testimonial clearfix">
                             <div class="testi-meta">
-                                <img src="images/testi_02.png" alt="" class="img-fluid">
-                                <h4>Jacques Philips </h4>
+                                <img src="admin_assets/images/testi_03.png" alt="" class="img-fluid">
+                                <h4>Sarah Lee</h4>
                             </div>
                             <div class="desc">
-                                <h3><i class="fa fa-quote-left"></i> Awesome Services!</h3>
-                                <p class="lead">Explain to you how all this mistaken idea of denouncing pleasure and
-                                    praising pain was born and I will give you completed.</p>
+                                <h3><i class="fa fa-quote-left"></i> Outstanding Support!</h3>
+                                <p class="lead">"The team is truly dedicated to delivering results. They went above and beyond to ensure my project was completed on time and exceeded expectations."</p>
                             </div>
-                            <!-- end testi-meta -->
                         </div>
                         <!-- end testimonial -->
-
+    
                         <div class="testimonial clearfix">
                             <div class="testi-meta">
-                                <img src="images/testi_03.png" alt="" class="img-fluid ">
-                                <h4>Venanda Mercy </h4>
+                                <img src="admin_assets/images/testi_02.png" alt="" class="img-fluid">
+                                <h4>Daniel Carter</h4>
                             </div>
                             <div class="desc">
-                                <h3><i class="fa fa-quote-left"></i> Great & Talented Team!</h3>
-                                <p class="lead">The master-builder of human happines no one rejects, dislikes avoids
-                                    pleasure itself, because it is very pursue pleasure. </p>
+                                <h3><i class="fa fa-quote-left"></i> Highly Recommend!</h3>
+                                <p class="lead">"I've worked with many companies, but this one stands out for its professionalism and commitment to quality. I couldn't be happier with the results."</p>
                             </div>
-                            <!-- end testi-meta -->
                         </div>
                         <!-- end testimonial -->
-                        <div class="testimonial clearfix">
+    
+                        <!-- <div class="testimonial clearfix">
                             <div class="testi-meta">
-                                <img src="images/testi_01.png" alt="" class="img-fluid">
-                                <h4>James Fernando </h4>
+                                <img src="admin_assets/images/team-04.png" alt="" class="img-fluid">
+                                <h4>Emily Davis</h4>
                             </div>
                             <div class="desc">
-                                <h3><i class="fa fa-quote-left"></i> Wonderful Support!</h3>
-                                <p class="lead">They have got my project on time with the competition with a sed highly
-                                    skilled, and experienced & professional team.</p>
+                                <h3><i class="fa fa-quote-left"></i> Truly Impressive!</h3>
+                                <p class="lead">"From start to finish, the process was smooth and efficient. The attention to detail and passion for excellence are unmatched."</p>
                             </div>
-                            <!-- end testi-meta -->
                         </div>
-                        <!-- end testimonial -->
-
+                        <!-- end testimonial --
+    
                         <div class="testimonial clearfix">
                             <div class="testi-meta">
-                                <img src="images/testi_02.png" alt="" class="img-fluid">
-                                <h4>Jacques Philips </h4>
+                                <img src="admin_assets/images/team-03.png" alt="" class="img-fluid">
+                                <h4>Oliver Thompson</h4>
                             </div>
                             <div class="desc">
-                                <h3><i class="fa fa-quote-left"></i> Awesome Services!</h3>
-                                <p class="lead">Explain to you how all this mistaken idea of denouncing pleasure and
-                                    praising pain was born and I will give you completed.</p>
+                                <h3><i class="fa fa-quote-left"></i> A Pleasure to Work With!</h3>
+                                <p class="lead">"Their approach to innovation and user-centric design has made a lasting impact. I'm confident recommending them to anyone seeking reliable service."</p>
                             </div>
-                            <!-- end testi-meta -->
-                        </div>
+                        </div> -->
                         <!-- end testimonial -->
-
-                        <div class="testimonial clearfix">
-                            <div class="testi-meta">
-                                <img src="images/testi_03.png" alt="" class="img-fluid">
-                                <h4>Venanda Mercy </h4>
-                            </div>
-                            <div class="desc">
-                                <h3><i class="fa fa-quote-left"></i> Great & Talented Team!</h3>
-                                <p class="lead">The master-builder of human happines no one rejects, dislikes avoids
-                                    pleasure itself, because it is very pursue pleasure. </p>
-                            </div>
-                            <!-- end testi-meta -->
-                        </div><!-- end testimonial -->
                     </div><!-- end carousel -->
                 </div><!-- end col -->
             </div><!-- end row -->
@@ -738,76 +724,9 @@
         </div>
     </div> -->
 
-    <footer class="footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-4 col-md-4 col-xs-12">
-                    <div class="widget clearfix">
-                        <div class="widget-title">
-                            <h3>About US</h3>
-                        </div>
-                        <p> Integer rutrum ligula eu dignissim laoreet. Pellentesque venenatis nibh sed tellus faucibus
-                            bibendum. Sed fermentum est vitae rhoncus molestie. Cum sociis natoque penatibus et magnis
-                            dis montes.</p>
-                        <div class="footer-right">
-                            <ul class="footer-links-soi">
-                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                <li><a href="#"><i class="fa fa-github"></i></a></li>
-                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
-                                <li><a href="#"><i class="fa fa-pinterest"></i></a></li>
-                            </ul><!-- end links -->
-                        </div>
-                    </div><!-- end clearfix -->
-                </div><!-- end col -->
-
-                <div class="col-lg-4 col-md-4 col-xs-12">
-                    <div class="widget clearfix">
-                        <div class="widget-title">
-                            <h3>Information Link</h3>
-                        </div>
-                        <ul class="footer-links">
-                            <li><a href="#">Home</a></li>
-                            <li><a href="#">about</a></li>
-                            <li><a href="#">game</a></li>
-                            <li><a href="#">blog</a></li>
-                            <li><a href="#">Contact</a></li>
-                            <li><a href="#">privacy policy</a></li>
-                            <li><a href="#">terms & condition</a></li>
-                        </ul><!-- end links -->
-                    </div><!-- end clearfix -->
-                </div><!-- end col -->
-
-                <div class="col-lg-4 col-md-4 col-xs-12">
-                    <div class="widget clearfix">
-                        <div class="widget-title">
-                            <h3>Contact Details</h3>
-                        </div>
-
-                        <ul class="footer-links">
-                            <li><a href="mailto:#">Spectrum@.com</a></li>
-                            
-                            <li>PO Box 16122 Collins Street West Victoria 8007 Australia</li>
-                            <li>+61 3 8376 6284</li>
-                        </ul><!-- end links -->
-                    </div><!-- end clearfix -->
-                </div><!-- end col -->
-
-            </div><!-- end row -->
-        </div><!-- end container -->
-    </footer><!-- end footer -->
-
-    <div class="copyrights">
-        <div class="container">
-            <div class="footer-distributed">
-                <div class="footer-center">
-                    <p class="footer-company-name">Copy Right &copy; 2024 <a href="#">Spectrum </a> sports :
-                        <a href="https://ejs.design/">development by ciss</a>
-                    </p>
-                </div>
-            </div>
-        </div><!-- end container -->
-    </div><!-- end copyrights -->
+      <!-- Start header -->
+      <%- include ("footer.ejs") %>
+      <!-- End header -->
 
     <a href="#" id="scroll-to-top" class="dmtop global-radius"><i class="fa fa-angle-up"></i></a>
 

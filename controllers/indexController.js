@@ -33,6 +33,18 @@ const contact = async(req,res,next)=>{
   res.render('contact') 
  
 }
+const privacypolicy=async(req,res,next)=>{
+
+  res.render('privacypolicy') 
+
+}
+
+const termscondition=async(req,res,next)=>{
+
+  res.render('termscondition') 
+
+}
+
 const forgot_password=async(req,res,next)=>{
 
   res.render('forgot-password') 
@@ -41,7 +53,7 @@ const forgot_password=async(req,res,next)=>{
 
 
   //--------------------- Export Start ------------------------------------------
-export { home , index , about , games, blog, contact, forgot_password }
+export { home , index , about , games, blog, contact, forgot_password, privacypolicy, termscondition }
 
 
          

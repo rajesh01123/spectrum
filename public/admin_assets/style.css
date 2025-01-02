@@ -26,7 +26,7 @@ body {
     font-size: 14px;
     font-family: 'Rubik', sans-serif;
     line-height: 1.80857;
-    text-transform: capitalize;
+    text-transform: inherit;
     font-weight: 500;
 }
 
@@ -468,7 +468,7 @@ a img.aligncenter {
 
 
 .top-navbar .bg-light{
-	background: #4c5a7d !important;
+	background: gray !important;
 }
 
 .top-navbar .navbar-light .navbar-nav .nav-link{
@@ -648,6 +648,7 @@ a img.aligncenter {
   content: '';
   position: absolute;
   z-index: 1;
+  border-radius: 10px;
 }
 
 .navbar-right li a.hover-btn-new:hover span {
@@ -711,7 +712,7 @@ a img.aligncenter {
 
 
 .box-slider .carousel-control-prev{
-	border-radius: 2px;
+	border-radius: 40px;
 	background: #eea412;
 	position: absolute;
 	left: 0px;
@@ -723,7 +724,7 @@ a img.aligncenter {
 	opacity: 1;
 }
 .box-slider .carousel-control-next{
-	border-radius: 2px;
+	border-radius: 40px;
 	background: #eea412;
 	position: absolute;
 	right: 0px;
@@ -759,6 +760,7 @@ a img.aligncenter {
   content: '';
   position: absolute;
   z-index: 1;
+  border-radius: 40px;
 }
 
 .big-tagline a.hover-btn-new:hover span {
@@ -845,7 +847,7 @@ a img.aligncenter {
     display: block;
     position: relative;
     overflow: hidden;
-    padding: 70px 0;
+    padding: 40px 0;
 }
 
 .noover {
@@ -889,9 +891,9 @@ a img.aligncenter {
 	font-weight: 400;
 	line-height: 46px;
 	padding: 0 17px;
-	text-transform: uppercase;
+	text-transform: capitalize;
 	position: relative;
-	border: 2px solid #fff;
+	/* border: 2px solid #fff; */
 	font-size: 14px;
 	-webkit-transition: all 0.3s ease-in-out;
 	-moz-transition: all 0.3s ease-in-out;
@@ -957,7 +959,7 @@ a img.aligncenter {
 .section-title {
     display: block;
     position: relative;
-    margin-bottom: 60px;
+    margin-bottom: 20px;
 }
 
 .section-title p {
@@ -996,7 +998,7 @@ a img.aligncenter {
 
 
 .page-section{
-	padding: 70px 0px; 
+	padding: 0px 0px; 
 }
 
 .customwidget a{
@@ -2429,7 +2431,7 @@ div#message p {
 .contact_form .form-control {
     background-color: #fff;
     margin-bottom: 30px;
-    border: 1px solid #ebebeb;
+    border: 1px solid #bcbcbc;
     box-sizing: border-box;
     color: #bcbcbc;
     font-size: 16px;
@@ -2496,7 +2498,7 @@ div#message p {
     font-weight: 400;
     font-size: 20px;
     text-transform: capitalize;
-    line-height: !important;
+    line-height: 1 !important;
 }
 
 .footer {
@@ -2534,7 +2536,7 @@ div#message p {
 
 .footer-links a {
     color: #cccccc;
-    text-transform: capitalize;
+    text-transform: inherit;
 }
 
 .footer-links a:hover,
@@ -2606,7 +2608,7 @@ div#message p {
 .footer-distributed .footer-company-name {
     font-weight: 300;
     margin: 0 10px;
-    color: #666;
+    color: #eea412;
     padding: 5px 0px;
 }
 
@@ -2786,7 +2788,7 @@ div#message p {
     margin: 0;
     font-weight: 300;
     padding: 4px 0 0;
-    line-height: 1 !important:
+    line-height: 1 !important;
 }
 
 #preloader {
@@ -2866,13 +2868,16 @@ body.host_version .first-section .effect-1.slide-btn::after{
 /**-------------- inner Page css ---------------**/
 
 .all-title-box{
-	background: url(images/banner.jpg)no-repeat;
-	-webkit-background-size: cover;
-	-moz-background-size: cover;
-	-o-background-size: cover;
-	background-size: cover;
-	background-position: center;
-	min-height: 300px;
+    /*background: url(images/table-banner.jpg) no-repeat;*/
+    background-image: linear-gradient(#3e4095, #eb9f44);
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background-position: center;
+    opacity: 0.5; /* This applies to the entire box */
+    color: #000; /* This ensures the text inside the box remains black */
+    min-height: 300px;
 }
 
 .all-title-box h1{

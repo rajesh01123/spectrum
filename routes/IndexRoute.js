@@ -1,7 +1,7 @@
 import express from 'express'
 
 
-import { about, blog, contact, forgot_password, games, home, index } from '../controllers/indexController.js';
+import { home, index, about, games, blog, contact, forgot_password, privacypolicy, termscondition } from '../controllers/indexController.js';
 
 const router = express.Router(); 
 
@@ -24,9 +24,11 @@ router.route('/blog').get(blog);
 
 router.route('/contact').get(contact)
 
+router.route('/privacypolicy').get(privacypolicy)
+
+router.route('/termscondition').get(termscondition)
+
 router.route('/forgot-password').get(forgot_password)
-
-
 
 export default router
 
