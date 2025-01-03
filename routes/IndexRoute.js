@@ -18,7 +18,7 @@ router.route('/admin').get(home);
 
 router.route('/').get(isAuthenticatedUser,index);
 
-router.route('/index').get(isAuthenticatedUser,index);
+router.route('/index').get(index);
 
 
 router.route('/index').post(indexpost);
