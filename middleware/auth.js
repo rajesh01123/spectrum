@@ -12,13 +12,12 @@ const isAuthenticatedUser = async(req,res,next)=>{
     const {token }= req.cookies ;
 
         if(!token){
-           return res.json("Please Login to use this Service")
-          // res.render('login1',{'output':'Incorrect Password'})  
+            return res.redirect('/login'); 
         }
 
         const decodedData = jwt.verify(token,process.env.JWT_SECRET); 
     
-    const [results] = await con.query('SELECT * FROM tbl_user WHERE id = ?', [decodedData.id]);
+    const [results] = await con.query('SELECT * FROM tbl_user WHERE u_id = ?', [decodedData.id]);
 
     console.log(results)
 

@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Basic -->
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<!-- Mobile Metas -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Site Metas -->
+<title>Regitation</title>
+<meta name="keywords" content="">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<!-- Site Icons -->
+<link rel='shortcut icon' type='image/x-icon' href='admin_assets/images/rajesh143.png' />
+<link rel="apple-touch-icon" href="admin_assets/images/apple-touch-icon.png">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="admin_assets/css/bootstrap.min.css">
+<!-- Site CSS -->
+<link rel="stylesheet" href="admin_assets/style.css">
+<!-- ALL VERSION CSS -->
+<link rel="stylesheet" href="admin_assets/css/versions.css">
+<!-- Responsive CSS -->
+<link rel="stylesheet" href="admin_assets/css/responsive.css">
+<!-- Custom CSS -->
+<link rel="stylesheet" href="admin_assets/css/custom.css">
+
+<!-- Modernizer for Portfolio -->
+<script src="admin_assets/js/modernizer.js"></script>
+
+<!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body class="host_version">
+
+    <!-- Modal -->
+   
+                        <!-- <div class="tab-pane" id="Forgot-passwoed">
+                            <form role="form" class="form-horizontal">
+                            
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <input class="form-control" id="exampleInputPassword1" placeholder="Email"
+                                            type="email">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-10">
+                                        <button type="submit" class="btn btn-light btn-radius btn-brd grd1">
+                                            Submit
+                                        </button>
+                                        <a class="for-pwd" href="javascript:;">Forgot your password?</a>
+                                    </div>
+                                </div>
+                            </form>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- LOADER -->
+    <div id="preloader">
+        <div class="loader-container">
+            <div class="progress-br float shadow">
+                <div class="progress__item"></div>
+            </div>
+        </div>
+    </div>
+    <!-- END LOADER -->
+
+          <!-- Start header -->
+          <%- include ("header.ejs") %>
+          <!-- End header -->
+
+    
+        <div class="container">
+            <div class="section-title text-center">
+                
+            </div>
+
+            <div class="row">
+                <div class="col-xl-2 col-md-12 col-sm-12"></div>
+                <div class="col-xl-8 col-md-12 col-sm-12">
+                    <div class="contact_form bg-light">
+                        <div id="message">
+                            <% if(output){%>
+
+                            <p><%= output %></p>
+
+
+                          <%  }else{ %>
+                            
+                            <p>please enter your Email and Password</p>
+                        
+                            <% } %>
+                        </div>
+                       
+                        <form id="contactform"  action="regitation" name="contactform" method="post">
+                            <div class="row row-fluid">
+                                <div class="col-sm-6">
+                                    <label>User name</label>
+                                    <input class="form-control"  name="username" placeholder=" Enter Your UserName" type="text">
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <label>Email</label>
+                                    <input type="email" name="email" id="first_name" class="form-control" placeholder="Enter Your email" required>
+                                </div>
+                               
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <label>Contact</label>
+                                    <input type="number" name="contact" id="first_name" class="form-control" placeholder="Enter Your contact" required>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <label>Password</label>
+                                    <input type="password" name="password" id="first_name" class="form-control" placeholder="Enter Your password" required>
+                                </div>
+                                
+                                
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <label>Gender</label>
+                                    <select name="gender" class="form-control">
+                                        <option value="">select Your Gender</option>
+
+                                        <option value="male">male</option>
+                                        <option value="female">female</option>
+
+                                    </select>
+                                    
+                                </div><div class="col-lg-6 col-md-6 col-sm-6">
+                                    <label>state</label>
+                                    <select name="state" class="form-control">
+                                        <option value="">select Your state</option>
+
+                                        <option value="mp">mp</option>
+                                        <option value="up">up</option>
+
+                                    </select>
+                                    
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <label>Birthday date</label>
+                                    <input type="date" name="birthday"  class="form-control" placeholder="Enter Your birthday date" required>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <label>Address</label>
+                                    <input type="text" name="address"  class="form-control" placeholder="Enter Your Address" required>
+                                </div>
+                                
+                                <div class="text-center pd d-flex">
+                                    <input type="submit" value="submit" name="submit" class="btn btn-light btn-radius btn-brd grd1 btn-block" style="margin-right: 9rem;" >
+                                 
+                                 <a class="btn btn-light btn-radius btn-brd grd1 btn-block sizes" href="file:///C:/Users/HP/OneDrive/Desktop/gameing/index.html#Login" role="button" style="margin-right: 9rem;">Forgot-passwoed</a> 
+
+                                </div>
+                                
+                                <!-- <div class="text-center pd d-flex">
+                                 <a class="btn btn-light btn-radius btn-brd grd1 btn-block sizes" href="file:///C:/Users/HP/OneDrive/Desktop/gameing/index.html#Login" role="button" style="margin-right: 9rem;">Forgot-passwoed</a> 
+
+                               </div> -->
+                               <div class="text-center pd d-flex">
+                                
+                                <p>If you do not have login details, Please click <a href="regitation">here</a> to register</p>
+                             
+                             
+
+                             </div>
+                               
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-12 col-sm-12"></div>
+                <div class="col-xl-3 col-md-12 col-sm-12"></div>
+				<div class="col-xl-6 col-md-12 col-sm-12">
+					<div class="map-box">
+						<div id="custom-places" class="small-map" style="height: 100px;"></div>
+					</div>
+				</div>
+                <div class="col-xl-3 col-md-12 col-sm-12"></div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+    <!-- <div class="parallax section dbcolor">
+        <div class="container">
+            <div class="row logos">
+                <div class="col-md-2 col-sm-2 col-xs-6 wow fadeInUp">
+                    <a href="#"><img src="images/logo_01.png" alt="" class="img-repsonsive"></a>
+                </div>
+                <div class="col-md-2 col-sm-2 col-xs-6 wow fadeInUp">
+                    <a href="#"><img src="images/logo_02.png" alt="" class="img-repsonsive"></a>
+                </div>
+                <div class="col-md-2 col-sm-2 col-xs-6 wow fadeInUp">
+                    <a href="#"><img src="images/logo_03.png" alt="" class="img-repsonsive"></a>
+                </div>
+                <div class="col-md-2 col-sm-2 col-xs-6 wow fadeInUp">
+                    <a href="#"><img src="images/logo_04.png" alt="" class="img-repsonsive"></a>
+                </div>
+                <div class="col-md-2 col-sm-2 col-xs-6 wow fadeInUp">
+                    <a href="#"><img src="images/logo_05.png" alt="" class="img-repsonsive"></a>
+                </div>
+                <div class="col-md-2 col-sm-2 col-xs-6 wow fadeInUp">
+                    <a href="#"><img src="images/logo_06.png" alt="" class="img-repsonsive"></a>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+      <!-- Start header -->
+      <%- include ("footer.ejs") %>
+      <!-- End header -->
+    <a href="#" id="scroll-to-top" class="dmtop global-radius"><i class="fa fa-angle-up"></i></a>
+
+    <!-- ALL JS FILES -->
+    <script src="admin_assets/js/all.js"></script>
+    <!-- ALL PLUGINS -->
+    <script src="admin_assets/js/custom.js"></script>
+    <script src="admin_assets/js/timeline.min.js"></script>
+    <script>
+        timeline(document.querySelectorAll('.timeline'), {
+            forceVerticalMode: 700,
+            mode: 'horizontal',
+            verticalStartPosition: 'left',
+            visibleItems: 4
+        });
+
+    
+    </script>
+</body>
+
+</html>

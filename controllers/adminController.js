@@ -67,6 +67,7 @@ const loginAdmin = async (req,res,next)=>{
   if(!username || !password){    
       // res.json("Please Enter Email and Password")
        res.render('admin/login',{'output':'Please Enter Username and Password'})
+       console.log('Enter data');
       
   }
   else 
