@@ -179,7 +179,7 @@ const forgotpost = async(req,res,next)=>{
     await con.rollback();
 
     console.log(error)
-    res.render('rj500')
+    res.render('rje500')
 
   }
 
