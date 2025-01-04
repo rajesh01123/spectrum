@@ -9,14 +9,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <!-- Site Metas -->
-<title>forgot-password</title>
+<title>forgot password</title>
 <meta name="keywords" content="">
 <meta name="description" content="">
 <meta name="author" content="">
 
 <!-- Site Icons -->
-<link rel='shortcut icon' type='image/x-icon' href='admin_assets/images/rajesh143.png' />
-<link rel="apple-touch-icon" href="admin_assets/images/apple-touch-icon.png">
+<link rel="shortcut icon" href="admin_assets\images\logo.png" type="image/x-icon" />
+<link rel="apple-touch-icon" href="admin_assets\images\logo.png">
 
 <!-- Bootstrap CSS -->
 <link rel="stylesheet" href="admin_assets/css/bootstrap.min.css">
@@ -42,7 +42,7 @@
 <body class="host_version">
 
     <!-- Modal -->
-  
+   
 
     <!-- LOADER -->
     <div id="preloader">
@@ -54,9 +54,10 @@
     </div>
     <!-- END LOADER -->
 
-          <!-- Start header -->
-          <%- include ("header.ejs") %>
-          <!-- End header -->
+       <!-- Start header -->
+       <%- include ("header.ejs") %>
+       <!-- End header -->
+
 
     
         <div class="container">
@@ -70,27 +71,19 @@
                     <div class="contact_form bg-light">
                         <div id="message">
                             <img src="admin_assets\images\logo.png" >
-                            <% if(output){%>
-
-                            <p><%= output %></p>
-
-
-                          <%  }else{ %>
-                            
-                            <p>please enter your email below and follow the instructions send your Registrationv email id</p>
-                        
-                            <% } %>
+                            <p>please enter Youer email which is registered with Spectrum sports </p>
                         </div>
                        
-                        <form id="contactform" class="" action="forgat-password" name="contactform" method="post">
+                        <form id="contactform" class="" action="forgot" name="contactform" method="post">
                             <div class="row row-fluid">
                                 <div class="col-lg-12 col-md-12 col-sm-12">
-                                    <input type="email" name="email" id="first_name" class="form-control" placeholder="enter email">
+                                    <input type="password" name="email"  class="form-control" placeholder="email">
                                 </div>
+                               
                                 <div class="text-center pd d-flex">
-                                    <!-- <input type="submit" name="submit" value="submit"> -->
-                                 <button type="submit" value="SEND" id="submit" class="btn btn-light btn-radius btn-brd grd1 btn-block" style="margin-right: 9rem;">send otp</button>
-                                 <a class="btn btn-light btn-radius btn-brd grd1 btn-block sizes" href="file:///C:/Users/HP/OneDrive/Desktop/gameing/index.html#Login" role="button">back</a> 
+                                    <input type="submit" value="submit" class="btn btn-light btn-radius btn-brd grd1 btn-block">
+                                 <!-- <button type="submit" value="SEND" id="submit" class="btn btn-light btn-radius btn-brd grd1 btn-block" style="margin-right: 12rem;">submit</button> -->
+                                 <a class="btn btn-light btn-radius btn-brd grd1 btn-block sizes" href="file:///C:/Users/HP/OneDrive/Desktop/gameing/otp.html" role="button">back</a> 
 
                                 </div>
                             </div>
@@ -112,7 +105,7 @@
 
 
 
-
+   <!-- end section -->
 
     <!-- <div class="parallax section dbcolor">
         <div class="container">
@@ -139,9 +132,10 @@
         </div>
     </div> -->
 
-      <!-- Start header -->
-      <%- include ("footer.ejs") %>
-      <!-- End header -->
+       <!-- Start header -->
+       <%- include ("footer.ejs") %>
+       <!-- End header -->
+
     <a href="#" id="scroll-to-top" class="dmtop global-radius"><i class="fa fa-angle-up"></i></a>
 
     <!-- ALL JS FILES -->
