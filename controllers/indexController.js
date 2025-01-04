@@ -149,13 +149,13 @@ const forgotpost = async(req,res,next)=>{
    const expiry_time=new Date(current_time.getTime()+10 * 60000);
 
    if(otp_detail.length==0){
-    console.log(otp_detail.length);
+    // console.log(otp_detail.length);
 
      await con.query("INSERT INTO `tbl_otp`(`email`, `otp_code`,`expire_at`) VALUES (?,?,?)",[email,otp,expiry_time]);
      console.log ("data insert");
 
    }else{
-    console.log(otp_detail.length);
+    // console.log(otp_detail.length);
 
     await con.query("UPDATE `tbl_otp` SET `otp_code`=?,`expire_at`=? WHERE `email`=?",[otp,expiry_time,email]);
     console.log ("data update");
