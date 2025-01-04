@@ -136,7 +136,7 @@ const forgotpost = async(req,res,next)=>{
    const user_detail=data[0];
 
    console.log(user_detail);
-   if(user_detail.length){
+   if(!user_detail){
     res.render('forgot',{'output':'invalid email'});
    }
 
@@ -148,7 +148,7 @@ const forgotpost = async(req,res,next)=>{
    const current_time=new Date();
    const expiry_time=new Date(current_time.getTime()+10 * 60000);
 
-   if(otp_detail.length==0){
+   if(!otp_detail){
     // console.log(otp_detail.length);
 
      await con.query("INSERT INTO `tbl_otp`(`email`, `otp_code`,`expire_at`) VALUES (?,?,?)",[email,otp,expiry_time]);
