@@ -785,6 +785,10 @@ const sendOTPFornewPass = async function (email,otp) {
   
     const AppEmail = rows[0].appEmail;
     const AppPassword = rows[0].appPassword;
+
+    // console.log(AppEmail);
+    // console.log(AppPassword);
+
   
   
   try {
@@ -797,9 +801,9 @@ const sendOTPFornewPass = async function (email,otp) {
     });
 
     var mailOptions = {
-      from: 'vasubirla@gmail.com',
+      from: 'rajesh7126117@gmail.com',
       to: email,
-      subject: 'Reset Password OTP (MyrentWish)',
+      subject: 'Reset Password OTP (Spectrum)',
       html: `
           <html>
           <head>
@@ -833,10 +837,10 @@ const sendOTPFornewPass = async function (email,otp) {
                   <p>Dear User,</p>
                   <h2>  ${otp} </h2> <p> is Your OTP to reset Password.</p>
                 
-                  <p>Thank you for choosing MyrentWish!</p>
+                  <p>Thank you for choosing Spectrum!</p>
                   <p>Best regards,</p>
-                  <p>Your MyrentWish Team</p>
-                  <p>Kilvish Birla</p>
+                  <p>Your Spectrum Team</p>
+                  <p>Kumar Rajesh</p>
               </div>
           </body>
           </html>

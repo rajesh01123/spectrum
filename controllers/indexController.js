@@ -143,19 +143,24 @@ const forgotpost = async(req,res,next)=>{
    const otp = Math.floor(100000 + Math.random() * 900000);
 
    const[otp_data]=await con.query('SELECT * FROM tbl_otp WHERE email=?',[email]);
-   const otp_detail = otp_data[0];
+  //  const otp_detail = otp_data[0];
 
    const current_time=new Date();
    const expiry_time=new Date(current_time.getTime()+10 * 60000);
 
-   if(!otp_detail){
-    // console.log(otp_detail.length);
+   if(otp_data.length==0){
+    // console.log('otp deatil',otp_detail.length);
+    console.log('otp data',otp_data.length);
+
+
 
      await con.query("INSERT INTO `tbl_otp`(`email`, `otp_code`,`expire_at`) VALUES (?,?,?)",[email,otp,expiry_time]);
      console.log ("data insert");
 
    }else{
-    // console.log(otp_detail.length);
+    // console.log('otp deatil',otp_detail.length);
+    console.log('otp data',otp_data.length);
+
 
     await con.query("UPDATE `tbl_otp` SET `otp_code`=?,`expire_at`=? WHERE `email`=?",[otp,expiry_time,email]);
     console.log ("data update");
