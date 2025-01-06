@@ -3,7 +3,7 @@ import {isAuthenticatedUser} from '../middleware/auth.js' ;
 
 
 
-import { home, index, about, games, blog, contact, privacypolicy, termscondition, indexpost, login, regitation, regitation_post, login_post, resset, forgot, forgotpost, otp, otp_verify, resetpost } from '../controllers/indexController.js';
+import { home, index, about, games, blog, contactpage, privacypolicy, termscondition, indexpost, login, regitation, regitation_post, login_post, resset, forgot, forgotpost, otp, otp_verify, resetpost } from '../controllers/indexController.js';
 
 const router = express.Router(); 
 
@@ -51,7 +51,7 @@ router.route('/games').get(games);
 
 router.route('/blog').get(blog);
 
-router.route('/contact').get(contact)
+router.route('/contact').get(contactpage);
 
 router.route('/privacypolicy').get(privacypolicy)
 

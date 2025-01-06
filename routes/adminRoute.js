@@ -1,9 +1,10 @@
 import express from 'express'
-import { Profile, ProfilePost, changepass, homePage, loginAdmin, loginPage, logout, updateadminpic,viewUser,viewUserPost,viewUsers,deletuser, addmatch, addmatch_post, viewmatch } from '../controllers/adminController.js';
+import { Profile, ProfilePost, changepass, homePage, loginAdmin, loginPage, logout, updateadminpic,viewUser,viewUserPost,viewUsers,deletuser, addmatch, addmatch_post, viewmatch, eventcategory, eventcat_post } from '../controllers/adminController.js';
 
 
 import upload from '../middleware/upload.js';
 import { isAuthenticatedAdmin} from '../middleware/Adminauth.js' ;
+// import { eventNames } from 'pdfkit';
 
 const router = express.Router(); 
 
@@ -52,6 +53,12 @@ router.route('/deleteUser').delete(deletuser)
 router.route('/addmatch').get(isAuthenticatedAdmin,addmatch)
 router.route('/addmatch').post(isAuthenticatedAdmin,addmatch_post)
 router.route('/viewmatch').get(isAuthenticatedAdmin,viewmatch)
+
+
+//-----------------------------------event category------------------------
+
+router.route('/eventcategory').get(isAuthenticatedAdmin,eventcategory);
+router.route('/eventcategory').post(isAuthenticatedAdmin,upload.single('image'),eventcat_post);
 
 
 

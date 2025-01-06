@@ -37,7 +37,9 @@
                       <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Gross: activate to sort column ascending" style="width: 100.922px;">Mobile</th>
                       <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Gross: activate to sort column ascending" style="width: 100.922px;">Adress</th>
                       <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="5%: activate to sort column ascending" style="width: 73.1719px;">Gender</th>
-                      <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Net: activate to sort column ascending" style="width: 75.5625px;">Status</th>
+                      <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Net: activate to sort column ascending" style="width: 75.5625px;">Date of Birth</th>
+                      <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Net: activate to sort column ascending" style="width: 75.5625px;">state</th>
+
                       <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Action: activate to sort column ascending" style="width: 110.156px;">Action</th>
                     </tr>
                 </thead>
@@ -55,37 +57,28 @@
                             <label for="checkbox-1" class="custom-control-label">&nbsp;</label>
                           </div>
                         </td> -->
-                        <td><%- users[i].firstname %> <%- users[i].lastname %> </td>
+                        <td><%- users[i].firstname %> <%- users[i].user_name %> </td>
                         
-                        <td><%- users[i].user_email %> </td>
+                        <td><%- users[i].email %> </td>
 
-                        <td><%- users[i].user_mobile %> </td>
+                        <td><%- users[i].contact %> </td>
                      
-                        <td><%- users[i].address %> ,<%- users[i].city %> , <%- users[i].country %> </td>
+                        <td><%- users[i].address %> </td>
                         
                         <td><%- users[i].gender  %></td>
                        
-                   <td>
-        
-                        <div id="refreshDiv" class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
-                          <!-- Append the company's ID as data attribute -->
-                          <input type="checkbox" onchange="updateStatus('<%= users[i].user_id %>','<%= users[i].status %>')" class="custom-control-input" id="customSwitch<%= i %>"  data-company-id="<%= users[i].user_id %>" <% if (users[i].status === 'active') { %>checked<% } %>>
+                        <td><%-users[i].birthday_date %></td>
+                        <td><%-users[i].state %></td>
 
-                          
-                          <label style="color: black;" id="<%= users[i].user_id %>" class="custom-control-label" for="customSwitch<%= i %>"><%= users[i].status %></label>
-                          
-                      </div>                 
-                                                 
-                    </td>
 
                     
 
                   <td><div class="dropdown">
                         <button class="btn mt-1 mb-1 btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Action</button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                          <a class="dropdown-item"  href="/admin/viewUser?userID=<%= users[i].user_id %>">Edit</a>
+                          <a class="dropdown-item"  href="/admin/viewUser?userID=<%= users[i].u_id %>">Edit</a>
                                           
-                          <a  onclick="deleteit('<%= users[i].user_id %>')" class="delete-user-link dropdown-item " kil="<%= users[i].user_id %>" data-user-id="<%= users[i].user_id %>" >Delete</a>
+                          <a  onclick="deleteit('<%= users[i].u_id %>')" class="delete-user-link dropdown-item " kil="<%= users[i].u_id %>" data-user-id="<%= users[i].u_id %>" >Delete</a>
                     
                         </div>
                       </div>

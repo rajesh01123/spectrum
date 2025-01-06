@@ -229,16 +229,28 @@ const changepass = async (req, res, next) => {
   }
 };
 
+//---------------------  end password  ------------------------------------------
+
+
+
+
+
+
+//---------------------  view User  start  ------------------------------------------
+
+
 
 const viewUsers = async(req, res, next) => {
   const con =await connection();
    try{
-    const[users]= await con.query('SELECT * FROM tbl_users');
+    const[users]= await con.query('SELECT * FROM tbl_user');
     res.render('admin/viewUsers' , {'users':users,'output':'data fetched success fully'});
 
 
    }catch(error){
     console.log(error);
+    res.render('admin/kilvish500', {'output':'Internal Server Error'});
+
 
    }
 
@@ -250,7 +262,7 @@ const viewUser = async(req ,res,next) =>{
 
   try{
     var userid= req.query.userID;
-    const[[userInfo]]= await con.query('SELECT * FROM tbl_users WHERE user_id=?', [userid]);
+    const[[userInfo]]= await con.query('SELECT * FROM tbl_user WHERE u_id=?', [userid]);
 
     res.render('admin/viewUser',{'user':userInfo, 'output': 'user info fatched'});
 
@@ -259,6 +271,8 @@ const viewUser = async(req ,res,next) =>{
   }catch(error){
 
     console.log(error);
+    res.render('admin/kilvish500', {'output':'Internal Server Error'});
+
 
   }
 
@@ -267,19 +281,22 @@ const viewUser = async(req ,res,next) =>{
 const viewUserPost= async(req,res,next)=>{
 
   const con = await connection();
-  const {user_id , firstname, lastname, user_email, user_mobile, address, gender , country, city} =req.body;
-  console.log(gender);
+  console.log(req.body);
+  const {u_id , user_name, email, contact, address, gender , state, birthday_date} =req.body;
+  // console.log(gender);
   
   
   try{
 
-    var userdata = {"firstname":firstname,"lastname":lastname,"user_email":user_email,"user_mobile":user_mobile, "address":address, "gender":gender, "country":country , "city":city };
-    const [result] = await con.query('UPDATE tbl_users SET ? WHERE user_id = ?', [userdata, user_id]);
+    var userdata = {"user_name":user_name, "email":email, "contact":contact, "address":address, "gender":gender, "state":state , "birthday_date":birthday_date};
+    const [result] = await con.query('UPDATE tbl_user SET ? WHERE u_id = ?', [userdata, u_id]);
     res.redirect('/admin/viewUsers')
   
 
   }catch(error){
     console.log(error);
+    res.render('admin/kilvish500', {'output':'Internal Server Error'});
+
   }
 
 }
@@ -294,11 +311,11 @@ const deletuser= async(req,res,next)=>{
 
      
 
-     await con.query('DELETE FROM tbl_prop WHERE user_id =? ',[userID]);
+    //  await con.query('DELETE FROM tbl_prop WHERE user_id =? ',[userID]);
 
-     await con.query('DELETE FROM tbl_users WHERE user_id = ?',[userID]);
+     await con.query('DELETE FROM tbl_user WHERE u_id = ?',[userID]);
 
-     var[user]= await con.query('SELECT * FROM tbl_users');
+     var[user]= await con.query('SELECT * FROM tbl_user');
      console.log("delete user",userID)
 
      await con.commit();
@@ -324,6 +341,75 @@ const deletuser= async(req,res,next)=>{
   }
 
 }
+//--------------------- end  user   ------------------------------------------
+
+
+//--------------------- event  add  start  ------------------------------------------
+
+const eventcategory =async(req,res,next)=>{
+
+  res.render('eventcategory',{'output':'Add eventes'});
+
+}
+
+
+
+const eventcat_post =async(req,res,next)=>{
+
+  const con =await connection();
+  // console.log(req.body);
+
+  try{
+
+
+
+
+    const{name}=req.body;
+    var  image =req.file.filename
+
+
+    if (req.file) {
+      image =  req.file.filename ;
+     const imagePath=  req.file.path ;  
+      console.log(imagePath);
+   
+     
+   }
+
+    const[ucat_name]= await con.query('SELECT * FROM `tbl_event_category` WHERE `name`=?',[name]);
+    if(ucat_name.length !=0){
+  res.render('eventcategory',{'output':' That name event category allready exits'});
+     
+    }else{
+   await con.query('INSERT INTO `tbl_event_category`(`name`, `image`) VALUES (?,?)',[name,image]);
+  res.render('eventcategory',{'output':'eventcategory add successfully'});
+    
+    }
+
+
+  }catch(error){
+    console.log(error);
+    res.render('admin/kilvish500', {'output':'Internal Server Error'});
+
+
+  }
+
+
+}
+
+
+
+
+
+
+
+//--------------------- event  end  ------------------------------------------
+
+
+
+//--------------------- match add and ------------------------------------------
+
+
 
 const addmatch = async(req,res,next)=>{
   
@@ -416,6 +502,7 @@ const deletematch = async(req,res, next)=>{
 
 
 }
+//--------------------- match add and ------------------------------------------
 
 
 
@@ -424,7 +511,7 @@ const deletematch = async(req,res, next)=>{
 
 
 //--------------------- Export Start ------------------------------------------
-export { homePage, loginPage,loginAdmin,logout, Profile,ProfilePost,updateadminpic,changepass, viewUsers,viewUser,viewUserPost,deletuser,addmatch,addmatch_post,viewmatch,deletematch}
+export { homePage, loginPage,loginAdmin,logout, Profile,ProfilePost,updateadminpic,changepass, viewUsers,viewUser,viewUserPost,deletuser,addmatch,addmatch_post,viewmatch,deletematch, eventcategory,eventcat_post}
 
 
          

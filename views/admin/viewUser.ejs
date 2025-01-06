@@ -11,7 +11,7 @@
         <section class="section">
            <div class="fully-page">
              <div class="full-headings">
-               <h4> View User </h4>
+               <h4> Add events  </h4>
              </div>
 
    
@@ -50,29 +50,29 @@
             <form action="/admin/viewUser" method="post">
 
                  <div class="form-group row">
-                  <input type="hidden" name="user_id" value="<%- user.user_id  %>" >
+                  <input type="hidden" name="u_id" value="<%- user.u_id  %>" >
 
 
                 <div class="form-group add-admin col-md-6">
-                    <label class="control-label" for="name">First Name</label>
-                    <input type="text" name="firstname" class="form-control required"  value="<%- user.firstname  %>">
+                    <label class="control-label" for="name">user Name</label>
+                    <input type="text" name="user_name" class="form-control required"  value="<%- user.user_name  %>">
                 </div>
-                 <div class="form-group add-admin col-md-6">
+                 <!-- <div class="form-group add-admin col-md-6">
                     <label class="control-label" for="name">Last Name</label>
                     <input type="text" name="lastname" class="form-control required"  value="<%- user.lastname  %>">
-                </div>
+                </div> -->
 
               
                
 
-                   <div class="form-group add-admin col-md-12">
+                   <div class="form-group add-admin col-md-6">
                         <label class="control-label" for="name">Email</label>
-                        <input type="email" name="user_email" class="form-control required" pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}" value="<%- user.user_email  %>" readonly>
+                        <input type="email" name="email" class="form-control required" pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}" value="<%- user.email  %>" readonly>
                     </div>
                     
                     <div class="form-group add-admin col-md-6">
                       <label class="control-label" for="name">Mobile no</label>
-                      <input type="number" name="user_mobile" class="form-control required" value="<%- user.user_mobile  %>" readonly>
+                      <input type="number" name="contact" class="form-control required" value="<%- user.contact  %>" readonly>
                   </div>
 
                      <!-- <div class="form-group add-admin col-md-6">
@@ -84,11 +84,11 @@
                     <div class="form-group col-md-6">
                       <label for="gender">Gender</label><br>
                       <div class="form-check form-check-inline">
-                          <input class="form-check-input" type="radio" name="gender" id="male" value="Man"   <% if (user.gender === 'Man') { %>checked<% } %>>
+                          <input class="form-check-input" type="radio" name="gender" id="male" value="male"   <% if (user.gender === 'male') { %>checked<% } %>>
                           <label class="form-check-label" for="male">Male</label>
                       </div>
                       <div class="form-check form-check-inline">
-                          <input class="form-check-input" type="radio" name="gender" id="female" value="Women" <% if (user.gender === 'Women') { %>checked<% } %>>
+                          <input class="form-check-input" type="radio" name="gender" id="female" value="female" <% if (user.gender === 'Women') { %>checked<% } %>>
                           <label class="form-check-label" for="female">Female</label>
                       </div>
                   </div>
@@ -99,13 +99,13 @@
                     </div>
 
                     <div class="form-group add-admin col-md-6">
-                      <label class="control-label" for="name">Country</label>
-                      <input type="text" name="country" class="form-control required"  value="<%- user.country  %>">
+                      <label class="control-label" for="name">state</label>
+                      <input type="text" name="state" class="form-control required"  value="<%- user.state  %>">
                   </div>
 
                   <div class="form-group add-admin col-md-6">
-                    <label class="control-label" for="name"> City </label>
-                    <input type="text" name="city" class="form-control required"  value="<%- user.city  %>">
+                    <label class="control-label" for="name"> Birthday Date </label>
+                    <input type="date" name="birthday_date" class="form-control required"  value="<%- user.birthday_date  %>">
                 </div>
 
 
