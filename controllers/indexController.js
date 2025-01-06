@@ -121,7 +121,7 @@ const indexpost = async(req,res,next)=>{
 
 const forgot = async(req,res,next)=>{
 
-   res.render('forgot')
+   res.render('forgot',{'output':''})
 
 }
 
@@ -135,10 +135,11 @@ const forgotpost = async(req,res,next)=>{
    const [data]= await con.query('SELECT * from tbl_user WHERE email=?',[email]);
    const user_detail=data[0];
 
-   console.log(user_detail);
-   if(!user_detail){
-    res.render('forgot',{'output':'invalid email'});
-   }
+   console.log(data);
+   console.log(data.length);
+   if(data.length == 0){
+    res.render('forgot',{'output':'Oops! It seems the email address entered is not recognized. Please verify and re-enter'});
+   }else{
 
    const otp = Math.floor(100000 + Math.random() * 900000);
 
@@ -177,6 +178,7 @@ const forgotpost = async(req,res,next)=>{
     output: '',
     email: email
   })
+}
 
 
 

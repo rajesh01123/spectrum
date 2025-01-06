@@ -71,7 +71,13 @@
                     <div class="contact_form bg-light">
                         <div id="message">
                             <img src="admin_assets\images\logo.png" >
+                            <% if(!output){%>
                             <p>please enter Youer email which is registered with Spectrum sports </p>
+                            <% }else{ %>
+                            <p><%= output %></p>
+                             
+
+                           <% } %>
                         </div>
                        
                         <form id="contactform" class="" action="forgot" name="contactform" method="post">
