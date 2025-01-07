@@ -86,6 +86,8 @@ app.get('/api/hello', (req, res) => {
 //   return initializeChatService(server);
 // });  
 
+console.log(`the rk`)
+
 
     initializeChatService(server);
 server.listen(port, () => {
