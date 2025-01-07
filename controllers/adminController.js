@@ -34,7 +34,7 @@ const homePage = async(req,res,next)=>{
     console.log(error.message)
     res.render('admin/kilvish500', {'output':'Internal Server Error'});
     
-  } finally{
+  }finally{
      con.release();
   }
 
@@ -101,7 +101,18 @@ const logout = async(req,res,next)=>{
 })
 
 res.render('admin/login',{'output':'Logged Out !!'}) 
+
 }
+
+
+//--------------------- change and reset password --------------------
+
+
+
+
+
+//--------------------- end change and reset password --------------------
+
 
 
 
@@ -483,7 +494,7 @@ const edit_event_post=async(req,res,next)=>{
     res.render('admin/kilvish500', {'output':'Internal Server Error'});
 
   }finally{
-    await con.release();
+      con.release();
   }
 }
 

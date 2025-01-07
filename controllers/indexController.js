@@ -136,7 +136,7 @@ const login_post=async(req,res,next)=>{
 
   }finally{
 
-    await con.release();
+  con.release();
     
   }
   
@@ -384,7 +384,7 @@ const otp_verify = async(req,res,next)=>{
 
   }finally{
 
-    await con.release();
+     con.release();
 
   }
 
