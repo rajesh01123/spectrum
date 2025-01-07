@@ -25,6 +25,53 @@ const index = async(req,res,next)=>{
 
 }
 
+// ---------------------------------- user side get page ---------------------------------------//
+
+const about = async(req,res,next)=>{
+  res.render('about')
+
+}
+
+const games = async(req,res,next)=>{
+  res.render('games') 
+}
+
+const blog = async(req,res,next)=>{
+  res.render('blog') 
+
+
+}
+
+const contactpage = async(req,res,next)=>{
+
+  res.render('contact') 
+ 
+}
+const privacypolicy=async(req,res,next)=>{
+
+  res.render('privacypolicy') 
+
+}
+
+const termscondition=async(req,res,next)=>{
+
+  res.render('termscondition') 
+
+}
+const resset =async(req,res,next)=>{
+
+  res.render('resset',{'output':''})
+
+
+
+}
+
+const otp = async(req,res,next)=>{
+  res.render('otp',{'output':''});
+}
+
+
+
 
 
 const login = async (req,res,next)=>{
@@ -32,6 +79,23 @@ const login = async (req,res,next)=>{
   res.render('login',{'output':''});
 
 }
+
+const regitation=async(req,res,next) =>{
+  res.render('regitation',{'output':''});
+
+}
+
+const forgot = async(req,res,next)=>{
+
+  res.render('forgot',{'output':''})
+
+}
+
+// ---------------------------------- End user side get pages ---------------------------------------//
+
+
+// ---------------------------------- login  pages ---------------------------------------//
+
 
 
 
@@ -80,10 +144,7 @@ const login_post=async(req,res,next)=>{
 
 
 
-const regitation=async(req,res,next) =>{
-  res.render('regitation',{'output':''});
 
-}
 
 
 
@@ -179,11 +240,7 @@ const indexpost = async(req,res,next)=>{
 
 }
 
-const forgot = async(req,res,next)=>{
 
-   res.render('forgot',{'output':''})
-
-}
 
 const forgotpost = async(req,res,next)=>{
 
@@ -378,49 +435,6 @@ const resetpost = async(req,res,next)=>{
         
 
 
-
-const about = async(req,res,next)=>{
-  res.render('about')
-
-}
-
-const games = async(req,res,next)=>{
-  res.render('games') 
-}
-
-const blog = async(req,res,next)=>{
-  res.render('blog') 
-
-
-}
-
-const contactpage = async(req,res,next)=>{
-
-  res.render('contact') 
- 
-}
-const privacypolicy=async(req,res,next)=>{
-
-  res.render('privacypolicy') 
-
-}
-
-const termscondition=async(req,res,next)=>{
-
-  res.render('termscondition') 
-
-}
-const resset =async(req,res,next)=>{
-
-  res.render('resset',{'output':''})
-
-
-
-}
-
-const otp = async(req,res,next)=>{
-  res.render('otp',{'output':''});
-}
 
 
 

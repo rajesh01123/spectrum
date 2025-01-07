@@ -1,5 +1,5 @@
 import express from 'express'
-import { Profile, ProfilePost, changepass, homePage, loginAdmin, loginPage, logout, updateadminpic,viewUser,viewUserPost,viewUsers,deletuser, addmatch, addmatch_post, viewmatch, eventcategory, eventcat_post } from '../controllers/adminController.js';
+import { Profile, ProfilePost, changepass, homePage, loginAdmin, loginPage, logout, updateadminpic,viewUser,viewUserPost,viewUsers,deletuser, addmatch, addmatch_post, viewmatch, eventcategory, eventcat_post, vieweventcat, editevent, edit_event_post, deletevent } from '../controllers/adminController.js';
 
 
 import upload from '../middleware/upload.js';
@@ -51,14 +51,27 @@ router.route('/deleteUser').delete(deletuser)
 // match
 
 router.route('/addmatch').get(isAuthenticatedAdmin,addmatch)
+
 router.route('/addmatch').post(isAuthenticatedAdmin,addmatch_post)
+
 router.route('/viewmatch').get(isAuthenticatedAdmin,viewmatch)
 
 
 //-----------------------------------event category------------------------
 
 router.route('/eventcategory').get(isAuthenticatedAdmin,eventcategory);
+
 router.route('/eventcategory').post(isAuthenticatedAdmin,upload.single('image'),eventcat_post);
+
+router.route('/vieweventcat').get(isAuthenticatedAdmin, vieweventcat);
+
+router.route('/edit_events').get(isAuthenticatedAdmin,editevent);
+
+router.route('/edit_events').post(isAuthenticatedAdmin ,upload.single('image'), edit_event_post);
+
+router.route('/deletevent').delete(deletevent);
+
+
 
 
 
