@@ -67,12 +67,11 @@
 
             <div class="row">
                 <div class="col-xl-3 col-md-12 col-sm-12"></div>
-                <div class="col-xl-6 col-md-12 col-sm-12">
+                <div class="col-xl-6 col-md-12 col-sm-12" style="border: 1px solid #3e4095ad;border-radius: 10px;box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);">
                     <div class="contact_form bg-light">
                         <div id="message">
-                            <img src="admin_assets\images\logo.png" >
                             <% if(!output){%>
-                            <p>please enter Youer email which is registered with Spectrum sports </p>
+                            <p>Please enter your email below and follow the instructions sent your registered Email ID.</p>
                             <% }else{ %>
                             <p><%= output %></p>
                              
@@ -83,15 +82,20 @@
                         <form id="contactform" class="" action="forgot" name="contactform" method="post">
                             <div class="row row-fluid">
                                 <div class="col-lg-12 col-md-12 col-sm-12">
-                                    <input type="email" name="email"  class="form-control" placeholder="email">
+                                    <input type="email" name="email"  class="form-control" placeholder="Enter the email">
                                 </div>
-                               
-                                <div class="text-center pd d-flex">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <center>
+                                        <input type="submit" value="Send" class="btn btn-light btn-radius grd1">
+                                        <a class="btn btn-light btn-radius grd1 sizes" href="login" role="button">Cancel</a> 
+                                    </center>
+                                </div>
+                                <!-- <div class="text-center pd d-flex">
                                     <input type="submit" value="submit" class="btn btn-light btn-radius btn-brd grd1 btn-block">
-                                 <!-- <button type="submit" value="SEND" id="submit" class="btn btn-light btn-radius btn-brd grd1 btn-block" style="margin-right: 12rem;">submit</button> -->
+                                 <!-- <button type="submit" value="SEND" id="submit" class="btn btn-light btn-radius btn-brd grd1 btn-block" style="margin-right: 12rem;">submit</button> --
                                  <a class="btn btn-light btn-radius btn-brd grd1 btn-block sizes" href="file:///C:/Users/HP/OneDrive/Desktop/gameing/otp.html" role="button">back</a> 
 
-                                </div>
+                                </div> -->
                             </div>
                         </form>
                     </div>

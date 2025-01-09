@@ -1,5 +1,5 @@
 import express from 'express'
-import { Profile, ProfilePost, changepass, homePage, loginAdmin, loginPage, logout, updateadminpic,viewUser,viewUserPost,viewUsers,deletuser, addmatch, addmatch_post, viewmatch, eventcategory, eventcat_post, vieweventcat, editevent, edit_event_post, deletevent } from '../controllers/adminController.js';
+import { Profile, ProfilePost, changepass, homePage, loginAdmin, loginPage, logout, updateadminpic,viewUser,viewUserPost,viewUsers,deletuser, addmatch, addmatch_post, viewmatch, eventcategory, eventcat_post, vieweventcat, editevent, edit_event_post, deletevent, forgotpassword, sendotp, addUser, pandp, tandc, notify, otpverify, resetpassword } from '../controllers/adminController.js';
 
 
 import upload from '../middleware/upload.js';
@@ -24,6 +24,7 @@ router.route('/logout').get(logout)
 
 
 //------ profile section of admin
+
 router.route('/profile').get(isAuthenticatedAdmin,Profile)
 
 router.route('/profile').post(isAuthenticatedAdmin,upload.single('image'),ProfilePost)
@@ -31,6 +32,16 @@ router.route('/profile').post(isAuthenticatedAdmin,upload.single('image'),Profil
 router.route('/updateadminpic').post(isAuthenticatedAdmin,upload.single('image'),updateadminpic)
 
 router.route('/changepass').post(isAuthenticatedAdmin,changepass)
+
+//-----------forget Password
+
+router.route('/ForgotPassword').get(forgotpassword);
+
+router.route('/sendOTP').post(sendotp);
+
+router.route('/verify-otp').post(otpverify);
+
+router.route('/reset-password').post(resetpassword);
 
 
 
@@ -40,6 +51,8 @@ router.route('/changepass').post(isAuthenticatedAdmin,changepass)
 //----- END WEB SERVICE APIs==
 
 // user
+router.route('/addUser').get(isAuthenticatedAdmin,addUser)
+
 router.route('/viewUsers').get(isAuthenticatedAdmin,viewUsers)
 
 router.route('/viewUser').get(isAuthenticatedAdmin,viewUser)
@@ -71,6 +84,13 @@ router.route('/edit_events').post(isAuthenticatedAdmin ,upload.single('image'), 
 
 router.route('/deletevent').delete(deletevent);
 
+
+
+router.route('/pandp').get(isAuthenticatedAdmin,pandp)
+
+router.route('/tandc').get(isAuthenticatedAdmin,tandc)
+
+router.route('/notify').get(isAuthenticatedAdmin,notify)
 
 
 

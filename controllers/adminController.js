@@ -13,6 +13,7 @@ import { response } from 'express';
 import { userInfo } from 'os';
 import { error } from 'console';
 
+
 //-------------------- Home page  ------------------------------ 
 
 
@@ -242,13 +243,209 @@ const changepass = async (req, res, next) => {
 
 //---------------------  end password  ------------------------------------------
 
+const forgotpassword = async(req,res,next)=>{
+  const con= await connection();
+  res.render('forgotpassword',{
+    showForgotPasswordForm:true,
+    showverifyotp:false,
+    showresetpassword:false,
+    login:false,
+    'output':"Enter youer Email"
+
+
+  });
+
+}
+const  sendotp = async(req,res,next)=>{
+  const con = await connection();
+  console.log(req.body);
+  const email =req.body.email;
+  try{
+    await con.beginTransaction();
+
+    const[isAdmin] = await con.query("SELECT * FROM tbl_admin WHERE email=?",[email]);
+    if(isAdmin.length==0){
+      res.render('forgotpassword',{
+        showForgotPasswordForm:true,
+        showverifyotp:false,
+        showresetpassword:false,
+        login:false,
+        'output':"invalid email",
+
+      });
+    }
+
+    // const otp = Math.floor(100000 + Math.random()+900000);
+    const otp = Math.floor(100000 + Math.random() * 900000); 
+    const currentTime = new Date();
+    const expirestime =new Date(currentTime.getTime()+10 * 60000);
+
+    const [results]=await con.query("SELECT * FROM tbl_otp WHERE email=?",[email]);
+    if(results.length==0){
+      await con.query('INSERT INTO `tbl_otp`(`email`,`otp_code`,`expire_at`) VALUES (?,?,?)',[email,otp,expirestime]);
+
+
+    }else{
+      await con.query('UPDATE tbl_otp SET otp_code=? , expire_at=? WHERE email=?',[otp,expirestime,email]);
+
+    }
+
+    await con.commit();
+
+    sendOTPFornewPass(email,otp);
+
+    res.render('forgotpassword',{
+      showForgotPasswordForm:false,
+      showverifyotp:true,
+      showresetpassword:false,
+      login:false,
+      'output':"! OTP Send",
+      email: email
+    })
+
+  }catch(error){
+    con.rollback();
+    console.log('error',error);
+    res.render('forgotpassword',{
+      showForgotPasswordForm:true,
+      showverifyotp:false,
+      showresetpassword:false,
+      login:false,
+      'output':"Internal Server Error"})
+
+  }finally{
+    con.release();
+  }
+
+}
+
+
+const otpverify = async(req,res,next)=>{
+  const con = await connection();
+  console.log(req.body)
+  const email=req.body.verifyEmail;
+  const otp=req.body.otp;
+
+  try{
+    await con.beginTransaction();
+    const [results]=await con.query('SELECT * FROM `tbl_otp` WHERE email=?',[email]);
+    const otp_data=results[0];
+    console.log('dbotp',otp_data.otp_code);
+    console.log('userotp',otp);
+    if(otp_data.otp_code==otp){
+
+      res.render('forgotpassword',{
+        showForgotPasswordForm:false,
+        showverifyotp:false,
+        showresetpassword:true,
+        login:false,
+        'output':"!Enter new password And confirm Password",
+        email: email
+      });
+
+
+    }else{
+
+      
+      res.render('forgotpassword',{
+        showForgotPasswordForm:false,
+        showverifyotp:true,
+        showresetpassword:false,
+        login:false,
+        'output':"otp expire",
+        email: email
+      });
+
+    }
+
+
+
+    await con.commit();
+  }catch(error){
+
+    con.rollback();
+    console.log('error',error);
+    res.render('forgotpassword',{
+      showForgotPasswordForm:false,
+      showverifyotp:true,
+      showresetpassword:false,
+      login:false,
+      'output':"Internal Server Error",
+      email: email
+
+    });
+
+   
+  }finally{
+    con.release();
+  }
+
+}
+
+const resetpassword = async(req,res,next)=>{
+  const con = await connection();
+  console.log(req.body);
+  const {npass,cpass,email}= req.body;
+  
+  try{
+    await con.beginTransaction();
+    if(npass!=cpass){
+
+      res.render('forgotpassword',{
+        showForgotPasswordForm:false,
+        showverifyotp:false,
+        showresetpassword:true,
+        login:false,
+        'output':"!New password and confirm password do not match",
+        email: email
+      })
+  
+    }else{
+
+      await con.query('UPDATE `tbl_admin` SET `password`=? WHERE email=?',[cpass,email]);
+
+      // res.render('login',{'output':'Password Reset Success !'});
+
+      res.render('forgotpassword',{
+        showForgotPasswordForm:false,
+        showverifyotp:false,
+        showresetpassword:false,
+        login:true,
+        'output':"Password Reset Success please login!",
+        }
+      );
+
+
+    }
+
+  
+    await con.commit();
+  }catch(error){
+    con.rollback();
+    console.log('error',error);
+    res.render('forgotpassword',{
+      showForgotPasswordForm:false,
+      showverifyotp:false,
+      showresetpassword:true,
+      login:false,
+      'output':"Internal Server Error",
+      email: email }
+    );
+  
+  }finally{
+    con.release();
+  }
+  }
+
 
 
 
 
 
 //---------------------  view User  start  ------------------------------------------
-
+const addUser = async(req, res, next) => {
+    res.render('admin/addUser' , {'output':''});
+}
 
 
 const viewUsers = async(req, res, next) => {
@@ -267,6 +464,8 @@ const viewUsers = async(req, res, next) => {
 
 
 }
+
+
 
 const viewUser = async(req ,res,next) =>{
   const con = await connection();
@@ -631,13 +830,27 @@ const deletematch = async(req,res, next)=>{
 //--------------------- match add and ------------------------------------------
 
 
+const pandp = async(req,res, next)=>{
+    res.render('admin/pandp', {'output':''});
+}
+
+const tandc = async(req,res, next)=>{
+  res.render('admin/tandc', {'output':''});
+}
+
+const notify = async(req,res, next)=>{
+  res.render('admin/notify', {'output':''});
+}
+
+
+
 
 
 
 
 
 //--------------------- Export Start ------------------------------------------
-export { homePage, loginPage , loginAdmin , logout , Profile , ProfilePost , updateadminpic , changepass , viewUsers ,viewUser , viewUserPost , deletuser , addmatch , addmatch_post , viewmatch , deletematch , eventcategory , eventcat_post , editevent , vieweventcat , edit_event_post, deletevent}
+export { homePage, loginPage , loginAdmin , logout , Profile , ProfilePost , updateadminpic , changepass ,forgotpassword,sendotp,otpverify,resetpassword, addUser, viewUsers ,viewUser , viewUserPost , deletuser , addmatch , addmatch_post , viewmatch , deletematch , eventcategory , eventcat_post , editevent , vieweventcat , edit_event_post, deletevent, pandp, tandc, notify}
 
 
          

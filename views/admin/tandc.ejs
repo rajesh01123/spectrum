@@ -1,0 +1,120 @@
+<%- include ("header.ejs") %>
+<%- include ("navbar.ejs") %>
+
+<!-- Main Content -->
+<div class="main-content">
+    <section class="section">
+        <div class="row">
+            <div class="fully-tables">
+                <div class="cards-headers">
+                   <h4> Add Terms & Conditions </h4>
+                </div>
+
+                <form action="#" method="post">
+                    <div class="form-group row">
+                        <div class="form-group add-admin col-md-12">
+                            <label for="eventDescription" class="form-label"></label>
+                            <textarea class="form-control" id="summernote" name="eventDescription" rows="4" placeholder="Enter event description" required></textarea>
+                        </div>
+                        <div class="form-group  add-admin mt-3 col-md-12" style="margin-bottom: 0px;">
+                            <input type="submit" name="add_user" class="btn btn-success" value="Send" style="width: 12%;"> 
+                        </div> 
+                    </div>  
+                </form>
+            
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="fully-tables">
+                <div class="cards-headers">
+                    <h4> View Terms & Conditions </h4>
+                </div>
+                <div class="table-reponsive box">
+                    <div id="example_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                        <div class="row">
+                            <table id="example" class="table table-striped table-bordered dataTable no-footer" role="grid" aria-describedby="example_info">
+                                <thead>
+                                    <tr role="row">
+                                        <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Day: activate to sort column ascending" style="width: 30.0781px;">Sr. No</th>
+                                        <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Gross: activate to sort column ascending" style="width: 100.922px;">View</th>
+                                        <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Action: activate to sort column ascending" style="width: 110.156px;">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>Hello</td>
+                                        <td>
+                                            <div class="dropdown">
+                                                <button class="btn mt-1 mb-1 btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Action</button>
+                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                    <a class="dropdown-item"  href="#">Edit</a>
+                                                    <a  onclick="" class="delete-user-link dropdown-item " kil="" data-user-id="#" >Delete</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<footer class="main-footer">
+    <div class="footer-left">
+        Copyright © 2025  <a href="#">Spectrum Sports </a> All rights reserved
+    </div>
+</footer>
+
+<!-- General JS Scripts -->
+<script src="../assets/js/app.min.js"></script>
+
+<!-- JS Libraies -->
+<script src="../assets/bundles/apexcharts/apexcharts.min.js"></script>
+
+<!-- Page Specific JS File -->
+<script src="../assets/js/page/index.js"></script>
+
+<!-- Template JS File -->
+<script src="../assets/js/scripts.js"></script>
+
+<!-- Custom JS File -->
+<script src="../assets/js/custom.js"></script>
+<script>
+$(document).ready(function() {
+    $('#example').DataTable();
+} );
+</script>
+
+
+</body>
+</html>
+
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+<!-- Include Summernote CSS -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.css" rel="stylesheet">
+
+<!-- Include Summernote JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.js"></script>
+
+<!-- Page specific script -->
+<script>
+    $(function () {
+      // Summernote
+      $('#summernote').summernote({
+        height: 200, // Set height (like 'rows')
+        width: '100%', // Full width of container
+        minHeight: 200, // Minimum height
+        maxHeight: 500, // Maximum height
+      });
+
+    })
+</script>

@@ -122,29 +122,29 @@
                                        <a class="edit-link" data-toggle="modal" href="#edit_personal_details"><i class="fa fa-edit mr-1"></i>Edit</a>
                                     </h5>
                                     <div class="row">
-                                       <p class="col-sm-3 text-muted text-sm-right mb-0 mb-sm-3">First Name </p>
+                                       <p class="col-sm-3 text-muted text-sm-left mb-0 mb-sm-3">First Name </p>
                                        <p class="col-sm-9"><%- admin.firstname %></p>
                                     </div>
                                     <div class="row">
-                                       <p class="col-sm-3 text-muted text-sm-right mb-0 mb-sm-3">Last Name  </p>
+                                       <p class="col-sm-3 text-muted text-sm-left mb-0 mb-sm-3">Last Name  </p>
                                        <p class="col-sm-9"><%- admin.lastname %></p>
                                     </div>
 
                                     <div class="row">
-                                       <p class="col-sm-3 text-muted text-sm-right mb-0 mb-sm-3">Username </p>
+                                       <p class="col-sm-3 text-muted text-sm-left mb-0 mb-sm-3">Username </p>
                                        <p class="col-sm-9"><%- admin.username %></p>
                                     </div>
                              
                                     <div class="row">
-                                       <p class="col-sm-3 text-muted text-sm-right mb-0 mb-sm-3">Email ID</p>
+                                       <p class="col-sm-3 text-muted text-sm-left mb-0 mb-sm-3">Email ID</p>
                                        <p class="col-sm-9"> <%- admin.email %> </p>
                                     </div>
                                     <div class="row">
-                                       <p class="col-sm-3 text-muted text-sm-right mb-0 mb-sm-3">Mobile</p>
+                                       <p class="col-sm-3 text-muted text-sm-left mb-0 mb-sm-3">Mobile</p>
                                        <p class="col-sm-9"><%- admin.contact %></p>
                                     </div>
                                     <div class="row">
-                                       <p class="col-sm-3 text-muted text-sm-right mb-0">Address</p>
+                                       <p class="col-sm-3 text-muted text-sm-left mb-0">Address</p>
                                        <p class="col-sm-9 mb-0"> <%- admin.address %></p>
                                     </div>
                                  </div>
@@ -174,7 +174,7 @@
                                              <label>Confirm Password</label>
                                              <input name="cpass" type="password" class="form-control">
                                           </div>
-                                          <button class="btn btn-primary" type="submit">Save Changes</button>
+                                          <button class="btn btn-primary" type="submit" style="width: 40%;">Save Changes</button>
                                        </form>
                                     </div>
                                  </div>
@@ -302,7 +302,7 @@
                            <div class="row form-row">
                               <div class="col-12 col-sm-6">
                                  <div class="form-group">
-                                    <label> FirstName /label>
+                                    <label> Firstname </label>
                                     <input name="firstname" type="text" class="form-control" value="<%- admin.firstname %>">
                                  </div>
                               </div>
@@ -347,20 +347,24 @@
 
                                   
 
-                              <div class="col-12">
+                              <div class="col-12 col-sm-6">
                                  <div class="form-group">
                                  <label>Address</label>
                                     <input name="address"  type="text" class="form-control" value="<%- admin.address %>">
                                  </div>
                               </div>
                               
-                              <div class="form-group col-md-6 col-12">
+                              <div class="col-md-6 col-12">
+                                 <div class="form-group">
                                  <label>Update Profile Picture </label>
                                  <input  type="file"  class="form-control"  id="avatar" name="image" accept="image/png, image/jpeg" />
                               </div>
+                           </div><br>
+                           <div class="col-md-12 col-12" style="text-align: center;">
+                              <button type="submit" class="btn btn-primary">Save Changes</button>
+                              <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="closeEmailModal()">Close</button>
                            </div>
-                           <button type="submit" class="btn btn-primary btn-block">Save Changes</button>
-                           <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="closeEmailModal()">Close</button>
+                           
                         </form>
                      </div>
                   </div>

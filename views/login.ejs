@@ -66,10 +66,10 @@
 
             <div class="row">
                 <div class="col-xl-3 col-md-12 col-sm-12"></div>
-                <div class="col-xl-6 col-md-12 col-sm-12">
+                <div class="col-xl-6 col-md-12 col-sm-12" style="border: 1px solid #3e4095ad;border-radius: 10px;box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);">
                     <div class="contact_form bg-light">
                         <div id="message">
-                            <img src="admin_assets\images\logo.png" >
+                            <h1>Login</h1>
                             <% if(output){%>
 
                             <p><%= output %></p>
@@ -77,7 +77,7 @@
 
                           <%  }else{ %>
                             
-                            <p>please enter your Email and Password</p>
+                            <p>Please enter your email and password</p>
                         
                             <% } %>
                         </div>
@@ -85,19 +85,20 @@
                         <form id="contactform" class="" action="login" name="contactform" method="post">
                             <div class="row row-fluid">
                                 <div class="col-lg-12 col-md-12 col-sm-12">
-                                    <input type="email" name="email" id="first_name" class="form-control" placeholder="enter email" required>
+                                    <input type="email" name="email" id="first_name" class="form-control" placeholder="Enter the email" required>
                                 </div>
                                 <div class="col-lg-12 col-md-12 col-sm-12">
-                                    <input type="password" name="password" id="first_name" class="form-control" placeholder="password" required>
+                                    <input type="password" name="password" id="first_name" class="form-control" placeholder="Enter the password" required>
                                     
                                 </div>
-                                
-                                <div class="text-center pd d-flex">
-                                    <input type="submit" value="submit" name="submit" class="btn btn-light btn-radius btn-brd grd1 btn-block" style="margin-right: 9rem;" >
-                                 
-                                 <a class="btn btn-light btn-radius btn-brd grd1 btn-block sizes" href="forgot" role="button" style="margin-right: 9rem;">Forgot-passwoed</a> 
-
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <center><input type="submit" name="submit" value="Login" class="btn btn-light btn-radius grd1 sizes"></center>
                                 </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <a href="forgot" role="button">Forgot Password?</a> 
+                                </div>
+
+                                
                                 <!-- <div class="text-center pd d-flex">
                                  <a class="btn btn-light btn-radius btn-brd grd1 btn-block sizes" href="file:///C:/Users/HP/OneDrive/Desktop/gameing/index.html#Login" role="button" style="margin-right: 9rem;">Forgot-passwoed</a> 
 

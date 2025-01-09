@@ -9,7 +9,7 @@
           <div class="row">
            <div class="fully-tables">
             <div class="cards-headers">
-                  <h4> User Management View  </h4>
+                  <h4> View Users </h4>
                   <div class="card-header-form">
                   </div>
                 </div>
@@ -35,11 +35,12 @@
                       <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Day: activate to sort column ascending" style="width: 80.0781px;">Name</th>
                       <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Dc Id: activate to sort column ascending" style="width: 167.953px;">Email</th>
                       <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Gross: activate to sort column ascending" style="width: 100.922px;">Mobile</th>
-                      <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Gross: activate to sort column ascending" style="width: 100.922px;">Adress</th>
-                      <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="5%: activate to sort column ascending" style="width: 73.1719px;">Gender</th>
                       <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Net: activate to sort column ascending" style="width: 75.5625px;">Date of Birth</th>
-                      <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Net: activate to sort column ascending" style="width: 75.5625px;">state</th>
-
+                      <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="5%: activate to sort column ascending" style="width: 73.1719px;">Gender</th>
+                      <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Net: activate to sort column ascending" style="width: 75.5625px;">State</th>
+                      <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Net: activate to sort column ascending" style="width: 75.5625px;">Disability</th>
+                      <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Gross: activate to sort column ascending" style="width: 100.922px;">Document</th>
+                      <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Gross: activate to sort column ascending" style="width: 100.922px;">Address</th>
                       <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Action: activate to sort column ascending" style="width: 110.156px;">Action</th>
                     </tr>
                 </thead>
@@ -65,6 +66,8 @@
                      
                         <td><%- users[i].address %> </td>
                         
+                        <td><%- users[i].gender  %></td>
+                        <td><%- users[i].gender  %></td>
                         <td><%- users[i].gender  %></td>
                        
                         <td><%-users[i].birthday_date %></td>
