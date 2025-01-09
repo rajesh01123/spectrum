@@ -834,12 +834,86 @@ const pandp = async(req,res, next)=>{
     res.render('admin/pandp', {'output':''});
 }
 
-const tandc = async(req,res, next)=>{
-  res.render('admin/tandc', {'output':''});
-}
+
 
 const notify = async(req,res, next)=>{
   res.render('admin/notify', {'output':''});
+}
+
+//---------------------------Terms & Conditions-------------------------
+
+
+const tandc = async(req,res, next)=>{
+  const con =await connection();
+
+  try{
+    
+    const[term_data]= await con.query('SELECT * FROM `tbl_termsconditions`');
+   
+
+    res.render('admin/tandc', {'term_data':term_data,'output':''});
+
+  }catch(error){
+    console.log(error);
+    res.render('admin/kilvish500', {'output':'Internal Server Error'});
+
+  }
+  
+}
+const TermsConditions = async(req,res,next)=>{
+
+  const con = await connection();
+  console.log(req.body);
+  const  {eventDescription} = req.body;
+
+  const dbevent=JSON.stringify.eventDescription;
+  console.log('event',eventDescription);
+
+  try{
+    await con.beginTransaction();
+
+    await con.query('INSERT INTO `tbl_termsconditions`(`eventDescription`) VALUES (?)',[eventDescription]);
+
+    await con.commit();
+    const[term_data]= await con.query('SELECT * FROM `tbl_termsconditions`');
+   
+ 
+    res.render('admin/tandc', {'term_data':term_data,'output':'Terms & conditions Add Successfully'});
+
+  }catch(error){
+    await con.rollback();
+    console.log(error);
+    res.render('admin/kilvish500', {'output':'Internal Server Error'});
+
+  }finally{
+     con.release();
+  }
+
+}
+
+const deletTerm = async(req,res,next)=>{
+  const con = await connection();
+  
+  const termID= req.body.termID;
+
+  try{
+
+    await con.query('DELETE FROM `tbl_termsconditions` WHERE id=?',[termID]);
+
+    console.log("termsconditions delete id of TERM ",termID);
+
+    await con.commit();
+
+    res.status(200).json({ msg:true });
+
+
+  }catch(error){
+    
+    res.status(200).json({ msg:false });
+    console.log(error);
+
+ 
+ }
 }
 
 
@@ -850,7 +924,7 @@ const notify = async(req,res, next)=>{
 
 
 //--------------------- Export Start ------------------------------------------
-export { homePage, loginPage , loginAdmin , logout , Profile , ProfilePost , updateadminpic , changepass ,forgotpassword,sendotp,otpverify,resetpassword, addUser, viewUsers ,viewUser , viewUserPost , deletuser , addmatch , addmatch_post , viewmatch , deletematch , eventcategory , eventcat_post , editevent , vieweventcat , edit_event_post, deletevent, pandp, tandc, notify}
+export { homePage, loginPage , loginAdmin , logout , Profile , ProfilePost , updateadminpic , changepass ,forgotpassword,sendotp,otpverify,resetpassword, addUser, viewUsers ,viewUser , viewUserPost , deletuser , addmatch , addmatch_post , viewmatch , deletematch , eventcategory , eventcat_post , editevent , vieweventcat , edit_event_post, deletevent, pandp, notify,tandc,TermsConditions,deletTerm }
 
 
          

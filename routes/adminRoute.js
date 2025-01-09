@@ -1,5 +1,5 @@
 import express from 'express'
-import { Profile, ProfilePost, changepass, homePage, loginAdmin, loginPage, logout, updateadminpic,viewUser,viewUserPost,viewUsers,deletuser, addmatch, addmatch_post, viewmatch, eventcategory, eventcat_post, vieweventcat, editevent, edit_event_post, deletevent, forgotpassword, sendotp, addUser, pandp, tandc, notify, otpverify, resetpassword } from '../controllers/adminController.js';
+import { Profile, ProfilePost, changepass, homePage, loginAdmin, loginPage, logout, updateadminpic,viewUser,viewUserPost,viewUsers,deletuser, addmatch, addmatch_post, viewmatch, eventcategory, eventcat_post, vieweventcat, editevent, edit_event_post, deletevent, forgotpassword, sendotp, addUser, pandp, tandc, notify, otpverify, resetpassword, TermsConditions, deletTerm } from '../controllers/adminController.js';
 
 
 import upload from '../middleware/upload.js';
@@ -88,9 +88,17 @@ router.route('/deletevent').delete(deletevent);
 
 router.route('/pandp').get(isAuthenticatedAdmin,pandp)
 
-router.route('/tandc').get(isAuthenticatedAdmin,tandc)
+
 
 router.route('/notify').get(isAuthenticatedAdmin,notify)
+
+
+//-------------------term and condition--------------
+router.route('/tandc').get(isAuthenticatedAdmin,tandc)
+
+router.route('/termsConditions').post(isAuthenticatedAdmin,TermsConditions);
+
+router.route('/deleteterm').delete(deletTerm);
 
 
 
