@@ -551,16 +551,58 @@ const deletuser= async(req,res,next)=>{
   }
 
 }
+
+ const adduserpost =async(req,res,next)=>{
+  const con = await connection();
+  console.log(req.body);
+  if (req.file) {
+   const image =  req.file.filename ;
+   const imagePath=  req.file.path ;   
+ }
+
+  console.log( req.file.filename);
+
+
+  try{
+    
+
+  const { name, email, contact, password ,address, gender , state, birthday_date,disability} =req.body;
+  await con.query('INSERT INTO `tbl_user`(`user_name`, `email`, `contact`, `password`, `address`, `gender`, `birthday_date`, `state`, `document`, `disability`) VALUES ( ?,?,?,?,?,?,?,?,?,? )',[name,email,contact,password,address,gender,birthday_date,state,req.file.filename,disability]);
+  res.render('admin/addUser',{'output':'User add Successfully'});
+
+    
+
+  }catch(error){
+    console.log(error);
+    res.render('admin/kilvish500', {'output':'Internal Server Error'});
+
+  }
+
+ }
 //--------------------- end  user   ------------------------------------------
 
 
 //--------------------- event  add  start  ------------------------------------------
 
-const eventcategory =async(req,res,next)=>{
+const eventtype =async(req,res,next)=>{
 
-  res.render('eventcategory',{'output':'Please Add eventes'});
+  res.render('eventtype',{'output':''});
 
 }
+
+const addevent =async(req,res,next)=>{
+
+  res.render('addevent',{'output':'Please Add eventes'});
+
+}
+
+const viewevent =async(req,res,next)=>{
+
+  res.render('viewevent',{'output':'Please Add eventes'});
+
+}
+
+
 
 
 
@@ -736,10 +778,10 @@ const edit_event_post=async(req,res,next)=>{
 
 
 
-const addmatch = async(req,res,next)=>{
+const addgame = async(req,res,next)=>{
   
   try{
-  res.render('admin/addmatch',{'output':''});
+  res.render('admin/addgame',{'output':''});
   
   }catch(error){
     console.log(error);
@@ -749,18 +791,20 @@ const addmatch = async(req,res,next)=>{
   
 }
 
-const addmatch_post = async(req,res,next)=>{
+const addgame_post = async(req,res,next)=>{
   const con =await connection();
-  const {sport_name, match_id, match_name, team_name1, team_name2, match_type, date, time}=req.body;
+  const {name,max_player,min_player,play_time,description}=req.body;
   
   try{
     await con.beginTransaction();
 
-    await con.query("INSERT INTO `tbl_match`(`match_id`, `sport_name`, `match_name`, `match_type`, `team_name1`, `team_name2`, `match_date`, `match_time`) VALUES (?,?,?,?,?,?,?,?)", [match_id,sport_name,match_name,match_type,team_name1,team_name2, date,time]);
+    await con.query('INSERT INTO `tbl_game`(`name`, `max_player`, `min_player`, `play_time`, `Description`) VALUES ( ?,?,?,?,? )',[name,max_player,min_player,play_time,description]);
+
+    // await con.query("INSERT INTO `tbl_match`(`name`, `sport_name`, `match_name`, `match_type`, `team_name1`, `team_name2`, `match_date`, `match_time`) VALUES (?,?,?,?,?,?,?,?)", [match_id,sport_name,match_name,match_type,team_name1,team_name2, date,time]);
 
     await con.commit();
 
-    res.render('admin/addmatch',{'output':'match add success full'});
+    res.render('admin/addgame',{'output':'match add success full'});
 
   }catch(error){
     res.render('admin/kilvish500', {'output':'Internal Server Error'});
@@ -781,7 +825,7 @@ const viewmatch = async(req,res,next)=>{
   try{
     await con.beginTransaction();
 
-    const[matchs]=await con.query('SELECT * FROM tbl_match');
+    const[matchs]=await con.query('SELECT * FROM tbl_game');
 
 
 
@@ -830,15 +874,13 @@ const deletematch = async(req,res, next)=>{
 //--------------------- match add and ------------------------------------------
 
 
-const pandp = async(req,res, next)=>{
-    res.render('admin/pandp', {'output':''});
-}
 
 
 
-const notify = async(req,res, next)=>{
-  res.render('admin/notify', {'output':''});
-}
+
+// const notify = async(req,res, next)=>{
+//   res.render('admin/notify', {'output':''});
+// }
 
 //---------------------------Terms & Conditions-------------------------
 
@@ -917,6 +959,180 @@ const deletTerm = async(req,res,next)=>{
 }
 
 
+// ------------------------------privacy policy-----------------------
+
+const pandp = async(req,res, next)=>{
+
+  try{
+    
+    const[privacy_data]= await con.query('SELECT * FROM `tbl_privacypolicy`');
+    res.render('admin/pandp', {'privacy_data':privacy_data,'output':'Privacy & Policy fetched Successfully'});
+    console.log('fetch data',privacy_data);
+  
+   
+  }catch(error){
+    console.log(error);
+    res.render('admin/kilvish500', {'output':'Internal Server Error'});
+  
+  
+  }
+
+
+ 
+}
+
+const privacyPolicy =async(req,res,next)=>{
+  const con = await connection();
+  console.log(req.body);
+  const  {description} = req.body;
+  try{
+    await con.beginTransaction();
+    await con.query('INSERT INTO `tbl_privacypolicy`(`description`) VALUES (?)',[description]);
+
+   await con.commit();
+   const[privacy_data]= await con.query('SELECT * FROM `tbl_privacypolicy`');
+    res.render('admin/pandp', {'privacy_data':privacy_data,'output':'Privacy & Policy Add Successfully'});
+  }catch(error){
+    await con.rollback();
+    console.log(error);
+    res.render('admin/kilvish500', {'output':'Internal Server Error'});
+
+  }finally{
+    con.release();
+  }
+
+
+
+
+}
+
+
+// try{
+//   await con.beginTransaction();
+
+//  await con.commit();
+// }catch(error){
+//   await con.rollback();
+// console.log(error);
+// res.render('admin/kilvish500', {'output':'Internal Server Error'});
+
+// }finally{
+//   con.release();
+// }
+
+
+const deleteprivacy = async(req,res,next)=>{
+  const con = await connection();
+  const privacy_id=req.body.privacyID;
+  console.log(privacy_id);
+ 
+try{
+  await con.beginTransaction();
+  await con.query('DELETE  FROM tbl_privacypolicy WHERE id=?',[privacy_id]);
+  res.status(200).json({ msg:true });
+  await con.commit();
+  console.log("privacy delete",privacy_id);
+
+
+}catch(error){
+  await con.rollback();
+  console.log('delete time error',error);
+
+  res.status(200).json({ msg:false });
+
+  
+}
+
+
+
+}
+
+const notify = async(req,res,next)=>{
+  const con = await connection();
+  try{
+    const[notify_data]= await con.query('SELECT * FROM tbl_notification');
+
+    res.render('admin/notify',{'notify_data':notify_data,'output':'data fetched successfully'});
+}catch(error){
+  console.log(error);
+  res.render('admin/kilvish500', {'output':'Internal Server Error'});
+
+}
+
+}
+
+const notifypost = async(req,res,next)=>{
+
+  const con = await connection();
+  console.log(req.body);
+  const {title,message}=req.body;
+  const users = req.body['users'];
+  console.log('user',users);
+
+  const usersString = Array.isArray(users) ? users.join(',') : users;
+  console.log(usersString);
+
+
+
+  try{
+    await con.beginTransaction();
+
+    
+
+    await con.query('INSERT INTO tbl_notification (`users`, `title`, `message`) VALUES ( ?, ?, ? )', [usersString, title, message]);
+
+
+    const[notify_data]= await con.query('SELECT * FROM tbl_notification');
+
+    res.render('admin/notify',{'notify_data':notify_data,'output':' notification add successfully'});
+
+
+
+    await con.commit();
+
+  }catch(error){
+  console.log(error);
+  res.render('admin/kilvish500', {'output':'Internal Server Error'});
+
+
+  }finally{
+    con.release();
+
+  }
+
+
+}
+  
+
+const deletenotify = async(req,res,next)=>{
+
+  const con =await connection();
+  const notifyId = req.body.notifyId;
+  console.log('notificati delete id',notifyId);
+  try{
+   await con.beginTransaction();
+
+    await con.query('DELETE from tbl_notification WHERE id=?', [notifyId] );
+    res.status(200).json({ msg:true });
+
+
+   await con.commit();
+  
+  }catch(error){
+    await con.rollback();
+    console.log(error);
+    res.status(200).json({ msg:false });
+
+
+
+  }finally{
+      con.release();
+  }
+
+}
+
+
+
 
 
 
@@ -924,7 +1140,7 @@ const deletTerm = async(req,res,next)=>{
 
 
 //--------------------- Export Start ------------------------------------------
-export { homePage, loginPage , loginAdmin , logout , Profile , ProfilePost , updateadminpic , changepass ,forgotpassword,sendotp,otpverify,resetpassword, addUser, viewUsers ,viewUser , viewUserPost , deletuser , addmatch , addmatch_post , viewmatch , deletematch , eventcategory , eventcat_post , editevent , vieweventcat , edit_event_post, deletevent, pandp, notify,tandc,TermsConditions,deletTerm }
+export { homePage, loginPage , loginAdmin , logout , Profile , ProfilePost , updateadminpic , changepass ,forgotpassword,sendotp,otpverify,resetpassword, addUser,  adduserpost, viewUsers ,viewUser , viewUserPost , deletuser , addgame , addgame_post , viewmatch , deletematch , eventtype , eventcat_post , editevent , vieweventcat , edit_event_post, deletevent, pandp, notify,tandc,TermsConditions,deletTerm,privacyPolicy,deleteprivacy,addevent, viewevent,notifypost,deletenotify }
 
 
          

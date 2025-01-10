@@ -1,5 +1,5 @@
 import express from 'express'
-import { Profile, ProfilePost, changepass, homePage, loginAdmin, loginPage, logout, updateadminpic,viewUser,viewUserPost,viewUsers,deletuser, addmatch, addmatch_post, viewmatch, eventcategory, eventcat_post, vieweventcat, editevent, edit_event_post, deletevent, forgotpassword, sendotp, addUser, pandp, tandc, notify, otpverify, resetpassword, TermsConditions, deletTerm } from '../controllers/adminController.js';
+import { Profile, ProfilePost, changepass, homePage, loginAdmin, loginPage, logout, updateadminpic,viewUser,viewUserPost,viewUsers,deletuser, addgame, addgame_post, viewmatch, eventtype, addevent, viewevent, editevent, edit_event_post, deletevent, forgotpassword, sendotp, addUser, pandp, tandc, notify, otpverify, resetpassword, TermsConditions, deletTerm, privacyPolicy, deleteprivacy, notifypost, deletenotify, adduserpost } from '../controllers/adminController.js';
 
 
 import upload from '../middleware/upload.js';
@@ -57,26 +57,28 @@ router.route('/viewUsers').get(isAuthenticatedAdmin,viewUsers)
 
 router.route('/viewUser').get(isAuthenticatedAdmin,viewUser)
 
+router.route('/addUser').post(isAuthenticatedAdmin,upload.single('image'),adduserpost)
+
 router.route('/viewUser').post(isAuthenticatedAdmin,viewUserPost)
 
 router.route('/deleteUser').delete(deletuser)
 
 // match
 
-router.route('/addmatch').get(isAuthenticatedAdmin,addmatch)
+router.route('/addgame').get(isAuthenticatedAdmin,addgame)
 
-router.route('/addmatch').post(isAuthenticatedAdmin,addmatch_post)
+router.route('/addgame').post(isAuthenticatedAdmin,addgame_post)
 
 router.route('/viewmatch').get(isAuthenticatedAdmin,viewmatch)
 
 
 //-----------------------------------event category------------------------
 
-router.route('/eventcategory').get(isAuthenticatedAdmin,eventcategory);
+router.route('/eventtype').get(isAuthenticatedAdmin,eventtype);
 
-router.route('/eventcategory').post(isAuthenticatedAdmin,upload.single('image'),eventcat_post);
+router.route('/addevent').get(isAuthenticatedAdmin,addevent);
 
-router.route('/vieweventcat').get(isAuthenticatedAdmin, vieweventcat);
+router.route('/viewevent').get(isAuthenticatedAdmin, viewevent);
 
 router.route('/edit_events').get(isAuthenticatedAdmin,editevent);
 
@@ -86,7 +88,7 @@ router.route('/deletevent').delete(deletevent);
 
 
 
-router.route('/pandp').get(isAuthenticatedAdmin,pandp)
+
 
 
 
@@ -99,6 +101,25 @@ router.route('/tandc').get(isAuthenticatedAdmin,tandc)
 router.route('/termsConditions').post(isAuthenticatedAdmin,TermsConditions);
 
 router.route('/deleteterm').delete(deletTerm);
+
+
+//------------------------privacy policy------------------
+
+
+router.route('/pandp').get(isAuthenticatedAdmin,pandp)
+
+router.route('/privacyPolicy').post(isAuthenticatedAdmin,privacyPolicy);
+
+router.route('/deleteprivacy').delete(deleteprivacy);
+
+
+//--------------------notification----------------------
+router.route('/notify').post(isAuthenticatedAdmin,notifypost)
+
+router.route('/deletenotify').delete(deletenotify)
+
+
+
 
 
 

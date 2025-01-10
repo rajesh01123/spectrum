@@ -39,7 +39,7 @@
                       <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="5%: activate to sort column ascending" style="width: 73.1719px;">Gender</th>
                       <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Net: activate to sort column ascending" style="width: 75.5625px;">State</th>
                       <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Net: activate to sort column ascending" style="width: 75.5625px;">Disability</th>
-                      <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Gross: activate to sort column ascending" style="width: 100.922px;">Document</th>
+                      <!-- <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Gross: activate to sort column ascending" style="width: 100.922px;">Document</th> -->
                       <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Gross: activate to sort column ascending" style="width: 100.922px;">Address</th>
                       <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Action: activate to sort column ascending" style="width: 110.156px;">Action</th>
                     </tr>
@@ -67,11 +67,12 @@
                         <td><%- users[i].address %> </td>
                         
                         <td><%- users[i].gender  %></td>
-                        <td><%- users[i].gender  %></td>
-                        <td><%- users[i].gender  %></td>
-                       
-                        <td><%-users[i].birthday_date %></td>
-                        <td><%-users[i].state %></td>
+                        <td><%- users[i].state  %></td>
+                        <td><%- users[i].disability  %></td>
+                        
+                        <!-- <td><img src="http://<%= host %>/uploads/<%- users[i].document %>" id="output" alt="<%-users[i].document  %>" width="200" alt="Image"> -->
+                        </td>
+                        <td><%-users[i].address %></td>
 
 
                     

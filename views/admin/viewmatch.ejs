@@ -1,4 +1,5 @@
 
+
 <%- include ("header.ejs") %>
 <%- include ("navbar.ejs") %>
 
@@ -9,7 +10,7 @@
           <div class="row">
            <div class="fully-tables">
             <div class="cards-headers">
-                  <h4> User Management View  </h4>
+                  <h4> View Games </h4>
                   <div class="card-header-form">
                   </div>
                 </div>
@@ -30,16 +31,13 @@
                   <table id="example" class="table table-striped table-bordered dataTable no-footer" role="grid" aria-describedby="example_info">
                 <thead>
                      <tr role="row">
-                        <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Day: activate to sort column ascending" style="width: 30.0781px;">Id</th>
-                      <!-- <th class="sorting_asc" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Date: activate to sort column descending" style="width: 30.156px;">box</th> -->
-                      <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Day: activate to sort column ascending" style="width: 80.0781px;">Sport name</th>
-                      
-                      <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Day: activate to sort column ascending" style="width: 80.0781px;">Match name </th>
-                      <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Dc Id: activate to sort column ascending" style="width: 167.953px;">Match Id</th>
-                      <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Gross: activate to sort column ascending" style="width: 100.922px;">Match Type</th>
-                      <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Gross: activate to sort column ascending" style="width: 100.922px;">Team Name 1</th>
-                      <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="5%: activate to sort column ascending" style="width: 73.1719px;">Team Name 2</th>
-                      <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Net: activate to sort column ascending" style="width: 75.5625px;">date</th>
+                      <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Day: activate to sort column ascending" style="width: 30.0781px;">Sr. No.</th>
+                      <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Day: activate to sort column ascending" style="width: 80.0781px;">Game Name</th>
+                      <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Day: activate to sort column ascending" style="width: 80.0781px;">Max Players</th>
+                      <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Dc Id: activate to sort column ascending" style="width: 167.953px;">Min Players</th>
+                      <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Gross: activate to sort column ascending" style="width: 100.922px;">Play Time</th>
+                      <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Gross: activate to sort column ascending" style="width: 100.922px;">Description</th>
+                      <!-- <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="5%: activate to sort column ascending" style="width: 73.1719px;">Create at</th> -->
                       <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Action: activate to sort column ascending" style="width: 110.156px;">Action</th>
                     </tr>
                 </thead>
@@ -57,26 +55,18 @@
                             <label for="checkbox-1" class="custom-control-label">&nbsp;</label>
                           </div>
                         </td> -->
-                        <td><%- matchs[i].sport_name %>  </td>
+                        <td><%- matchs[i].name %>  </td>
                         
-                        <td><%- matchs[i].match_name %> </td>
-                        <td><%- matchs[i].match_id %> </td>
+                        <td><%- matchs[i].max_player %> </td>
+                        <td><%- matchs[i].min_player %> </td>
 
 
-                        <td><%- matchs[i].match_type %> </td>
                      
-                        <td><%- matchs[i].team_name1 %>  </td>
+                     
+                        <td><%- matchs[i].play_time %>  </td>
                         
-                        <td><%- matchs[i].team_name2  %></td>
-                       
-                      <td><%- matchs[i].match_date  %></td>
-        
-                                       
-                                                 
-                    
-
-                    
-
+                        <td><%- matchs[i].Description  %></td>
+                      
                   <td><div class="dropdown">
                         <button class="btn mt-1 mb-1 btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Action</button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -142,6 +132,191 @@ $(document).ready(function() {
 </body>
 </html>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+
+<script>
+  async function updateStatus(userID,status){
+          var newStatus ;
+
+          if(status=='active'){
+            newStatus = 'inactive';
+          }else{
+              newStatus = 'active';
+          }
+
+              try {
+                  const response = await fetch('/admin/updateUserStatus', {
+                      method: 'POST',
+                      headers: {
+                          'Content-Type': 'application/json',
+                      },
+                      body: JSON.stringify({ userID, status: newStatus }),
+                  });
+
+                  if (response.ok) {          
+                  
+                    const data = await response.json(); 
+                    const message = data.message;           
+                    //  window.location.href = '/viewCustomers';         
+
+                    $("#successMessage").html(message);
+                    $("#successMessage").removeClass("d-none");           
+                      $("#errorMessage").addClass("d-none");
+                     // window.location.href = '/admin/viewUsers';  
+
+
+                      setTimeout(function() {
+    window.location.href = '/admin/viewUsers';
+}, 2000);
+
+
+                    //   setTimeout(() => {
+                      
+                    //   }, 1000);
+
+                        
+                  } else {
+                      // Handle errors
+                      console.error('database Error:', error);
+
+                      $("#errorMessage").removeClass("d-none");
+                      $("#successMessage").addClass("d-none");
+                  }
+              } catch (error) {
+                  console.error('Error:', error);
+              }
+
+}
+
+
+
+
+
+
+$(document).ready(function() {
+
+
+    $('.delete-user-link78').on('click', function(e) {
+
+
+        e.preventDefault();
+
+        var userId = $(this).data('user-id');
+        var userElement = $(this).closest('.user');
+
+        
+
+        // Use SweetAlert2 for a stylish confirmation
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'You won\'t be able to revert this!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete User'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Make an AJAX request to delete the user
+                $.ajax({
+                    type: 'DELETE',
+                    url: '/admin/deleteUser',
+                    data: { userID: userId },
+                    success: function(response) {
+
+                        console.log('User deleted successfully');
+                        var message = 'User Deleted Successfully !!'
+                        if(response.msg == true){
+
+                          $("#successMessage").html(message);
+                    $("#successMessage").removeClass("d-none");           
+                      $("#errorMessage").addClass("d-none");
+                      window.location.href = '/admin/viewUsers';  
+                        }else{
+
+                          $("#errorMessage").removeClass("d-none");
+                      $("#successMessage").addClass("d-none");
+                     
+
+                        }
+
+                         
+                        // Handle success, update UI, etc.
+                    },
+                    error: function(error) {
+                        console.error('Error deleting user', error);
+                        // Handle error
+                    }
+                });
+            }
+        });
+
+
+
+
+    });
+});
+
+
+
+ function deleteit(id){
+
+    var matchID = id
+              
+
+        // Use SweetAlert2 for a stylish confirmation
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'You won\'t be able to revert this!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete User'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Make an AJAX request to delete the user
+                $.ajax({
+                    type: 'DELETE',
+                    url: '/admin/deletematch',
+                    data: { matchID: matchID },
+                    success: function(response) {
+
+                        console.log('User deleted successfully');
+                        var message = 'User Deleted Successfully !!'
+                        if(response.msg == true){
+
+                          $("#successMessage").html(message);
+                    $("#successMessage").removeClass("d-none");           
+                      $("#errorMessage").addClass("d-none");
+                      window.location.href = '/admin/viewmatch';  
+                        }else{
+
+                          $("#errorMessage").removeClass("d-none");
+                      $("#successMessage").addClass("d-none");
+                     
+
+                        }
+
+                         
+                        // Handle success, update UI, etc.
+                    },
+                    error: function(error) {
+                        console.error('Error deleting user', error);
+                        // Handle error
+                    }
+                });
+            }
+        });
+
+ }
+
+</script>
+
+
+
+                      
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
 

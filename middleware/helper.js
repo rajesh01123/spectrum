@@ -363,7 +363,7 @@ const sendNotification = async function (recipients, message, subject) {  consol
                 <p>${message}</p>
               
                 <p>Best regards,</p>
-                <p>The myrentwish Support Team</p>
+                <p>The spectrum Support Team</p>
             </div>
         </div>
     </body>

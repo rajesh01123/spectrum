@@ -1,0 +1,119 @@
+<%- include ("header.ejs") %>
+<%- include ("navbar.ejs") %>
+
+<style>
+  .form-group.add-admin {
+    margin-bottom: 0px !important;
+}
+</style>
+
+<!-- Main Content -->
+ <div class="main-content">
+  <section class="section">
+    <div class="fully-page">
+      <div class="full-headings">
+        <h4> Add Event</h4>
+      </div>
+      <div class="box-bodys" style="padding: 0px;">
+        <div class="row">
+          <div class="col-md-12">
+              <!-- alert msgs  -->
+              <div class="full-forms py-1 px-1">
+                <form action="/admin/addmatch" method="post">
+                  <div class="form-group row">
+                    <input type="hidden" name="user_id">
+                      <div class="form-group add-admin col-md-6">
+                        <label class="control-label" for="name">Event Type</label>
+                        <select name="eventtype" class="form-control">
+                            <option value="">Select your type</option>
+                            <option value="event1">Event 1</option>
+                            <option value="event2">Event 2</option>
+                            <option value="event3">Event 3</option>
+                        </select>
+                      </div>
+                      <div class="form-group add-admin col-md-6">
+                        <label class="control-label" for="name">Max Participants</label>
+                        <input type="number" name="participants" placeholder="Enter the number" class="form-control required">
+                      </div>
+                      <div class="form-group add-admin col-md-4">
+                          <label class="control-label" for="name">Event Date</label>
+                          <input type="date" name="match_name" placeholder="Enter the number" class="form-control required">
+                      </div>
+                      <div class="form-group add-admin col-md-4">
+                        <label class="control-label" for="name">Start Time</label>
+                        <input type="time" name="match_name" placeholder="Enter the number" class="form-control required">
+                      </div>
+                      <div class="form-group add-admin col-md-4">
+                        <label class="control-label" for="name">End Time</label>
+                        <input type="time" name="time" class="form-control required">
+                      </div>
+                      <div class="form-group add-admin col-md-6">
+                        <label class="control-label" for="name">Venue Name</label>
+                        <input type="text" name="match_name" placeholder="Enter the number" class="form-control required">
+                      </div>
+                      <div class="form-group add-admin col-md-6">
+                        <label class="control-label" for="name">Venue Location</label>
+                        <input type="text" name="time" class="form-control required">
+                      </div>
+                      <div class="form-group add-admin col-md-12">
+                        <label for="eventDescription" class="form-label">Description</label>
+                        <textarea class="form-control" id="summernote" name="eventDescription" rows="4" placeholder="Enter game description" required></textarea>
+                      </div>
+                    <div class="form-group  add-admin mt-3 col-md-12" style="margin-bottom: 0px;">
+                       <input type="submit" name="add" class="btn btn-primary" value="Submit" style="width: 10%;"> 
+                    </div> 
+                  </div>  
+                </form>
+                  </div>
+                 </div>
+             </div>
+           </div>
+          </div>
+        </section>
+
+      </div>
+      <footer class="main-footer">
+        <div class="footer-left">
+          Copyright © 2025  <a href="#">Spectrum Sports </a> All rights reserved
+        </div>
+        <div class="footer-right">
+        </div>
+      </footer>
+    </div>
+  </div>
+  <!-- General JS Scripts -->
+  <script src="../assets/js/app.min.js"></script>
+  <!-- JS Libraies -->
+  <script src="../assets/bundles/apexcharts/apexcharts.min.js"></script>
+  <!-- Page Specific JS File -->
+  <script src="../assets/js/page/index.js"></script>
+  <!-- Template JS File -->
+  <script src="../assets/js/scripts.js"></script>
+  <!-- Custom JS File -->
+  <script src="../assets/js/custom.js"></script>
+</body>
+
+
+<!-- index  21 Nov 2019 03:47:04 GMT -->
+</html>
+
+
+<!-- Include Summernote CSS -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.css" rel="stylesheet">
+
+<!-- Include Summernote JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.js"></script>
+
+<!-- Page specific script -->
+<script>
+    $(function () {
+      // Summernote
+      $('#summernote').summernote({
+        height: 200, // Set height (like 'rows')
+        width: '100%', // Full width of container
+        minHeight: 200, // Minimum height
+        maxHeight: 500, // Maximum height
+      });
+
+    })
+</script>
