@@ -19,45 +19,49 @@
           <div class="col-md-12">
               <!-- alert msgs  -->
               <div class="full-forms py-1 px-1">
-                <form action="/admin/addmatch" method="post">
+                <form action="/admin/event" method="post">
                   <div class="form-group row">
                     <input type="hidden" name="user_id">
                       <div class="form-group add-admin col-md-6">
                         <label class="control-label" for="name">Event Type</label>
-                        <select name="eventtype" class="form-control">
+                        <select name="event_type" class="form-control">
                             <option value="">Select your type</option>
-                            <option value="event1">Event 1</option>
-                            <option value="event2">Event 2</option>
-                            <option value="event3">Event 3</option>
+                            <% for(var j = 0; j<event_type.length; j++ ){ %>
+                             
+                            <option value="<%- event_type[j].name %>"><%- event_type[j].name %></option>
+                           
+                            
+                            <% } %>
+                           
                         </select>
                       </div>
                       <div class="form-group add-admin col-md-6">
                         <label class="control-label" for="name">Max Participants</label>
-                        <input type="number" name="participants" placeholder="Enter the number" class="form-control required">
+                        <input type="number" name="participants" placeholder="Enter the number" class="form-control" required>
                       </div>
                       <div class="form-group add-admin col-md-4">
                           <label class="control-label" for="name">Event Date</label>
-                          <input type="date" name="match_name" placeholder="Enter the number" class="form-control required">
+                          <input type="date" name="date" placeholder="Enter the number" class="form-control" required>
                       </div>
                       <div class="form-group add-admin col-md-4">
                         <label class="control-label" for="name">Start Time</label>
-                        <input type="time" name="match_name" placeholder="Enter the number" class="form-control required">
+                        <input type="time" name="start_time" placeholder="Enter the number" class="form-control" required>
                       </div>
                       <div class="form-group add-admin col-md-4">
                         <label class="control-label" for="name">End Time</label>
-                        <input type="time" name="time" class="form-control required">
+                        <input type="time" name="end_time" class="form-control required" required>
                       </div>
                       <div class="form-group add-admin col-md-6">
                         <label class="control-label" for="name">Venue Name</label>
-                        <input type="text" name="match_name" placeholder="Enter the number" class="form-control required">
+                        <input type="text" name="venue_name" placeholder="Enter the Name" class="form-control" required>
                       </div>
                       <div class="form-group add-admin col-md-6">
                         <label class="control-label" for="name">Venue Location</label>
-                        <input type="text" name="time" class="form-control required">
+                        <input type="text" name="venue_location" class="form-control " required>
                       </div>
                       <div class="form-group add-admin col-md-12">
                         <label for="eventDescription" class="form-label">Description</label>
-                        <textarea class="form-control" id="summernote" name="eventDescription" rows="4" placeholder="Enter game description" required></textarea>
+                        <textarea class="form-control" id="summernote" name="description" rows="4" placeholder="Enter game description" required></textarea>
                       </div>
                     <div class="form-group  add-admin mt-3 col-md-12" style="margin-bottom: 0px;">
                        <input type="submit" name="add" class="btn btn-primary" value="Submit" style="width: 10%;"> 

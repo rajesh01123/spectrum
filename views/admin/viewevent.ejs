@@ -14,6 +14,7 @@
                         <div class="row">
                             <table id="example" class="table table-striped table-bordered dataTable no-footer" role="grid" aria-describedby="example_info">
                                 <thead>
+                                    
                                     <tr role="row">
                                         <th style="width: 30px;">Sr. No</th>
                                         <th style="width: 100px;">Event Type</th>
@@ -26,52 +27,35 @@
                                         <th style="width: 100px;">Description</th>
                                         <th style="width: 110px;">Action</th>
                                     </tr>
+                                    
                                 </thead>
                                 <tbody>
+                                    <% for (var i = 0; i < event.length; i++){ %>
                                     <tr>
-                                        <td>1</td>
-                                        <td>Soccer</td>
-                                        <td>2025-01-15</td>
-                                        <td>10:00 AM</td>
-                                        <td>12:00 PM</td>
-                                        <td>City Stadium</td>
-                                        <td>Main Street, Downtown</td>
-                                        <td>20</td>
-                                        <td>Soccer tournament for Phase 2</td>
+                                        <td><%- i+1 %></td>
+                                        <td><%- event[i].event_type %></td>
+                                        <td><%- event[i].date %></td>
+                                       
+                                        <td><%- event[i].start_time %></td>
+                                        <td><%- event[i].end_time %></td>
+                                        <td><%- event[i].venue_name %></td>
+                                        <td><%- event[i].venue_location %></td>
+                                        <td><%- event[i].participants  %></td>
+                                        <td><%- event[i].description %></td>
                                         <td>
                                             <div class="dropdown">
                                                 <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     Action
                                                 </button>
                                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                    <a class="dropdown-item" href="#">Edit</a>
-                                                    <a class="dropdown-item delete-user-link" href="#" data-user-id="1">Delete</a>
+                                                    <a class="dropdown-item" href="edit_event?eventID=<%- event[i].id %>">Edit</a>
+                                                    <a class="dropdown-item delete-user-link" onclick="deleteit('<%- event[i].id %>')"  data-user-id="1">Delete</a>
                                                 </div>
                                             </div>
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>Table Tennis</td>
-                                        <td>2025-01-20</td>
-                                        <td>2:00 PM</td>
-                                        <td>4:00 PM</td>
-                                        <td>Sports Complex</td>
-                                        <td>Highland Avenue</td>
-                                        <td>10</td>
-                                        <td>Friendly match in Phase 1</td>
-                                        <td>
-                                            <div class="dropdown">
-                                                <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    Action
-                                                </button>
-                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
-                                                    <a class="dropdown-item" href="#">Edit</a>
-                                                    <a class="dropdown-item delete-user-link" href="#" data-user-id="2">Delete</a>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                    <% } %>
+                                    
                                 </tbody>                            
                             </table>
                         </div>
@@ -134,4 +118,58 @@ $(document).ready(function() {
       });
 
     })
+</script>
+<script>
+    function deleteit(id){
+
+        var eventId = id
+                  
+    
+            // Use SweetAlert2 for a stylish confirmation
+            Swal.fire({
+                title: 'Are you sure?',
+                text: 'You won\'t be able to revert this!',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete User'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Make an AJAX request to delete the user
+                    $.ajax({
+                        type: 'DELETE',
+                        url: '/admin/deletevent',
+                        data: {eventId:eventId },
+                        success: function(response) {
+    
+                            console.log('User deleted successfully');
+                            var message = 'User Deleted Successfully !!'
+                            if(response.msg == true){
+    
+                              $("#successMessage").html(message);
+                        $("#successMessage").removeClass("d-none");           
+                          $("#errorMessage").addClass("d-none");
+                          window.location.href = '/admin/viewevent';  
+                            }else{
+    
+                              $("#errorMessage").removeClass("d-none");
+                          $("#successMessage").addClass("d-none");
+                         
+    
+                            }
+    
+                             
+                            // Handle success, update UI, etc.
+                        },
+                        error: function(error) {
+                            console.error('Error deleting user', error);
+                            // Handle error
+                        }
+                    });
+                }
+            });
+    
+     }
+    
 </script>

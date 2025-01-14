@@ -6,81 +6,71 @@
     margin-bottom: 0px !important;
 }
 </style>
-      <!-- Main Content -->
-      <div class="main-content">
-        <section class="section">
-           <div class="fully-page">
-             <div class="full-headings">
-               <h4> Add events  </h4>
-             </div>
 
-   
-
-
-
-           <div class="box-bodys" style="padding: 0px;">
-       
-              <div class="row">
-                <div class="col-md-4">
-           
-                  <div class="forms-img">
-                     <img src="../assets/img/dice.png" style="height: 220px !important;;">
-                     
-                  </div>
-                </div>
-       
-              
-
-
-
-
-
-                 <div class="col-md-8">
-                                            	<!-- alert msgs  -->
-    <% if (output === 'Error in fetching user' || output === 'Failed to Update' ) { %>
-      <div  class="alert alert-danger">
-         <%= output %>
-        </div>
-      
-    <% } else { %>
-      <div class="alert alert-success mb-1">
-         <%= output %>
-      </div>                                   
-    <% } %> 
-<!-- /alert msgs  -->
-                  <div class="full-forms py-1 px-1">
-
-            <form action="edit_events" method="post" enctype="multipart/form-data">
-
-                 <div class="form-group row">
-                  
-
-
-                <div class="form-group add-admin col-md-6">
-                    <label class="control-label" for="name">Event Name</label>
-                    <input type="text" name="name" class="form-control required"  value="<%- eventcatdata.name %>" value="<%- user.user_name  %>">
-                    <input type="hidden" name="eid"  value="<%- eventcatdata.id %>">
-                    
-                  </div>
-               
-
-              
-               
-
-                <div class="form-group add-admin col-md-6">
-                      <label class="control-label" for="name">image</label>
-                      <input type="file" name="image"  class="form-control required" required>   <img src="http://<%= host %>/uploads/<%- eventcatdata.image %>" width="200px">
-                </div>
-                   
-                <div class="form-group  add-admin mt-3 col-md-12" style="margin-bottom: 0px;">
-                    <input type="submit"  class="btn btn-primary" value="Submit"> 
-                </div> 
+<!-- Main Content -->
+ <div class="main-content">
+  <section class="section">
+    <div class="fully-page">
+      <div class="full-headings">
+        <h4> Add Event</h4>
+      </div>
+      <div class="box-bodys" style="padding: 0px;">
+        <div class="row">
+          <div class="col-md-12">
+              <!-- alert msgs  -->
+              <div class="full-forms py-1 px-1">
+                <form action="/admin/edit_event" method="post">
+                  <div class="form-group row">
+                    <input type="hidden" name="event_id" value="<%- eventdata.id %>">
+                      <div class="form-group add-admin col-md-6">
+                        <label class="control-label" for="name">Event Type </label>
+                        <select name="event_type" class="form-control">
+                            <option value="">Select your type</option>
+                            <% for (var j = 0; j < event_type.length; j++) { %>
+                              <option value="<%- event_type[j].name %>" 
+                                <%= (event_type[j].name === eventdata.event_type ? 'selected' : '') %>>
+                                <%- event_type[j].name %>
+                              </option>
+                            <% } %>
+                            
+                        </select>
+                      </div>
+                      <div class="form-group add-admin col-md-6">
+                        <label class="control-label" for="name">Max Participants</label>
+                        <input type="number" name="participants" placeholder="Enter the number" value="<%- eventdata.participants %>" class="form-control" required>
+                      </div>
+                      <div class="form-group add-admin col-md-4">
+                          <label class="control-label" for="name">Event Date </label>
+                          <input type="date" name="date" placeholder="Enter the number" class="form-control" value="<%- eventdata.date %>" required>
+                      </div>
+                      <div class="form-group add-admin col-md-4">
+                        <label class="control-label" for="name">Start Time</label>
+                        <input type="time" name="start_time" placeholder="Enter the number" value="<%- eventdata.start_time %>" class="form-control" required>
+                      </div>
+                      <div class="form-group add-admin col-md-4">
+                        <label class="control-label" for="name">End Time</label>
+                        <input type="time" name="end_time" class="form-control" value="<%- eventdata.end_time %>" required>
+                      </div>
+                      <div class="form-group add-admin col-md-6">
+                        <label class="control-label" for="name">Venue Name</label>
+                        <input type="text" name="venue_name" placeholder="Enter the Name" class="form-control" value="<%- eventdata.venue_name %>" required>
+                      </div>
+                      <div class="form-group add-admin col-md-6">
+                        <label class="control-label" for="name">Venue Location</label>
+                        <input type="text" name="venue_location" class="form-control " value="<%- eventdata.venue_location %>" required>
+                      </div>
+                      <div class="form-group add-admin col-md-12">
+                        <label for="eventDescription" class="form-label">Description</label>
+                        <textarea class="form-control" id="summernote" name="description" rows="4" placeholder="Enter game description" required> <%- eventdata.description %></textarea>
+                      </div>
+                    <div class="form-group  add-admin mt-3 col-md-12" style="margin-bottom: 0px;">
+                       <input type="submit" name="add" class="btn btn-primary" value="Submit" style="width: 10%;"> 
+                    </div> 
                   </div>  
                 </form>
                   </div>
                  </div>
              </div>
-             
            </div>
           </div>
         </section>
@@ -88,8 +78,7 @@
       </div>
       <footer class="main-footer">
         <div class="footer-left">
-          Copyright by 
-          <a href="https://cyberimpulses.com/"> ciss </a>
+          Copyright © 2025  <a href="#">Spectrum Sports </a> All rights reserved
         </div>
         <div class="footer-right">
         </div>
@@ -111,3 +100,24 @@
 
 <!-- index  21 Nov 2019 03:47:04 GMT -->
 </html>
+
+
+<!-- Include Summernote CSS -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.css" rel="stylesheet">
+
+<!-- Include Summernote JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.js"></script>
+
+<!-- Page specific script -->
+<script>
+    $(function () {
+      // Summernote
+      $('#summernote').summernote({
+        height: 200, // Set height (like 'rows')
+        width: '100%', // Full width of container
+        minHeight: 200, // Minimum height
+        maxHeight: 500, // Maximum height
+      });
+
+    })
+</script>

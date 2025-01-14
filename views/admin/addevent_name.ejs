@@ -36,53 +36,30 @@
                    <h4> Add Notification </h4>
                 </div>
 
-                <form action="/admin/notify" method="post">
+                <form action="/admin/addevent_name" method="post" enctype="multipart/form-data">
                     <div class="form-group row">
-                        <div class="form-group add-admin col-md-6">
-                            <label>Select User</label>
-                            <div class="dropdown-checkbox">
-                                <button type="button" class="btn btn-secondary btn-block dropdown-toggle" onclick="toggleDropdown()">
-                                    Select Users
-                                </button>
-                                <div class="dropdown-checkbox-menu">
-                                    <% for(var j=0; j< user_data.length; j++){ %>
-                                    <label>
-                                        <input type="checkbox" name="users[]" value="<%- user_data[j].email %>"> <%- user_data[j].user_name %>
-                                    </label>
-                                    <% } %>
-                                    <!-- <label>
-                                        <input type="checkbox" name="users[]" value="user2"> User 2
-                                    </label>
-                                    <label>
-                                        <input type="checkbox" name="users[]" value="user3"> User 3
-                                    </label>
-                                    <label>
-                                        <input type="checkbox" name="users[]" value="user4"> User 4
-                                    </label> -->
-                                </div>
+
+                        <% if (output === 'Error in fetching user' || output === 'Failed to Update' ) { %>
+                            <div  class="alert alert-danger">
+                                <%= output %>
                             </div>
-
-
-                            
-                            <!-- <select name="user" class="form-control">
-                                <option value="">Select your gender</option>
-                               
-
-                                <option value="user1">User 1</option>
-                                <option value="user2">User 2</option>
-                                <option value="user3">User 3</option>
-                            </select> -->
-                        </div>
-                        <div class="form-group add-admin col-md-6">
-                            <label class="control-label" for="name">Notification Title</label>
-                            <input type="text" name="title" class="form-control required" placeholder="Enter the name" required>
+                            <% }else if(output===''){
+                            } else { %>
+                            <div class="alert alert-success mb-1">
+                                <%= output %>
+                            </div>                                   
+                            <% } %>
+                        
+                        <div class="form-group add-admin col-md-12">
+                            <label class="control-label" for="name">Event name</label>
+                            <input type="text" name="name" class="form-control required" placeholder="Enter the name" required>
                         </div>
                         <div class="form-group add-admin col-md-12">
-                            <label for="eventDescription" class="form-label">Notification Message</label>
-                            <textarea class="form-control" id="summernote" name="message" rows="4" placeholder="Enter event description" required></textarea>
+                            <label class="control-label" for="name">Event image</label>
+                            <input type="file" name="image" class="form-control required" placeholder="Enter the name" required>
                         </div>
                         <div class="form-group  add-admin mt-3 col-md-12" style="margin-bottom: 0px;">
-                            <input type="submit" name="add_user" class="btn btn-success" value="Send" style="width: 12%;"> 
+                            <input type="submit" name="submit" class="btn btn-success" value="add event name" style="width: 12%;"> 
                         </div> 
                     </div>  
                 </form>
@@ -103,20 +80,21 @@
                                     <tr role="row">
                                         <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Day: activate to sort column ascending" style="width: 30.0781px;">Sr. No</th>
                                         <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Gross: activate to sort column ascending" style="width: 100.922px;">Username</th>
-                                        <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Gross: activate to sort column ascending" style="width: 100.922px;">Notification Title</th>
-                                        <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Gross: activate to sort column ascending" style="width: 100.922px;">Notification Message</th>
+                                        <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Gross: activate to sort column ascending" style="width: 100.922px;">Event image</th>
+                                        <!-- <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Gross: activate to sort column ascending" style="width: 100.922px;">Notification Message</th> -->
                                         <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Action: activate to sort column ascending" style="width: 110.156px;">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <% for (var i=0; i < notify_data.length; i++ ){%>
+                                    <% for (var i=0; i < eventname.length; i++ ){%>
                                     <tr>
-                                        <td>1</td>
-                                        <td><%- notify_data[i].users %></td>
-                                        <td><%- notify_data[i].title %></td>
-                                        <td><%- notify_data[i].message %></td>
+                                        <td><%- i+1 %></td>
+                                        <td><%- eventname[i].name %></td>
+                                         <td> <img src="/uploads/<%= eventname[i].image %>" id="output" alt="Change" width="200" alt="Image">
+                                      </td>
+                                        
                                         <td>
-                                        <button class="btn mt-1 mb-1 btn-outline-primary "  onclick="deleteit('<%- notify_data[i].id %>')" type="button"   > <i class="fa fa-trash"></i> Delete</button>
+                                        <button class="btn mt-1 mb-1 btn-outline-primary "  onclick="deleteit('<%- eventname[i].id %>')" type="button"   > <i class="fa fa-trash"></i> Delete</button>
 
                                             <!-- <div class="dropdown">
                                                 <button class="btn mt-1 mb-1 btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Action</button>
@@ -208,7 +186,7 @@ $(document).ready(function() {
 <script>
     function deleteit(id){
 
-        var notifyId = id
+        var e_nameId = id
                   
     
             // Use SweetAlert2 for a stylish confirmation
@@ -225,8 +203,8 @@ $(document).ready(function() {
                     // Make an AJAX request to delete the user
                     $.ajax({
                         type: 'DELETE',
-                        url: '/admin/deletenotify',
-                        data: {notifyId:notifyId },
+                        url: '/admin/deletevent_name',
+                        data: {e_nameId:e_nameId },
                         success: function(response) {
     
                             console.log('User deleted successfully');
@@ -236,7 +214,7 @@ $(document).ready(function() {
                               $("#successMessage").html(message);
                         $("#successMessage").removeClass("d-none");           
                           $("#errorMessage").addClass("d-none");
-                          window.location.href = '/admin/notify';  
+                          window.location.href = '/admin/addevent_name';  
                             }else{
     
                               $("#errorMessage").removeClass("d-none");

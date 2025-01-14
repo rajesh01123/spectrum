@@ -6,115 +6,113 @@
     margin-bottom: 0px !important;
 }
 </style>
-      <!-- Main Content -->
-      <div class="main-content">
-        <section class="section">
-           <div class="fully-page">
-             <div class="full-headings">
-               <h4>  </h4>
-             </div>
+    
+<!-- Main Content -->
+<div class="main-content">
+    <section class="section">
+        <div class="fully-page">
+            <div class="full-headings">
+               <h4> Add User </h4>
+            </div>
+            <div class="box-bodys" style="padding: 0px;">
+                <div class="row">
+                    <div class="col-md-12">
+                        <!-- alert msgs  -->
+                        <% if (output === 'Error in fetching user' || output === 'Failed to Update' ) { %>
+                        <div  class="alert alert-danger">
+                            <%= output %>
+                        </div>
+                        <% }else if(output===''){
+                        } else { %>
+                        <div class="alert alert-success mb-1">
+                            <%= output %>
+                        </div>                                   
+                        <% } %>
 
-   
-
-
-
-             <div class="box-bodys" style="padding: 0px;">
-       
-              <div class="row">
-                <div class="col-md-4">
-           
-                  <div class="forms-img">
-                     <img src="../assets/img/login-bg/add-user.jpg" style="width: 100%; height: 420px;">
-                  </div>
-                </div>
-
-
-
-
-
-                 <div class="col-md-8">
-                                            	<!-- alert msgs  -->
-    <% if (output === 'Error in fetching user' || output === 'Failed to Update' ) { %>
-      <div  class="alert alert-danger">
-         <%= output %>
-        </div>
-      
-    <% } else { %>
-      <div class="alert alert-success mb-1">
-         <%= output %>
-      </div>                                   
-    <% } %> 
-<!-- /alert msgs  -->
-                  <div class="full-forms py-1 px-1">
-
-            <form action="/admin/viewUser" method="post">
-
-                 <div class="form-group row">
-                  <input type="hidden" name="u_id" value="<%- user.u_id  %>" >
-
-
-                <div class="form-group add-admin col-md-6">
-                    <label class="control-label" for="name">user Name</label>
-                    <input type="text" name="user_name" class="form-control required"  value="<%- user.user_name  %>">
-                </div>
-                 <!-- <div class="form-group add-admin col-md-6">
-                    <label class="control-label" for="name">Last Name</label>
-                    <input type="text" name="lastname" class="form-control required"  value="<%- user.lastname  %>">
-                </div> -->
-
-              
-               
-
-                   <div class="form-group add-admin col-md-6">
-                        <label class="control-label" for="name">Email</label>
-                        <input type="email" name="email" class="form-control required" pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}" value="<%- user.email  %>" readonly>
-                    </div>
-                    
-                    <div class="form-group add-admin col-md-6">
-                      <label class="control-label" for="name">Mobile no</label>
-                      <input type="number" name="contact" class="form-control required" value="<%- user.contact  %>" readonly>
-                  </div>
-
-                     <!-- <div class="form-group add-admin col-md-6">
-                        <label class="control-label" for="image"> Customer Image</label><br>
-                        <input type="file" name="image" onchange="validateImage(this)" id="image" class="" size="20" required="">
-                        <div id="image_req" style="color: red"></div>
-                    </div> -->
-
-                    <div class="form-group col-md-6">
-                      <label for="gender">Gender</label><br>
-                      <div class="form-check form-check-inline">
-                          <input class="form-check-input" type="radio" name="gender" id="male" value="male"   <% if (user.gender === 'male') { %>checked<% } %>>
-                          <label class="form-check-label" for="male">Male</label>
-                      </div>
-                      <div class="form-check form-check-inline">
-                          <input class="form-check-input" type="radio" name="gender" id="female" value="female" <% if (user.gender === 'Women') { %>checked<% } %>>
-                          <label class="form-check-label" for="female">Female</label>
-                      </div>
-                  </div>
-
-                      <div class="form-group add-admin col-md-12">
-                        <label class="control-label" for="name">Address</label>
-                        <textarea type="text" name="address" class="form-control required" value="<%- user.address  %>"> <%- user.address  %> </textarea>
-                    </div>
-
-                    <div class="form-group add-admin col-md-6">
-                      <label class="control-label" for="name">state</label>
-                      <input type="text" name="state" class="form-control required"  value="<%- user.state  %>">
-                  </div>
-
-                  <div class="form-group add-admin col-md-6">
-                    <label class="control-label" for="name"> Birthday Date </label>
-                    <input type="date" name="birthday_date" class="form-control required"  value="<%- user.birthday_date  %>">
-                </div>
-
-
-         
-
-                   
-                    <div class="form-group  add-admin mt-3 col-md-12" style="margin-bottom: 0px;">
-                       <input type="submit" name="add" class="btn btn-primary" value="Submit"> 
-                    </div> 
+                        <div class="full-forms py-1 px-1">
+                            <form action="/admin/viewUser" method="post" enctype="multipart/form-data">
+                            <div class="form-group row">
+                                <input type="hidden" name="userID" value="<%- user.u_id  %>">
+                                <div class="form-group add-admin col-md-6">
+                                    <label class="control-label" for="name">Name</label>
+                                    <input type="text" name="name" class="form-control required" placeholder="Enter the name" value="<%- user.user_name %>" required>
+                                </div>
+                                <div class="form-group add-admin col-md-6">
+                                    <label class="control-label" for="name">Email</label>
+                                    <input type="email" name="email" id="first_name" class="form-control" placeholder="Enter your email" value="<%- user.email %>" required>
+                                </div>
+                                <div class="form-group add-admin col-md-6">
+                                    <label class="control-label" for="name">Contact</label>
+                                    <input type="number" name="contact" id="first_name" class="form-control" placeholder="Enter your contact" value="<%- user.contact %>" required>
+                                </div>
+                               
+                                <div class="form-group add-admin col-md-6">
+                                  <label>Date of Birth (DOB)</label>
+                                  <input type="date" name="birthday_date"  class="form-control" placeholder="Enter Your birthday date" value="<%- user.birthday_date %>" required>
+                                </div>
+                                <div class="form-group add-admin col-md-6">
+                                  <label>Gender</label>
+                                  <select name="gender" class="form-control">
+                                      <option value="">Select your gender</option>
+                                      <option value="male" <% if(user.gender=='male'){ %> Selected <% } %>>Male</option>
+                                      <option value="female" <% if(user.gender=='female'){ %> Selected <% } %>>Female</option>
+                                      <option value="others"<% if(user.gender=='others'){ %> Selected <% } %>>Others</option>
+                                  </select>
+                                </div>
+                                <div class="form-group add-admin col-md-6">
+                                  <label>State of Residence</label>
+                                  <select name="state" class="form-control">
+                                      <option value="" >Select your state</option>
+                                      <option value="andhra_pradesh" <% if(user.state=="andhra_pradesh"){ %> selected <%  } %> >Andhra Pradesh</option>
+                                      <option value="arunachal_pradesh" <% if(user.state=="arunachal_pradesh"){ %> selected <%  } %> >Arunachal Pradesh</option>
+                                      <option value="assam" <% if(user.state=="assam"){ %> selected <%  } %> >Assam</option>
+                                      <option value="bihar" <% if(user.state=="bihar"){ %> selected <%  } %> >Bihar</option>
+                                      <option value="chhattisgarh" <% if(user.state=="chhattisgarh"){ %> selected <%  } %> >Chhattisgarh</option>
+                                      <option value="goa" <% if(user.state=="goa"){ %> selected <%  } %> >Goa</option>
+                                      <option value="gujarat" <% if(user.state=="gujarat"){ %> selected <%  } %> >Gujarat</option>
+                                      <option value="haryana" <% if(user.state=="haryanaharyana"){ %> selected <%  } %> >Haryana</option>
+                                      <option value="himachal_pradesh" <% if(user.state=="himachal_pradesh"){ %> selected <%  } %> >Himachal Pradesh</option>
+                                      <option value="jharkhand" <% if(user.state=="jharkhand"){ %> selected <%  } %> >Jharkhand</option>
+                                      <option value="karnataka" <% if(user.state=="karnataka"){ %> selected <%  } %> >Karnataka</option>
+                                      <option value="kerala" <% if(user.state=="kerala"){ %> selected <%  } %> >Kerala</option>
+                                      <option value="madhya_pradesh" <% if(user.state=="madhya_pradesh"){ %> selected <%  } %> >Madhya Pradesh</option>
+                                      <option value="maharashtra" <% if(user.state==""){ %> selected <%  } %> >Maharashtra</option>
+                                      <option value="manipur" <% if(user.state=="manipur"){ %> selected <%  } %> >Manipur</option>
+                                      <option value="meghalaya" <% if(user.state=="meghalaya"){ %> selected <%  } %> >Meghalaya</option>
+                                      <option value="mizoram" <% if(user.state=="mizoram"){ %> selected <%  } %> >Mizoram</option>
+                                      <option value="nagaland" <% if(user.state=="nagaland"){ %> selected <%  } %> >Nagaland</option>
+                                      <option value="odisha" <% if(user.state=="odisha"){ %> selected <%  } %> >Odisha</option>
+                                      <option value="punjab" <% if(user.state=="punjab"){ %> selected <%  } %> >Punjab</option>
+                                      <option value="rajasthan" <% if(user.state=="rajasthan"){ %> selected <%  } %> >Rajasthan</option>
+                                      <option value="sikkim" <% if(user.state=="sikkim"){ %> selected <%  } %> >Sikkim</option>
+                                      <option value="tamil_nadu" <% if(user.state=="tamil_nadu"){ %> selected <%  } %> >Tamil Nadu</option>
+                                      <option value="telangana" <% if(user.state=="telangana"){ %> selected <%  } %> >Telangana</option>
+                                      <option value="tripura" <% if(user.state=="tripura"){ %> selected <%  } %> >Tripura</option>
+                                      <option value="uttar_pradesh" <% if(user.state=="uttar_pradesh"){ %> selected <%  } %> >Uttar Pradesh</option>
+                                      <option value="uttarakhand" <% if(user.state=="uttarakhand"){ %> selected <%  } %> >Uttarakhand</option>
+                                      <option value="west_bengal" <% if(user.state=="west_bengal"){ %> selected <%  } %> >West Bengal</option>
+                                  </select>
+                              </div>
+                              <div class="form-group add-admin col-md-6">
+                                  <label>Disability</label>
+                                  <select name="disability" class="form-control">
+                                      <option value="">Select your disability</option>
+                                     
+                                      <option value="on" <% if(user.disability=='on'){ %> Selected <% } %>>On</option>
+                                      <option value="off" <% if(user.disability=='Off'){ %> Selected <% } %>>Off</option>
+                                  </select>
+                              </div>
+                              <div class="form-group add-admin col-md-6">
+                                  <label>Upload Document</label>
+                                  <input type="file" name="image"  class="form-control">
+                              </div>
+                              <div class="form-group add-admin col-md-6">
+                                  <label>Address</label>
+                                  <input type="text" name="address" class="form-control" placeholder="Enter your address" value="<%- user.address %>" required>
+                              </div>
+                              <div class="form-group  add-admin mt-3 col-md-12" style="margin-bottom: 0px;">
+                                <input type="submit" name="add_user" class="btn btn-primary" value="Submit" style="width: 12%;"> 
+                              </div> 
                   </div>  
                 </form>
                   </div>
@@ -127,8 +125,7 @@
       </div>
       <footer class="main-footer">
         <div class="footer-left">
-          Copyright by 
-          <a href="https://cyberimpulses.com/"> ciss </a>
+          Copyright © 2025  <a href="#">Spectrum Sports </a> All rights reserved
         </div>
         <div class="footer-right">
         </div>

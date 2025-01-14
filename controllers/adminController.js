@@ -12,6 +12,9 @@ import {hashPassword, comparePassword, sendWelcomeMsg , responsetoQuery , sendOT
 import { response } from 'express';
 import { userInfo } from 'os';
 import { error } from 'console';
+// import { output } from 'pdfkit';
+
+// import { id } from 'date-fns/locale';
 
 
 //-------------------- Home page  ------------------------------ 
@@ -491,16 +494,30 @@ const viewUser = async(req ,res,next) =>{
 const viewUserPost= async(req,res,next)=>{
 
   const con = await connection();
-  console.log(req.body);
-  const {u_id , user_name, email, contact, address, gender , state, birthday_date} =req.body;
+  console.log("bodydata",req.body);
+  const {userID,name, email, contact,address, gender , state, birthday_date,disability} =req.body;
   // console.log(gender);
+  if (req.file) {
+    const image =  req.file.filename ;
+    const imagePath=  req.file.path ;   
+  }
+   
+  const[users]= await con.query('SELECT * FROM tbl_user WHERE u_id=?',[userID]);
+ 
+
+  const image =   users.document;
+  console.log(users);
   
   
   try{
 
-    var userdata = {"user_name":user_name, "email":email, "contact":contact, "address":address, "gender":gender, "state":state , "birthday_date":birthday_date};
-    const [result] = await con.query('UPDATE tbl_user SET ? WHERE u_id = ?', [userdata, u_id]);
-    res.redirect('/admin/viewUsers')
+    var userdata = {"user_name":name, "email":email, "contact":contact, "address":address, "gender":gender, "state":state , "birthday_date":birthday_date,"document":image,"disability":disability};
+    const [result] = await con.query('UPDATE tbl_user SET ? WHERE u_id = ?', [userdata, userID]);
+
+  const[users]= await con.query('SELECT * FROM tbl_user');
+
+
+    res.render('admin/viewUsers', {'users':users,'output':'detail update sucessfully'});
   
 
   }catch(error){
@@ -584,29 +601,194 @@ const deletuser= async(req,res,next)=>{
 
 //--------------------- event  add  start  ------------------------------------------
 
-const eventtype =async(req,res,next)=>{
-
-  res.render('eventtype',{'output':''});
-
-}
-
 const addevent =async(req,res,next)=>{
 
-  res.render('addevent',{'output':'Please Add eventes'});
+  const con = await connection();
+  try{
+    
+    const [event_type]= await con.query('SELECT * FROM `tbl_event_category`');
+
+  
+
+  res.render('addevent',{'event_type':event_type,'output':'Please Add eventes'});
+
+  }catch(error){
+    console.log(error);
+    res.render('admin/kilvish500', {'output':'Internal Server Error'});
+
+  }
 
 }
 
-const viewevent =async(req,res,next)=>{
+const viewevent = async(req,res,next)=>{
 
-  res.render('viewevent',{'output':'Please Add eventes'});
+  const con = await connection();
+
+  try{
+    const [event] =await con.query('SELECT * FROM `tbl_event`');
+    
+  res.render('viewevent',{"event":event,'output':'eventcategory fetched successfully'});
+
+
+
+  }catch(error){
+    console.log(error);
+    res.render('admin/kilvish500', {'output':'Internal Server Error'});
+
+
+  }
+
+
+
 
 }
 
 
+const event=async(req,res,next)=>{
+  const con= await connection();
+  console.log(req.body);
+  const{event_type,participants,date,start_time,end_time,venue_name,venue_location,description}=req.body;
 
 
 
-const eventcat_post =async(req,res,next)=>{
+
+
+  try{
+    await con.beginTransaction();
+   await con.query('INSERT INTO `tbl_event`( `event_type`, `participants`, `date`, `start_time`, `end_time`, `venue_name`, `venue_location`, `description`) VALUES ( ?,?,?,?,?,?,?,? )',[event_type,participants,date,start_time,end_time,venue_name,venue_location,description]);
+
+   res.render('admin/addevent',{'output':'Event add successfully'});
+  
+   await con.commit();
+  }catch(error){
+    await con.rollback();
+  console.log(error);
+  res.render('admin/kilvish500', {'output':'Internal Server Error'});
+  
+  }finally{
+    con.release();
+  }
+  
+  
+
+
+}
+
+
+const deletevent = async(req,res,next)=>{
+  const con = await connection();
+  
+  const eventID= req.body.eventId;
+
+  try{
+
+    await con.query('DELETE FROM `tbl_event` WHERE id=?',[eventID]);
+
+    console.log("event delete id of event ",eventID);
+
+    await con.commit();
+
+    res.status(200).json({ msg:true });
+
+
+  }catch(error){
+    
+    res.status(200).json({ msg:false });
+    console.log(error);
+
+ 
+ }
+}
+
+
+const editevent = async(req,res,next)=>{
+  const con = await connection();
+  const eventID= req.query.eventID;
+  console.log("event edite id ",eventID);
+  try{
+
+    const [eventcat_data] =await con.query('SELECT * FROM `tbl_event` WHERE id=?',[eventID]);
+    const eventdata= eventcat_data[0];
+    console.log(eventdata);
+
+    const [event_type]= await con.query('SELECT * FROM `tbl_event_category`');
+
+    
+    res.render('edit_event',{'eventdata':eventdata,'event_type':event_type,'output': 'data fetch successfully'});
+    
+
+    
+  }catch(error){
+
+    console.log(error);
+    res.render('admin/kilvish500', {'output':'Internal Server Error'});
+
+  }
+
+
+
+
+
+
+
+}
+const edit_event_post = async(req,res,next)=>{
+  const con = await connection();
+  const {event_id,event_type,participants,date,start_time,end_time,venue_name,venue_location,description}=req.body;
+
+
+
+  try{
+
+    await con.query('UPDATE `tbl_event` SET `event_type`=?,`participants`=?,`date`=?,`start_time`=?,`end_time`=?,`venue_name`=?,`venue_location`=?,`description`=? WHERE `id`=?',[event_type,participants,date,start_time,end_time,venue_name,venue_location,description,event_id]);
+
+    const [event] =await con.query('SELECT * FROM `tbl_event` ');
+    
+  res.render('viewevent',{"event":event,'output':'event Update successfully'});
+
+
+
+
+  }catch(error){
+
+    await con.rollback();
+    console.log(error);
+    res.render('admin/kilvish500', {'output':'Internal Server Error'});
+
+  }
+
+}
+
+
+// const eventtype =async(req,res,next)=>{
+
+//   res.render('eventtype',{'output':''});
+
+// }
+
+
+
+ const getevent_name = async(req,res,next)=>{
+
+  const con = await connection();
+  try{
+    const[eventNames]=await con.query('SELECT * FROM `tbl_event_category`');
+   res.render('addevent_name',{'eventname':eventNames,'output':''});
+  }catch(error){
+    console.log(error);
+    res.render('admin/kilvish500', {'output':'Internal Server Error'});
+
+
+  }
+
+ }
+
+
+
+
+
+
+const addevent_name =async(req,res,next)=>{
 
   const con =await connection();
   // console.log(req.body);
@@ -630,11 +812,15 @@ const eventcat_post =async(req,res,next)=>{
 
     const[ucat_name]= await con.query('SELECT * FROM `tbl_event_category` WHERE `name`=?',[name]);
     if(ucat_name.length !=0){
-  res.render('eventcategory',{'output':' That name event category allready exits'});
+      const[eventNames]=await con.query('SELECT * FROM `tbl_event_category`');
+   res.render('addevent_name',{'eventname':eventNames,'output':'That name event category allready exits'});
+  // res.render('addevent_name',{'output':' That name event category allready exits'});
      
     }else{
    await con.query('INSERT INTO `tbl_event_category`(`name`, `image`) VALUES (?,?)',[name,image]);
-  res.render('eventcategory',{'output':'eventcategory add successfully'});
+   const[eventNames]=await con.query('SELECT * FROM `tbl_event_category`');
+   res.render('addevent_name',{'eventname':eventNames,'output':'Event name add successfully'});
+  // res.render('addevent_name',{'output':'eventname add successfully'});
     
     }
 
@@ -648,6 +834,37 @@ const eventcat_post =async(req,res,next)=>{
 
 
 }
+
+const deletevent_name = async(req,res,next)=>{
+  const con = await connection();
+
+  console.log(req.body);
+  
+  const eventID= req.body.e_nameId;
+
+  try{
+
+    await con.query('DELETE FROM `tbl_event_category` WHERE id=?',[eventID]);
+
+    console.log("event delete id of event ",eventID);
+
+    await con.commit();
+
+    res.status(200).json({ msg:true });
+
+
+  }catch(error){
+    
+    res.status(200).json({ msg:false });
+    console.log(error);
+
+ 
+ }
+}
+
+
+
+
 
 const vieweventcat =async(req,res,next)=>{
 
@@ -670,99 +887,52 @@ const vieweventcat =async(req,res,next)=>{
 }
 
 
-const editevent = async(req,res,next)=>{
-  const con = await connection();
-  const eventcatID= req.query.eventcatID;
-  console.log(eventcatID);
-  try{
 
-    const [eventcat_data] =await con.query('SELECT * FROM `tbl_event_category` WHERE id=?',[eventcatID]);
-    const eventcatdata= eventcat_data[0];
-    console.log(eventcatdata);
+
+
+
+
+// const edit_event_post=async(req,res,next)=>{
+//   const con = await connection();
+//   // console.log(req.body);
+//   const {eid, name}=req.body;
+//   var  image = req.file.filename;
+//   if(!image){
+
+//     const [dbe_cat_data] =await con.query('SELECT * FROM `tbl_event_category` WHERE id=?',[eid]);
+//     const e_cat_data = dbe_cat_data[0];
+//     var image = e_cat_data.image;
+
+//   }
+//   console.log('update event name',name);
+//   console.log(' event id',eid);
+//   console.log('update image',image);
+
+
+
+
+
+
+//   try{
+//     await con.beginTransaction();
+
+//     await con.query('UPDATE `tbl_event_category` SET `name`=?,`image`=? WHERE id=?',[name,image,eid]);
+//     await con.commit();
+//     const [eventcat] =await con.query('SELECT * FROM `tbl_event_category`');
     
-    res.render('edit_event',{'eventcatdata':eventcatdata,'output': 'data fetch successfully'});
-    
+//     res.render('vieweventcat',{"eventcat":eventcat,'output':name+''+'eventcategory Update successfully'});
 
-    
-  }catch(error){
+//   }catch(error){
+//     await con.rollback();
+//     console.log(error);
+//     res.render('admin/kilvish500', {'output':'Internal Server Error'});
 
-    console.log(error);
-    res.render('admin/kilvish500', {'output':'Internal Server Error'});
-
-  }
-
-
-
-
-
-
-
-}
-
-const edit_event_post=async(req,res,next)=>{
-  const con = await connection();
-  // console.log(req.body);
-  const {eid, name}=req.body;
-  var  image = req.file.filename;
-  if(!image){
-
-    const [dbe_cat_data] =await con.query('SELECT * FROM `tbl_event_category` WHERE id=?',[eid]);
-    const e_cat_data = dbe_cat_data[0];
-    var image = e_cat_data.image;
-
-  }
-  console.log('update event name',name);
-  console.log(' event id',eid);
-  console.log('update image',image);
-
-
-
-
-
-
-  try{
-    await con.beginTransaction();
-
-    await con.query('UPDATE `tbl_event_category` SET `name`=?,`image`=? WHERE id=?',[name,image,eid]);
-    await con.commit();
-    const [eventcat] =await con.query('SELECT * FROM `tbl_event_category`');
-    
-    res.render('vieweventcat',{"eventcat":eventcat,'output':name+''+'eventcategory Update successfully'});
-
-  }catch(error){
-    await con.rollback();
-    console.log(error);
-    res.render('admin/kilvish500', {'output':'Internal Server Error'});
-
-  }finally{
-      con.release();
-  }
-}
-
- const deletevent = async(req,res,next)=>{
-  const con = await connection();
-  
-  const eventID= req.body.eventID;
-
-  try{
-
-    await con.query('DELETE FROM `tbl_event_category` WHERE id=?',[eventID]);
-
-    console.log("event delete id of event ",eventID);
-
-    await con.commit();
-
-    res.status(200).json({ msg:true });
-
-
-  }catch(error){
-    
-    res.status(200).json({ msg:false });
-    console.log(error);
+//   }finally{
+//       con.release();
+//   }
+// }
 
  
- }
-}
 
 
 
@@ -1051,8 +1221,10 @@ const notify = async(req,res,next)=>{
   const con = await connection();
   try{
     const[notify_data]= await con.query('SELECT * FROM tbl_notification');
+    const[user_data]= await con.query('SELECT * FROM tbl_user');
 
-    res.render('admin/notify',{'notify_data':notify_data,'output':'data fetched successfully'});
+
+    res.render('admin/notify',{'notify_data':notify_data,'user_data':user_data,'output':'data fetched successfully'});
 }catch(error){
   console.log(error);
   res.render('admin/kilvish500', {'output':'Internal Server Error'});
@@ -1083,8 +1255,11 @@ const notifypost = async(req,res,next)=>{
 
 
     const[notify_data]= await con.query('SELECT * FROM tbl_notification');
+    const[user_data]= await con.query('SELECT * FROM tbl_user');
 
-    res.render('admin/notify',{'notify_data':notify_data,'output':' notification add successfully'});
+    res.render('admin/notify',{'notify_data':notify_data,'user_data':user_data,'output':' notification add successfully'});
+
+    sendNotification(users,message,title);
 
 
 
@@ -1140,7 +1315,8 @@ const deletenotify = async(req,res,next)=>{
 
 
 //--------------------- Export Start ------------------------------------------
-export { homePage, loginPage , loginAdmin , logout , Profile , ProfilePost , updateadminpic , changepass ,forgotpassword,sendotp,otpverify,resetpassword, addUser,  adduserpost, viewUsers ,viewUser , viewUserPost , deletuser , addgame , addgame_post , viewmatch , deletematch , eventtype , eventcat_post , editevent , vieweventcat , edit_event_post, deletevent, pandp, notify,tandc,TermsConditions,deletTerm,privacyPolicy,deleteprivacy,addevent, viewevent,notifypost,deletenotify }
+export { homePage, loginPage , loginAdmin , logout , Profile , ProfilePost , updateadminpic , changepass ,forgotpassword,sendotp,otpverify,resetpassword, addUser,  adduserpost, viewUsers ,viewUser , viewUserPost , deletuser , addgame , addgame_post , viewmatch , deletematch  ,getevent_name, addevent_name ,deletevent_name, event,editevent , vieweventcat , edit_event_post, deletevent, pandp, notify,tandc,TermsConditions,deletTerm,privacyPolicy,deleteprivacy,addevent, viewevent,notifypost,deletenotify, }
 
 
          
+

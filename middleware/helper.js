@@ -318,13 +318,13 @@ const sendNotification = async function (recipients, message, subject) {  consol
   var transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-      user: 'vasubirla@gmail.com',
-      pass: 'phjwptaxdnaunqol'
+        user: 'rajesh7126117@gmail.com',
+        pass: 'ejxlynsgusepnaqw'
     }
   });
 
   const mailOptions = {
-    from: 'vasubirla@gmail.com',
+    from: 'rajesh7126117@gmail.com',
     to: recipients.join(', '), // Join all recipients with a comma
     subject: subject,
     html:  `
@@ -355,7 +355,7 @@ const sendNotification = async function (recipients, message, subject) {  consol
     <body>
         <div class="container">
             <div class="header">
-                <h2>Myrentwish Notification  </h2>
+                <h2>spectrum Support Notification  </h2>
             </div>
             <div class="content">
                 <h3>Hello Sir/Madam,</h3>
