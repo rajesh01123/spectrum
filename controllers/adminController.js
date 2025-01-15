@@ -616,7 +616,7 @@ const addevent =async(req,res,next)=>{
 
   
 
-  res.render('addevent',{'event_type':event_type,'output':'Please Add eventes'});
+  res.render('addevent',{'event_type':event_type,'output':'Please Add Games Eventes'});
 
   }catch(error){
     console.log(error);
@@ -669,7 +669,7 @@ const event=async(req,res,next)=>{
 
     console.log('event add succees full')
   
-    res.render('admin/addevent',{'event_type':event_types,'output':'Event add successfully'});
+    res.render('admin/addevent',{'event_type':event_types,'output':'Games Event add successfully'});
   
    await con.commit();
   }catch(error){
