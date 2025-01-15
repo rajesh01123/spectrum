@@ -21,6 +21,16 @@
               <div class="full-forms py-1 px-1">
                 <form action="/admin/edit_event" method="post">
                   <div class="form-group row">
+                    <% if (output === 'Error in fetching user' || output === 'Failed to Update' ) { %>
+                      <div  class="alert alert-danger col-md-12">
+                          <%= output %>
+                      </div>
+                      <% }else if(output===''){
+                      } else { %>
+                      <div class="alert alert-success mb-1 col-md-12">
+                          <%= output %>
+                      </div>                                   
+                      <% } %>
                     <input type="hidden" name="event_id" value="<%- eventdata.id %>">
                       <div class="form-group add-admin col-md-6">
                         <label class="control-label" for="name">Event Type </label>
@@ -36,8 +46,8 @@
                         </select>
                       </div>
                       <div class="form-group add-admin col-md-6">
-                        <label class="control-label" for="name">Max Participants</label>
-                        <input type="number" name="participants" placeholder="Enter the number" value="<%- eventdata.participants %>" class="form-control" required>
+                        <label class="control-label" for="name">title</label>
+                        <input type="text" name="title" placeholder="Enter the Title" value="<%- eventdata.title %>" class="form-control" required>
                       </div>
                       <div class="form-group add-admin col-md-4">
                           <label class="control-label" for="name">Event Date </label>
@@ -51,17 +61,25 @@
                         <label class="control-label" for="name">End Time</label>
                         <input type="time" name="end_time" class="form-control" value="<%- eventdata.end_time %>" required>
                       </div>
-                      <div class="form-group add-admin col-md-6">
+                      <div class="form-group add-admin col-md-4">
                         <label class="control-label" for="name">Venue Name</label>
                         <input type="text" name="venue_name" placeholder="Enter the Name" class="form-control" value="<%- eventdata.venue_name %>" required>
                       </div>
-                      <div class="form-group add-admin col-md-6">
+                      <div class="form-group add-admin col-md-4">
                         <label class="control-label" for="name">Venue Location</label>
                         <input type="text" name="venue_location" class="form-control " value="<%- eventdata.venue_location %>" required>
+                      </div>
+                      <div class="form-group add-admin col-md-4">
+                        <label class="control-label" for="name">Partisipants</label>
+                        <input type="text" name="participants" class="form-control " value="<%- eventdata.participants %>" required>
                       </div>
                       <div class="form-group add-admin col-md-12">
                         <label for="eventDescription" class="form-label">Description</label>
                         <textarea class="form-control" id="summernote" name="description" rows="4" placeholder="Enter game description" required> <%- eventdata.description %></textarea>
+                      </div>
+                      <div class="form-group add-admin col-md-12">
+                        <label for="eventDescription" class="form-label">Rules and Regulations</label>
+                        <textarea class="form-control" id="summernote1" name="rules" rows="4" placeholder="Enter game description" required> <%- eventdata.rules %></textarea>
                       </div>
                     <div class="form-group  add-admin mt-3 col-md-12" style="margin-bottom: 0px;">
                        <input type="submit" name="add" class="btn btn-primary" value="Submit" style="width: 10%;"> 
@@ -115,9 +133,21 @@
       $('#summernote').summernote({
         height: 200, // Set height (like 'rows')
         width: '100%', // Full width of container
-        minHeight: 200, // Minimum height
+        minHeight: 100, // Minimum height
         maxHeight: 500, // Maximum height
       });
 
     })
+</script>
+<script>
+  $(function () {
+    // Summernote
+    $('#summernote1').summernote({
+      height: 200, // Set height (like 'rows')
+      width: '100%', // Full width of container
+      minHeight: 100, // Minimum height
+      maxHeight: 500, // Maximum height
+    });
+
+  })
 </script>

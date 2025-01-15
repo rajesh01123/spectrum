@@ -79,7 +79,11 @@
                           <label style="color: black;" id="<%= users[i].user_id %>" class="custom-control-label" for="customSwitch<%= i %>"><%= users[i].disability %></label>
                           
                       </div></td>
+                      <% if(users[i].document){ %>
                       <td><img src="/uploads/<%= users[i].document %>" id="output" alt="Change" width="200" alt="Image">
+                      <% }else{ %> 
+                      <td><img src="/images/daycare_13936758.gif" id="output" alt="Change" width="200" alt="Image">
+                        <% } %>
                       </td>
                         <td><%-users[i].address %></td>
 

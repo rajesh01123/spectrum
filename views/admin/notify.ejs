@@ -45,33 +45,20 @@
                                     Select Users
                                 </button>
                                 <div class="dropdown-checkbox-menu">
-                                    <% for(var j=0; j< user_data.length; j++){ %>
+                                    <!-- Select All Checkbox -->
                                     <label>
-                                        <input type="checkbox" name="users[]" value="<%- user_data[j].email %>"> <%- user_data[j].user_name %>
+                                        <input type="checkbox" id="select-all" onclick="selectAllCheckboxes(this)"> Select All
+                                    </label>
+                        
+                                    <!-- User Checkboxes -->
+                                    <% for(var j=0; j < user_data.length; j++) { %>
+                                    <label>
+                                        <input type="checkbox" name="users[]" value="<%- user_data[j].email %>" class="user-checkbox"> 
+                                        <%- user_data[j].user_name %>
                                     </label>
                                     <% } %>
-                                    <!-- <label>
-                                        <input type="checkbox" name="users[]" value="user2"> User 2
-                                    </label>
-                                    <label>
-                                        <input type="checkbox" name="users[]" value="user3"> User 3
-                                    </label>
-                                    <label>
-                                        <input type="checkbox" name="users[]" value="user4"> User 4
-                                    </label> -->
                                 </div>
                             </div>
-
-
-                            
-                            <!-- <select name="user" class="form-control">
-                                <option value="">Select your gender</option>
-                               
-
-                                <option value="user1">User 1</option>
-                                <option value="user2">User 2</option>
-                                <option value="user3">User 3</option>
-                            </select> -->
                         </div>
                         <div class="form-group add-admin col-md-6">
                             <label class="control-label" for="name">Notification Title</label>
@@ -163,6 +150,7 @@ $(document).ready(function() {
     $('#example').DataTable();
 } );
 </script>
+
 
 
 </body>
@@ -258,4 +246,19 @@ $(document).ready(function() {
     
      }
     
+</script>
+<script>
+    // Toggle dropdown visibility
+    function toggleDropdown() {
+        const dropdownMenu = document.querySelector('.dropdown-checkbox-menu');
+        dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
+    }
+
+    // Select/Deselect all checkboxes
+    function selectAllCheckboxes(selectAllCheckbox) {
+        const checkboxes = document.querySelectorAll('.user-checkbox');
+        checkboxes.forEach(checkbox => {
+            checkbox.checked = selectAllCheckbox.checked;
+        });
+    }
 </script>

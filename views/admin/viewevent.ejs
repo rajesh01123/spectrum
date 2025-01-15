@@ -17,6 +17,8 @@
                                     
                                     <tr role="row">
                                         <th style="width: 30px;">Sr. No</th>
+                                        <th style="width: 100px;">Event Title</th>
+
                                         <th style="width: 100px;">Event Type</th>
                                         <th style="width: 100px;">Event Date</th>
                                         <th style="width: 100px;">Start Time</th>
@@ -25,6 +27,8 @@
                                         <th style="width: 100px;">Venue Location</th>
                                         <th style="width: 100px;">Max Participants</th>
                                         <th style="width: 100px;">Description</th>
+                                        <th style="width: 100px;">Rules and Regulations</th>
+
                                         <th style="width: 110px;">Action</th>
                                     </tr>
                                     
@@ -33,6 +37,8 @@
                                     <% for (var i = 0; i < event.length; i++){ %>
                                     <tr>
                                         <td><%- i+1 %></td>
+                                        <td><%- event[i].title %></td>
+
                                         <td><%- event[i].event_type %></td>
                                         <td><%- event[i].date %></td>
                                        
@@ -42,6 +48,8 @@
                                         <td><%- event[i].venue_location %></td>
                                         <td><%- event[i].participants  %></td>
                                         <td><%- event[i].description %></td>
+                                        <td><%- event[i].rules %></td>
+
                                         <td>
                                             <div class="dropdown">
                                                 <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

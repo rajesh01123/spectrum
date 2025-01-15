@@ -1,0 +1,117 @@
+<%- include ("header.ejs") %>
+<%- include ("navbar.ejs") %>
+
+<style>
+  .form-group.add-admin {
+    margin-bottom: 0px !important;
+}
+</style>
+
+<!-- Main Content -->
+ <div class="main-content">
+  <section class="section">
+    <div class="fully-page">
+      <div class="full-headings">
+        <h4> Add Games </h4>
+      </div>
+      <div class="box-bodys" style="padding: 0px;">
+        <div class="row">
+          <div class="col-md-12">
+              <!-- alert msgs  -->
+              <% if (output === 'Error in fetching user' || output === 'Failed to Update' ) { %>
+                <div  class="alert alert-danger">
+                    <%= output %>
+                </div>
+              <% }else if(output===''){
+              } else { %>
+                <div class="alert alert-success mb-1">
+                    <%= output %>
+                </div>                                   
+              <% } %>
+              <div class="full-forms py-1 px-1">
+                <form action="/admin/editgame" method="post">
+                  <div class="form-group row">
+                    <input type="hidden" name="user_id">
+                      <div class="form-group add-admin col-md-3">
+                        <label class="control-label" for="name">Game Name</label>
+                        <input type="text" name="name" placeholder="Enter the game name" value="<%- matchs.name %>" class="form-control required">
+                        <input type="hidden" name="e_id"  value="<%- matchs.id %>" >
+
+                      </div>
+                      <div class="form-group add-admin col-md-3">
+                        <label class="control-label" for="name">Max Players</label>
+                        <input type="number" name="max_player" placeholder="Enter the number" value="<%- matchs.max_player %>" class="form-control required">
+                      </div>
+                      <div class="form-group add-admin col-md-3">
+                          <label class="control-label" for="name">Min Players</label>
+                          <input type="number" name="min_player" placeholder="Enter the number"  value="<%- matchs.min_player %>"  class="form-control required">
+                      </div>
+                      <div class="form-group add-admin col-md-3">
+                        <label class="control-label" for="name">Play Time</label>
+                        <input type="time" name="play_time"  value="<%- matchs.play_time %>"  class="form-control required">
+                      </div>
+                      <div class="form-group add-admin col-md-12">
+                        <label for="eventDescription" class="form-label">Description</label>
+                        <textarea class="form-control" id="summernote" name="description" rows="4" placeholder="Enter game description" required><%- matchs.Description %></textarea>
+                      </div>
+                    <div class="form-group  add-admin mt-3 col-md-12" style="margin-bottom: 0px;">
+                       <input type="submit" name="add" class="btn btn-primary" value="Submit" style="width: 10%;"> 
+                    </div> 
+                  </div>  
+                </form>
+                  </div>
+                 </div>
+             </div>
+           </div>
+          </div>
+        </section>
+
+      </div>
+      <footer class="main-footer">
+        <div class="footer-left">
+          Copyright © 2025  <a href="#">Spectrum Sports </a> All rights reserved
+        </div>
+        <div class="footer-right">
+        </div>
+      </footer>
+    </div>
+  </div>
+  <!-- General JS Scripts -->
+  <script src="../assets/js/app.min.js"></script>
+  <!-- JS Libraies -->
+  <script src="../assets/bundles/apexcharts/apexcharts.min.js"></script>
+  <!-- Page Specific JS File -->
+  <script src="../assets/js/page/index.js"></script>
+  <!-- Template JS File -->
+  <script src="../assets/js/scripts.js"></script>
+  <!-- Custom JS File -->
+  <script src="../assets/js/custom.js"></script>
+</body>
+
+
+<!-- index  21 Nov 2019 03:47:04 GMT -->
+</html>
+
+
+<!-- Include Summernote CSS -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.css" rel="stylesheet">
+
+<!-- Include Summernote JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.js"></script>
+
+<!-- Page specific script -->
+<script>
+    $(function () {
+      // Summernote
+      $('#summernote').summernote({
+        height: 200, // Set height (like 'rows')
+        width: '100%', // Full width of container
+        minHeight: 200, // Minimum height
+        maxHeight: 500, // Maximum height
+      });
+
+    })
+</script>
+
+
+

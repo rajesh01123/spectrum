@@ -1,5 +1,5 @@
 import express from 'express'
-import { Profile, ProfilePost, changepass, homePage, loginAdmin, loginPage, logout, updateadminpic,viewUser,viewUserPost,viewUsers,deletuser, addgame, addgame_post, viewmatch, addevent, viewevent, editevent, edit_event_post, deletevent, forgotpassword, sendotp, addUser, pandp, tandc, notify, otpverify, resetpassword, TermsConditions, deletTerm, privacyPolicy, deleteprivacy, notifypost, deletenotify, adduserpost, event, addevent_name, getevent_name, deletevent_name } from '../controllers/adminController.js';
+import { Profile, ProfilePost, changepass, homePage, loginAdmin, loginPage, logout, updateadminpic,viewUser,viewUserPost,viewUsers,deletuser, addgame, addgame_post, viewmatch, addevent, viewevent, editevent, edit_event_post, deletevent, forgotpassword, sendotp, addUser, pandp, tandc, notify, otpverify, resetpassword, TermsConditions, deletTerm, privacyPolicy, deleteprivacy, notifypost, deletenotify, adduserpost, event, addevent_name, getevent_name, deletevent_name, edite_match, edit_game_post } from '../controllers/adminController.js';
 
 
 import upload from '../middleware/upload.js';
@@ -70,6 +70,15 @@ router.route('/addgame').get(isAuthenticatedAdmin,addgame)
 router.route('/addgame').post(isAuthenticatedAdmin,addgame_post)
 
 router.route('/viewmatch').get(isAuthenticatedAdmin,viewmatch)
+
+router.route('/editmatch').get(isAuthenticatedAdmin,edite_match);
+router.route('/editgame').post(isAuthenticatedAdmin,edit_game_post);
+
+
+
+
+
+
 
 
 //-----------------------------------event category------------------------
