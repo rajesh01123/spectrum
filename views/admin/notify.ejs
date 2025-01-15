@@ -111,7 +111,7 @@
                                 <tbody>
                                     <% for (var i=0; i < notify_data.length; i++ ){%>
                                     <tr>
-                                        <td>1</td>
+                                        <td><%- i+1 %></td>
                                         <td><%- notify_data[i].users %></td>
                                         <td><%- notify_data[i].title %></td>
                                         <td><%- notify_data[i].message %></td>

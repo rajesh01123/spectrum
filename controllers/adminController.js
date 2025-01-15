@@ -478,6 +478,7 @@ const viewUser = async(req ,res,next) =>{
     const[[userInfo]]= await con.query('SELECT * FROM tbl_user WHERE u_id=?', [userid]);
 
     res.render('admin/viewUser',{'user':userInfo, 'output': 'user info fatched'});
+    // console.log(userInfo);
 
     
 
@@ -494,25 +495,29 @@ const viewUser = async(req ,res,next) =>{
 const viewUserPost= async(req,res,next)=>{
 
   const con = await connection();
-  console.log("bodydata",req.body);
+  // console.log("bodydata",req.body);
   const {userID,name, email, contact,address, gender , state, birthday_date,disability} =req.body;
-  // console.log(gender);
+  
   if (req.file) {
+
     const image =  req.file.filename ;
-    const imagePath=  req.file.path ;   
+    console.log("file name",image);
+    const imagePath=  req.file.path ;  
+    var userdata = {"user_name":name, "email":email, "contact":contact, "address":address, "gender":gender, "state":state , "birthday_date":birthday_date,"document":image,"disability":disability};
+
+  }else{
+    var userdata = {"user_name":name, "email":email, "contact":contact, "address":address, "gender":gender, "state":state , "birthday_date":birthday_date,"disability":disability};
   }
    
-  const[users]= await con.query('SELECT * FROM tbl_user WHERE u_id=?',[userID]);
- 
-
-  const image =   users.document;
-  console.log(users);
   
   
   try{
+    
 
-    var userdata = {"user_name":name, "email":email, "contact":contact, "address":address, "gender":gender, "state":state , "birthday_date":birthday_date,"document":image,"disability":disability};
+    
     const [result] = await con.query('UPDATE tbl_user SET ? WHERE u_id = ?', [userdata, userID]);
+
+    console.log('data update successfully');
 
   const[users]= await con.query('SELECT * FROM tbl_user');
 
@@ -1220,8 +1225,10 @@ try{
 const notify = async(req,res,next)=>{
   const con = await connection();
   try{
-    const[notify_data]= await con.query('SELECT * FROM tbl_notification');
+    const [notify_data] = await con.query('SELECT * FROM tbl_notification ORDER BY id DESC');
     const[user_data]= await con.query('SELECT * FROM tbl_user');
+    const  send_notify = notify_data.users;
+    console.log('send_notify', send_notify);
 
 
     res.render('admin/notify',{'notify_data':notify_data,'user_data':user_data,'output':'data fetched successfully'});

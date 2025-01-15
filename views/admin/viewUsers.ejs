@@ -68,7 +68,7 @@
                         
                         <td><%- users[i].gender  %></td>
                         <td><%- users[i].state  %></td>
-                        <td><%- users[i].disability  %></td>
+                       
 
                         
                         <td> <div id="refreshDiv" class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
@@ -79,6 +79,8 @@
                           <label style="color: black;" id="<%= users[i].user_id %>" class="custom-control-label" for="customSwitch<%= i %>"><%= users[i].disability %></label>
                           
                       </div></td>
+                      <td><img src="/uploads/<%= users[i].document %>" id="output" alt="Change" width="200" alt="Image">
+                      </td>
                         <td><%-users[i].address %></td>
 
 
