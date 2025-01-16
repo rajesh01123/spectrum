@@ -87,6 +87,8 @@ app.get('/api/hello', (req, res) => {
 // });  
 
 console.log(`the rk`)
+console.log(`the rj`)
+
 
 
     initializeChatService(server);

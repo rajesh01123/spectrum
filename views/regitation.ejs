@@ -106,7 +106,7 @@
                             <% } %>
                         </div>
                        
-                        <form id="contactform"  action="regitation" name="contactform" method="post">
+                        <form id="contactform"  action="regitation" name="contactform" method="post" enctype="multipart/form-data">
                             <div class="row row-fluid">
                                 <div class="col-sm-6">
                                     <label>Name</label>
@@ -202,7 +202,7 @@
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-sm-6">
                                     <label>Disability</label>
-                                    <select name="state" class="form-control">
+                                    <select name="disability" class="form-control">
                                         <option value="">Select your disability</option>
                                         <option value="on">On</option>
                                         <option value="off">Off</option>
@@ -210,7 +210,7 @@
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-sm-6">
                                     <label>Upload Document</label>
-                                    <input type="file" name="document"  class="form-control" placeholder="Enter your images" required>
+                                    <input type="file" name="image"  class="form-control" placeholder="Enter your images" required>
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-sm-6">
                                     <label>Address</label>

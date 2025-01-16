@@ -66,7 +66,7 @@ const sendTokenUser = (user, statusCode, res)=>{
         }                 
         // res.render('index')
         console.log("login success", user.u_id)
-       res.status(statusCode).cookie('token',token,options).redirect('/index');   
+       res.status(statusCode).cookie('token',token,options).redirect('/dashboard');   
     
        
 }

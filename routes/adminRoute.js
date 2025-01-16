@@ -101,7 +101,7 @@ router.route('/edit_event').get(isAuthenticatedAdmin,editevent);
 
 router.route('/edit_event').post(isAuthenticatedAdmin,edit_event_post);
 
-deletevent_name
+
 
 router.route('/deletevent_name').delete(deletevent_name);
 

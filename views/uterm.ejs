@@ -1,0 +1,168 @@
+<%- include ("uheader.ejs") %>
+<%- include ("unavbar.ejs") %>
+
+<!-- Main Content -->
+<div class="main-content">
+    <section class="section">
+        <!-- <div class="row">
+            <div class="fully-tables">
+                <div class="cards-headers">
+                   <h4> Add Terms & Conditions </h4>
+                </div>
+
+                <form action="/admin/termsConditions" method="post">
+                    <div class="form-group row">
+                        <div class="form-group add-admin col-md-12">
+                            <label for="eventDescription" class="form-label"></label>
+                            <textarea class="form-control" id="summernote" name="eventDescription" rows="4" placeholder="Enter event description" required></textarea>
+                        </div>
+                        <div class="form-group  add-admin mt-3 col-md-12" style="margin-bottom: 0px;">
+                            <input type="submit" name="add_user" class="btn btn-success" value="Send" style="width: 12%;"> 
+                        </div> 
+                    </div>  
+                </form>
+            
+            </div>
+        </div> -->
+
+        <div class="row">
+            <div class="fully-tables">
+                <div class="cards-headers">
+                    <h4>User Terms & Conditions </h4>
+                </div>
+                <div class="table-reponsive box">
+                    <div id="example_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                        <div class="row">
+                            <table id="example" class="table table-striped table-bordered dataTable no-footer" role="grid" aria-describedby="example_info">
+                                <thead>
+                                    <tr role="row">
+                                        <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Gross: activate to sort column ascending" style="width: 100.922px;">View Terms & Conditions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% for(var i = 0; i < term_data.length; i++) { %>
+                                    <tr>
+                                       
+                                        <td><%-   term_data[i].eventDescription %></td>
+                                        
+                                    </tr>
+                                  
+                                    
+                                    <% } %>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<footer class="main-footer">
+    <div class="footer-left">
+        Copyright © 2025  <a href="#">Spectrum Sports </a> All rights reserved
+    </div>
+</footer>
+
+<!-- General JS Scripts -->
+<script src="/assets/js/app.min.js"></script>
+
+<!-- JS Libraies -->
+<script src="/assets/bundles/apexcharts/apexcharts.min.js"></script>
+
+<!-- Page Specific JS File -->
+<script src="/assets/js/page/index.js"></script>
+
+<!-- Template JS File -->
+<script src="/assets/js/scripts.js"></script>
+
+<!-- Custom JS File -->
+<script src="/assets/js/custom.js"></script>
+<script>
+$(document).ready(function() {
+    $('#example').DataTable();
+} );
+</script>
+<script>
+    function deleteit(id){
+
+        var termID = id
+                  
+    
+            // Use SweetAlert2 for a stylish confirmation
+            Swal.fire({
+                title: 'Are you sure?',
+                text: 'You won\'t be able to revert this!',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete User'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Make an AJAX request to delete the user
+                    $.ajax({
+                        type: 'DELETE',
+                        url: '/admin/deleteterm',
+                        data: { termID: termID },
+                        success: function(response) {
+    
+                            console.log('User deleted successfully');
+                            var message = 'User Deleted Successfully !!'
+                            if(response.msg == true){
+    
+                              $("#successMessage").html(message);
+                        $("#successMessage").removeClass("d-none");           
+                          $("#errorMessage").addClass("d-none");
+                          window.location.href = '/admin/tandc';  
+                            }else{
+    
+                              $("#errorMessage").removeClass("d-none");
+                          $("#successMessage").addClass("d-none");
+                         
+    
+                            }
+    
+                             
+                            // Handle success, update UI, etc.
+                        },
+                        error: function(error) {
+                            console.error('Error deleting user', error);
+                            // Handle error
+                        }
+                    });
+                }
+            });
+    
+     }
+    
+</script>
+
+
+</body>
+</html>
+
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+<!-- Include Summernote CSS -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.css" rel="stylesheet">
+
+<!-- Include Summernote JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.js"></script>
+
+<!-- Page specific script -->
+<script>
+    $(function () {
+      // Summernote
+      $('#summernote').summernote({
+        height: 200, // Set height (like 'rows')
+        width: '100%', // Full width of container
+        minHeight: 200, // Minimum height
+        maxHeight: 500, // Maximum height
+      });
+
+    })
+</script>

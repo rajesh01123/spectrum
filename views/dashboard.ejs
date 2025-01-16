@@ -1,0 +1,225 @@
+<%- include ("uheader.ejs") %>
+<%- include ("unavbar.ejs") %>
+
+
+
+
+
+       
+      <!-- Main Content -->
+      <div class="main-content">
+        <section class="section">
+          <div class="fully-graph">
+                  <div class="fulls-headings">
+                     <h4> <i class="fa fa-th-large" aria-hidden="true"></i>  Games</h4>
+                   </div>
+          <div class="row ride-boxes">
+            
+            <input type="hidden" id="dataPoints"  value="<%= JSON.stringify(Data.dataPoints) %>">
+
+            <input type="hidden" id="clientIp"  value="<%= Data.clientIp %>">
+
+            
+            
+            <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <div class="card">
+                <div class="card-statistic-4">
+                  <div class="align-items-center justify-content-between">
+                    <div class="row ">
+                      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pr-0 pt-3">
+                        <div class="card-content">
+                          <h5 class="font-15">Ludo</h5>
+                          <h2 class="mb-3 font-14"><%= Data.propsnum %></h2>
+                          <a href="#" class="mb-0">
+                            <p class="mb-0 font-13"><span class="col-green"> Read  More</span></p>
+                            </a>
+                        </div>
+                      </div>
+                      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0">
+                        <div class="banner-img">
+                          <img src="/images/4445205.jpg" style="height: 100px !important;" alt="">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <div class="card">
+                <div class="card-statistic-4">
+                  <div class="align-items-center justify-content-between">
+                    <div class="row ">
+                      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pr-0 pt-3">
+                        <div class="card-content wow zoomin">
+                          <h5 class="font-15">whot</h5>
+                          <h2 class="mb-3 font-14"><%= Data.usernum %></h2>
+                       
+                          <a href="#">
+                            <p class="mb-0 font-13"><span class="col-green"> Read  More</span></p>
+                            </a>
+                        </div>
+                      </div>
+                      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0">
+                        <div class="banner-img">
+                          <img src="/images/2558.jpg" alt="">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+            </div>
+            <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <div class="card">
+                <div class="card-statistic-4">
+                  <div class="align-items-center justify-content-between">
+                    <div class="row ">
+                      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pr-0 pt-3">
+                        <div class="card-content">
+                          <h5 class="font-15">Table Tennis</h5>
+                          <h2 class="mb-3 font-14"><%= Data.rentedPropsCount %>  </h2>
+                                <a href="#" class="mb-0">
+                            <p class="mb-0 font-13"><span class="col-green"> Read  More</span></p>
+                            </a>
+                        </div>
+                      </div>
+                      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0">
+                        <div class="banner-img">
+                          <img src="/images/10183244_4320475.svg"  style="height: 100px !important;"  alt="" >
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+           <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <div class="card">
+                <div class="card-statistic-4">
+                  <div class="align-items-center justify-content-between">
+                    <div class="row ">
+                      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pr-0 pt-3">
+                        <div class="card-content">
+                          <h5 class="font-15">Draught</h5>
+                          <!-- <h2 class="mb-3 font-14" id="lastlogin">  </h2> -->
+
+                          <h2 class="mb-3 font-11" id="lastlogin" >     </h2>
+
+                          <p class="mb-0 font-13"><span class="col-green"  onclick="toggleReadMore()" > Read More </span>  </p>
+                        </div>
+                      </div>
+                      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0">
+                        <div class="banner-img">
+                          <img src="/images/rb_48351.png" style="height: 100px !important;" alt="">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div> 
+          </div>
+        </div>
+
+        <!-- <div class="row">
+           <div class="col-md-12">
+               <div class="fully-graph">
+                  <div class="fulls-headings">
+                     <h4><i class="fa fa-th-large" aria-hidden="true"></i> Spectrum Chart</h4>
+                   </div>
+                   <div class="canvas-charts">
+                     <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+                       <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+                   </div>
+                </div>
+            </div>
+        </div>      -->
+        </section>
+      </div>
+      <footer class="main-footer">
+        <div class="footer-left">
+          Copyright © 2025  <a href="#">Spectrum Sports </a> All rights reserved
+        </div>
+        <div class="footer-right">
+        </div>
+      </footer>
+    </div>
+  </div>
+  <!-- General JS Scripts -->
+  <script src="/assets/js/app.min.js"></script>
+  <!-- JS Libraies -->
+  <script src="/assets/bundles/apexcharts/apexcharts.min.js"></script>
+  <!-- Page Specific JS File -->
+  <script src="/assets/js/page/index.js"></script>
+  <!-- Template JS File -->
+  <script src="/assets/js/scripts.js"></script>
+  <!-- Custom JS File -->
+  <script src="/assets/js/custom.js"></script>
+<!-- CANVAS CHART JS  SCRIPT START  CANVAS CHART JS  SCRIPT START  CANVAS CHART JS  SCRIPT START  -->
+<script>
+
+readmore = true;
+
+
+window.onload = function () {
+
+ DATAPOINTS =  document.getElementById('dataPoints').value; 
+ DATAPOINTS = JSON.parse(DATAPOINTS)
+
+ clientIp =  document.getElementById('clientIp').value; 
+
+ const timestamp = new Date().toString();
+   LastLogin = `From IP- ${clientIp} on ${timestamp} `;
+
+    var halfLength = Math.ceil(LastLogin.length / 4);
+
+    document.getElementById('lastlogin').innerText  =  LastLogin.substring(0, halfLength);
+
+   
+
+var chart = new CanvasJS.Chart("chartContainer", {
+  animationEnabled: true,
+  theme: "light2", // "light1", "light2", "dark1", "dark2"
+  title:{
+    text: "Top Interested Properties"
+  },
+  axisY: {
+    title: "Interest Count"
+  },
+  data: [{        
+    type: "column",  
+    showInLegend: true, 
+    legendMarkerColor: "grey",
+    legendText: "MyRentWish",
+    dataPoints: DATAPOINTS
+  }]
+});
+chart.render();
+
+}
+
+
+
+
+function toggleReadMore() {  
+    var readMoreContent = document.getElementById('readMoreContent');
+
+    // Toggle the display of the read more content
+    if (readmore == true) { 
+       lastlogin.style.display = 'inline';
+       document.getElementById('lastlogin').innerText  =  LastLogin
+       readmore = false; 
+
+    } else {
+      document.getElementById('lastlogin').innerText  =  LastLogin.substring(0, halfLength);  
+      readmore = true;    
+    }
+  }
+</script>
+</body>
+
+
+<!-- index  21 Nov 2019 03:47:04 GMT -->
+</html>

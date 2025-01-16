@@ -2,7 +2,19 @@
 import { query } from 'express';
 import connection from '../config.js';
 import { sendTokenAdmin, sendTokenUser } from '../utils/jwtToken.js';
-import { sendOTPFornewPass } from '../middleware/helper.js'
+import { sendOTPFornewPass } from '../middleware/helper.js';
+import upload from '../middleware/upload.js';
+
+// import { image } from 'pdfkit';
+import jwt from 'jsonwebtoken';
+import cookieParser from 'cookie-parser';
+
+
+
+// Middleware to verify token
+
+
+ 
 
 
 
@@ -14,6 +26,11 @@ const home = async(req,res,next)=>{
   res.redirect('/admin')
 
 
+}
+
+const dashboard= async(req,res,next)=>{
+  const Data ='';
+  res.render('dashboard',{Data});
 }
 
 
@@ -91,6 +108,51 @@ const forgot = async(req,res,next)=>{
 
 }
 
+const uterm =async(req,res, next)=>{
+
+
+  const con =await connection();
+
+  try{
+    
+    const[term_data]= await con.query('SELECT * FROM `tbl_termsconditions`');
+   
+
+    res.render('uterm', {'term_data':term_data,'output':''});
+
+  }catch(error){
+    console.log(error);
+    res.render('admin/kilvish500', {'output':'Internal Server Error'});
+
+  }
+
+  
+
+
+}
+const uprivacy =async(req,res, next)=>{
+
+
+  const con =await connection();
+
+  try{
+    
+    const[privacy_data]= await con.query('SELECT * FROM `tbl_privacypolicy`');
+   
+
+    res.render('uprivacy', {'privacy_data':privacy_data,'output':''});
+
+  }catch(error){
+    console.log(error);
+    res.render('admin/kilvish500', {'output':'Internal Server Error'});
+
+  }
+
+  
+
+
+}
+
 // ---------------------------------- End user side get pages ---------------------------------------//
 
 
@@ -153,10 +215,17 @@ const regitation_post = async (req, res, next) => {
   const con = await connection();
 
   console.log(req.body);
+  if (req.file) {
+   const image =  req.file.filename ;
+    const imagePath=  req.file.path ;   
+ 
+    console.log(image);
+ }
 
-  const { username, email, contact, password, gender, address, state, birthday } = req.body;
+  const { username, email, contact, password, gender, address, state, birthday ,disability} = req.body;
 
   const upgrade_address = JSON.stringify(address);
+  console.log(gender);
   
   try {
 
@@ -176,14 +245,15 @@ const regitation_post = async (req, res, next) => {
     res.render('regitation',{'output':'Please Enter Unique contact Number '});
 
     }else{
+      
     
-    
+   const image=req.file.filename
       
     await con.query(
 
-      "INSERT INTO `tbl_user` (`user_name`, `email`, `contact`, `password`, `address`, `gender`, `birthday_date`, `state`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", 
+      "INSERT INTO `tbl_user` (`user_name`, `email`, `contact`, `password`, `address`, `gender`, `birthday_date`, `state`,`document`,`disability`) VALUES (?, ?, ?, ?, ?, ?, ?, ?,?,? )", 
       
-      [username, email, contact, password, upgrade_address, gender, birthday, state]
+      [username, email, contact, password, upgrade_address, gender, birthday, state,image,disability,]
 
     );
     
@@ -430,6 +500,22 @@ const resetpost = async(req,res,next)=>{
 
 }
 
+
+const logout = async(req,res,next)=>{    
+
+  res.cookie("token",null,{
+    expires : new Date(Date.now()),
+    httpOnly:true
+})
+
+console.log('user logout')
+
+res.render('login',{'output':'Logged Out !!'}) 
+
+}
+
+
+
        
 
         
@@ -440,7 +526,8 @@ const resetpost = async(req,res,next)=>{
 
 
   //--------------------- Export Start ------------------------------------------
-export { home , login , login_post , regitation , regitation_post , forgot , forgotpost, otp,otp_verify, resset, resetpost, index ,indexpost, about , games, blog, contactpage , privacypolicy , termscondition }
+export { home , login , login_post , regitation , regitation_post , forgot , forgotpost, otp,otp_verify, resset, resetpost, index ,indexpost, about , games, blog, contactpage , privacypolicy , termscondition, dashboard,logout,uterm,uprivacy 
+}
 
 
          
