@@ -787,7 +787,7 @@ const edit_event_post = async(req,res,next)=>{
   const con = await connection();
   try{
     const[eventNames]=await con.query('SELECT * FROM `tbl_event_category`');
-   res.render('addevent_name',{'eventname':eventNames,'output':''});
+   res.render('addevent_name',{'event_type':eventNames,'output':''});
   }catch(error){
     console.log(error);
     res.render('admin/kilvish500', {'output':'Internal Server Error'});
@@ -829,7 +829,8 @@ const addevent_name =async(req,res,next)=>{
     if(ucat_name.length !=0){
 
       const [event_type]= await con.query('SELECT * FROM `tbl_event_category`');
-      console.log(event_type);
+      console.log('event type',event_type);
+      
 
    res.render('addevent_name',{'event_type':event_type,'output':'That name event category allready exits'});
   

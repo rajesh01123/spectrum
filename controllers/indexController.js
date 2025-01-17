@@ -8,6 +8,7 @@ import upload from '../middleware/upload.js';
 // import { image } from 'pdfkit';
 import jwt from 'jsonwebtoken';
 import cookieParser from 'cookie-parser';
+// import { image } from 'pdfkit';
 
 
 
@@ -15,7 +16,6 @@ import cookieParser from 'cookie-parser';
 
 
  
-
 
 
 
@@ -33,6 +33,40 @@ const dashboard= async(req,res,next)=>{
   res.render('dashboard',{Data});
 }
 
+const uviewevent= async(req,res,next)=>{
+  
+    const con = await connection();
+    
+    try{
+
+       await con.beginTransaction()
+       const event_type=req.query.event_type;
+       const [event_data]= await con.query('SELECT * FROM `tbl_event` WHERE event_type=?',[event_type]);
+       console.log('eventdata',event_data);
+       res.render('uviewevent',{'event_data':event_data,'event_name':event_type});
+    
+    
+      await con.commit();
+    }catch(error){
+      await con.rollback();
+    console.log(error);
+    res.render('shine500');
+    }finally{
+       con.release();
+    
+    }
+    
+    
+    }
+
+
+  
+
+
+const booking_history= async(req,res,next)=>{
+  const Data ='';
+  res.render('booking_history',{Data});
+}
 
 
 const index = async(req,res,next)=>{
@@ -152,6 +186,10 @@ const uprivacy =async(req,res, next)=>{
 
 
 }
+
+// const  booking_history = async(req,res,next)=>{
+
+// }
 
 // ---------------------------------- End user side get pages ---------------------------------------//
 
@@ -500,6 +538,118 @@ const resetpost = async(req,res,next)=>{
 
 }
 
+//------------------------------- User profile----------------------//
+
+const uprofile_get = async(req,res,next)=>{
+  
+ const  user_data = req.user;
+ console.log('userdeatil');
+  res.render('uprofile',{'output':'','user_data':user_data});
+
+
+
+}
+
+const uprofile_post =async(req,res,next)=>{
+
+  const con = await connection();
+
+  console.log(req.body);
+
+  const {u_id, user_name, email, contact, password, address, gender, birthday_date, state, disability}=req.body;
+
+  
+
+  try{
+
+    await con.beginTransaction()
+   
+    await con.query('UPDATE tbl_user SET user_name= ? ,email= ? ,contact= ? ,address= ? ,gender= ? ,birthday_date= ? , state= ? , disability= ? WHERE u_id= ? ',[ user_name, email, contact, address, gender, birthday_date, state, disability , u_id ]);
+
+    
+ 
+   await con.commit();
+
+    const [user_dataa]= await con.query('SELECT * FROM `tbl_user` WHERE u_id= ? ',[u_id] );
+    const user_data=user_dataa[0];
+    console.log('userdaat',user_dataa);
+
+
+  res.render('uprofile',{'user_data':user_data,'output':'user profile update successfully '});
+
+ }catch(error){
+   await con.rollback();
+ console.log(error);
+ res.render('shine500');
+ }finally{
+    con.release();
+ 
+ }
+}
+
+
+const uchangepass = async (req, res, next) => {
+  const con = await connection();
+
+  try {
+  
+    
+    const existingPass = req.user.password;
+
+     const user_data =req.user;
+  
+    const { opass, npass, cpass } = req.body;
+
+    if (opass !== existingPass) {    
+      return res.render('uprofile',{'user_data':user_data, "output":"Old password is incorrect"})
+    }
+    if (npass !== cpass) {
+     return res.render('uprofile',{ 'user_data':user_data, "output":"New password and confirm password do not match"})
+     
+    }
+   
+    res.render('uprofile',{'user_data':user_data, "output":"Password changed successfully"})
+    await con.query('UPDATE tbl_user SET password = ? WHERE id = ?', [cpass,req.user.id]);
+
+   
+  } catch (error) {
+    console.error('Error:', error);
+    const user_data =req.user;
+    res.render('uprofile',{'user_data':user_data, "output":"failed to Update Password "})
+  }finally {
+    con.release(); 
+  }
+};
+
+
+// const ename = async(req,res,next)=>{
+// const con = await connection();
+
+// try{
+//    await con.beginTransaction()
+
+
+//   await con.commit();
+// }catch(error){
+//   await con.rollback();
+// console.log(error);
+// res.render('shine500');
+// }finally{
+//    con.release();
+
+// }
+
+
+// }
+
+
+
+
+
+
+
+
+
 
 const logout = async(req,res,next)=>{    
 
@@ -526,7 +676,7 @@ res.render('login',{'output':'Logged Out !!'})
 
 
   //--------------------- Export Start ------------------------------------------
-export { home , login , login_post , regitation , regitation_post , forgot , forgotpost, otp,otp_verify, resset, resetpost, index ,indexpost, about , games, blog, contactpage , privacypolicy , termscondition, dashboard,logout,uterm,uprivacy 
+export {uprofile_get, uprofile_post , uchangepass , home , login , login_post , regitation , regitation_post , forgot , forgotpost, otp,otp_verify, resset, resetpost, index ,indexpost, about , games, blog, contactpage , privacypolicy , termscondition, dashboard,logout,uterm,uprivacy, uviewevent, booking_history 
 }
 
 

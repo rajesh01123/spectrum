@@ -86,15 +86,15 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <% for (var i=0; i < eventname.length; i++ ){%>
+                                    <% for (var i=0; i < event_type.length; i++ ){%>
                                     <tr>
                                         <td><%- i+1 %></td>
-                                        <td><%- eventname[i].name %></td>
-                                         <td> <img src="/uploads/<%= eventname[i].image %>" id="output" alt="Change" width="200" alt="Image">
+                                        <td><%- event_type[i].name %></td>
+                                         <td> <img src="/uploads/<%= event_type[i].image %>" id="output" alt="Change" width="200" alt="Image">
                                       </td>
                                         
                                         <td>
-                                        <button class="btn mt-1 mb-1 btn-outline-primary "  onclick="deleteit('<%- eventname[i].id %>')" type="button"   > <i class="fa fa-trash"></i> Delete</button>
+                                        <button class="btn mt-1 mb-1 btn-outline-primary "  onclick="deleteit('<%- event_type[i].id %>')" type="button"   > <i class="fa fa-trash"></i> Delete</button>
 
                                             <!-- <div class="dropdown">
                                                 <button class="btn mt-1 mb-1 btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Action</button>

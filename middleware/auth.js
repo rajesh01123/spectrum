@@ -19,7 +19,7 @@ const isAuthenticatedUser = async(req,res,next)=>{
     
     const [results] = await con.query('SELECT * FROM tbl_user WHERE u_id = ?', [decodedData.id]);
 
-    console.log(results)
+    // console.log(results)
 
         req.user = results[0];
         next();

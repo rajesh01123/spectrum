@@ -20,7 +20,7 @@
        <section class="section">
            <div class="fully-page">
              <div class="full-headings">
-               <h4> Profiles</h4>
+               <h4>User Profiles</h4>
              </div>
              <div class="box-bodys">
               <div id="successMessage" class="alert alert-success d-none">
@@ -33,7 +33,7 @@
             <div class="row profile-boxes">
                 <div class="col-md-12">
                  <div class="cards-head">
-                  <h2 class="section-title">Hi, <%- admin.firstname %></h2>
+                  <h2 class="section-title">Hi, <%- user_data.firstname %></h2>
                   <p class="section-lead">
                     Change information about yourself on this page.
                   </p>
@@ -51,16 +51,16 @@
                     <!-- <span>Change Image</span> -->
                   </label>
                   <input id="file" type="file" onchange="loadFile(event)"/>
-                  <!-- <img src="http://<%= host %>/uploads/<%- admin.image %>" id="output" alt="Change" width="200" /> -->
-                  <img src="http://<%= host %>/uploads/<%= admin.image %>" id="output" alt="Change" width="200" alt="Image">
+                  <!-- <img src="http://<%= host %>/uploads/<%- user_data.image %>" id="output" alt="Change" width="200" /> -->
+                  <img src="/images/user_14251527.gif" id="output" alt="Change" width="200" alt="Image">
                  </div>
 
                  <div class="contact_inner mt-3 text-center">
-                  <h3><%- admin.firstname %> <%- admin.lastname %></h3>
-                  <p><strong>About: </strong>Admin of Spectrum Sport </p>
+                  <h3><%- user_data.user_name %> </h3>
+                  <p><strong>About: </strong>User of Spectrum Sport </p>
                   <ul class="list-unstyled">
-                     <li><i class="fa fa-envelope-o"></i> : <%- admin.email  %></li>
-                     <li><i class="fa fa-phone"></i> :  <%- admin.contact  %></li>
+                     <li><i class="fa fa-envelope-o"></i> : <%- user_data.email  %></li>
+                     <li><i class="fa fa-phone"></i> :  <%- user_data.contact  %></li>
                   </ul>
                </div>
 
@@ -122,31 +122,37 @@
                                        <a class="edit-link" data-toggle="modal" href="#edit_personal_details"><i class="fa fa-edit mr-1"></i>Edit</a>
                                     </h5>
                                     <div class="row">
-                                       <p class="col-sm-3 text-muted text-sm-left mb-0 mb-sm-3">First Name </p>
-                                       <p class="col-sm-9"><%- admin.firstname %></p>
+                                       <p class="col-sm-3 text-muted text-sm-left mb-0 mb-sm-3">User Name </p>
+                                       <p class="col-sm-9"><%- user_data.user_name %></p>
                                     </div>
                                     <div class="row">
-                                       <p class="col-sm-3 text-muted text-sm-left mb-0 mb-sm-3">Last Name  </p>
-                                       <p class="col-sm-9"><%- admin.lastname %></p>
+                                       <p class="col-sm-3 text-muted text-sm-left mb-0 mb-sm-3">Date of birthday </p>
+                                       <p class="col-sm-9"><%- user_data.birthday_date %></p>
                                     </div>
 
-                                    <div class="row">
-                                       <p class="col-sm-3 text-muted text-sm-left mb-0 mb-sm-3">Username </p>
-                                       <p class="col-sm-9"><%- admin.username %></p>
-                                    </div>
+                                   
                              
                                     <div class="row">
                                        <p class="col-sm-3 text-muted text-sm-left mb-0 mb-sm-3">Email ID</p>
-                                       <p class="col-sm-9"> <%- admin.email %> </p>
+                                       <p class="col-sm-9"> <%- user_data.email %> </p>
                                     </div>
                                     <div class="row">
                                        <p class="col-sm-3 text-muted text-sm-left mb-0 mb-sm-3">Mobile</p>
-                                       <p class="col-sm-9"><%- admin.contact %></p>
+                                       <p class="col-sm-9"><%- user_data.contact %></p>
+                                    </div>
+                                    <div class="row">
+                                       <p class="col-sm-3 text-muted text-sm-left mb-0 mb-sm-3">disability</p>
+                                       <p class="col-sm-9"><%- user_data.disability %></p>
                                     </div>
                                     <div class="row">
                                        <p class="col-sm-3 text-muted text-sm-left mb-0">Address</p>
-                                       <p class="col-sm-9 mb-0"> <%- admin.address %></p>
+                                       <p class="col-sm-9 mb-0"> <%- user_data.address %></p>
                                     </div>
+                                    <div class="row">
+                                       <p class="col-sm-3 text-muted text-sm-left mb-0 mb-sm-3">State </p>
+                                       <p class="col-sm-9"><%- user_data.state %></p>
+                                    </div>
+
                                  </div>
                               </div>
                                        
@@ -161,7 +167,7 @@
                                  <h5 class="card-title">Change Password</h5>
                                  <div class="row">
                                     <div class="col-md-10 col-lg-6">
-                                       <form method="post" action="/admin/changepass">
+                                       <form method="post" action="/uchangepass">
                                           <div class="form-group">
                                              <label>Old Password</label>
                                              <input name="opass" type="password" class="form-control">
@@ -298,40 +304,41 @@
                         </button> -->
                      </div>
                      <div class="modal-body">
-                        <form method="post" action="/admin/profile" enctype="multipart/form-data" >
+                        <form  action="/updatae" method="post" >
                            <div class="row form-row">
                               <div class="col-12 col-sm-6">
                                  <div class="form-group">
-                                    <label> Firstname </label>
-                                    <input name="firstname" type="text" class="form-control" value="<%- admin.firstname %>">
+                                    <label> user name </label>
+                                    <input name="u_id" type="hidden"  value="<%- user_data.u_id %>">
+                                   
+                                    <input name="user_name" type="text" class="form-control" value="<%- user_data.user_name %>">
                                  </div>
                               </div>
-                              <div class="col-12 col-sm-6">
-                                 <div class="form-group">
-                                    <label> Lastname </label>
-                                    <input name="lastname"  type="text" class="form-control" value="<%- admin.lastname %>">
-                                 </div>
-                              </div>
-
-
-                              <div class="col-12 col-sm-6">
-                                 <div class="form-group">
-                                    <label> Username </label>
-                                    <input name="username"  type="text" class="form-control" value="<%- admin.username%>">
-                                 </div>
-                              </div>
+                             
                   
                             
                               <div class="col-12 col-sm-6">
                                  <div class="form-group">
                                     <label>Login Email </label>
-                                    <input name="email" type="email" class="form-control" value="<%- admin.email %>">
+                                    <input name="email" type="email" class="form-control" value="<%- user_data.email %>">
                                  </div>
                               </div>
                               <div class="col-12 col-sm-6">
                                  <div class="form-group">
+                                    <label>Disability</label>
+                                    <select name="disability" class="form-control">
+                                        <option value="">Select your disability</option>
+                                       
+                                        <option value="on" <% if(user_data.disability=='on'){ %> Selected <% } %>>On</option>
+                                        <option value="off" <% if(user_data.disability=='Off'){ %> Selected <% } %>>Off</option>
+                                    </select>
+                                 </div>
+                              </div>
+                              
+                              <div class="col-12 col-sm-6">
+                                 <div class="form-group">
                                     <label>Mobile</label>
-                                    <input name="contact"  type="text" value="<%- admin.contact %>"class="form-control">
+                                    <input name="contact"  type="text" value="<%- user_data.contact %>"class="form-control">
                                  </div>
                               </div>
              
@@ -341,25 +348,85 @@
                            <!-- <div class="col-12">
                               <div class="form-group">
                               <label>About</label>
-                                 <input name="about"  type="text" class="form-control" value="<%- admin.about %>">
+                                 <input name="about"  type="text" class="form-control" value="<%- user_data.about %>">
                               </div>
                            </div> -->
 
-                                  
+                           <div class="col-12 col-sm-6">
+                              <div class="form-group">
+                              <label>Birthday</label>
+                                 
+                              <input name="birthday_date"  type="text" class="form-control" value="<%- user_data.birthday_date %>">
+                              </div>
+                           </div>
+
 
                               <div class="col-12 col-sm-6">
                                  <div class="form-group">
                                  <label>Address</label>
-                                    <input name="address"  type="text" class="form-control" value="<%- admin.address %>">
+                                    
+                                 <input name="address"  type="text" class="form-control" value="<%- user_data.address %>">
                                  </div>
                               </div>
+
                               
-                              <div class="col-md-6 col-12">
-                                 <div class="form-group">
-                                 <label>Update Profile Picture </label>
-                                 <input  type="file"  class="form-control"  id="avatar" name="image" accept="image/png, image/jpeg" />
+                                 <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                       <label>Gender</label>
+                                       <select name="gender" class="form-control">
+                                           <option value="">Select your gender</option>
+                                           <option value="male" <% if(user_data.gender=='male'){ %> Selected <% } %>>Male</option>
+                                           <option value="female" <% if(user_data.gender=='female'){ %> Selected <% } %>>Female</option>
+                                           <option value="others"<% if(user_data.gender=='others'){ %> Selected <% } %>>Others</option>
+                                       </select>
+                                     </div>
                               </div>
-                           </div><br>
+
+                              <div class="col-12 col-sm-6">
+                                 <div class="form-group">
+                                    <label>State of Residence</label>
+                                  <select name="state" class="form-control">
+                                      <option value="" >Select your state</option>
+                                      <option value="andhra_pradesh" <% if(user_data.state=="andhra_pradesh"){ %> selected <%  } %> >Andhra Pradesh</option>
+                                      <option value="arunachal_pradesh" <% if(user_data.state=="arunachal_pradesh"){ %> selected <%  } %> >Arunachal Pradesh</option>
+                                      <option value="assam" <% if(user_data.state=="assam"){ %> selected <%  } %> >Assam</option>
+                                      <option value="bihar" <% if(user_data.state=="bihar"){ %> selected <%  } %> >Bihar</option>
+                                      <option value="chhattisgarh" <% if(user_data.state=="chhattisgarh"){ %> selected <%  } %> >Chhattisgarh</option>
+                                      <option value="goa" <% if(user_data.state=="goa"){ %> selected <%  } %> >Goa</option>
+                                      <option value="gujarat" <% if(user_data.state=="gujarat"){ %> selected <%  } %> >Gujarat</option>
+                                      <option value="haryana" <% if(user_data.state=="haryanaharyana"){ %> selected <%  } %> >Haryana</option>
+                                      <option value="himachal_pradesh" <% if(user_data.state=="himachal_pradesh"){ %> selected <%  } %> >Himachal Pradesh</option>
+                                      <option value="jharkhand" <% if(user_data.state=="jharkhand"){ %> selected <%  } %> >Jharkhand</option>
+                                      <option value="karnataka" <% if(user_data.state=="karnataka"){ %> selected <%  } %> >Karnataka</option>
+                                      <option value="kerala" <% if(user_data.state=="kerala"){ %> selected <%  } %> >Kerala</option>
+                                      <option value="madhya_pradesh" <% if(user_data.state=="madhya_pradesh"){ %> selected <%  } %> >Madhya Pradesh</option>
+                                      <option value="maharashtra" <% if(user_data.state==""){ %> selected <%  } %> >Maharashtra</option>
+                                      <option value="manipur" <% if(user_data.state=="manipur"){ %> selected <%  } %> >Manipur</option>
+                                      <option value="meghalaya" <% if(user_data.state=="meghalaya"){ %> selected <%  } %> >Meghalaya</option>
+                                      <option value="mizoram" <% if(user_data.state=="mizoram"){ %> selected <%  } %> >Mizoram</option>
+                                      <option value="nagaland" <% if(user_data.state=="nagaland"){ %> selected <%  } %> >Nagaland</option>
+                                      <option value="odisha" <% if(user_data.state=="odisha"){ %> selected <%  } %> >Odisha</option>
+                                      <option value="punjab" <% if(user_data.state=="punjab"){ %> selected <%  } %> >Punjab</option>
+                                      <option value="rajasthan" <% if(user_data.state=="rajasthan"){ %> selected <%  } %> >Rajasthan</option>
+                                      <option value="sikkim" <% if(user_data.state=="sikkim"){ %> selected <%  } %> >Sikkim</option>
+                                      <option value="tamil_nadu" <% if(user_data.state=="tamil_nadu"){ %> selected <%  } %> >Tamil Nadu</option>
+                                      <option value="telangana" <% if(user_data.state=="telangana"){ %> selected <%  } %> >Telangana</option>
+                                      <option value="tripura" <% if(user_data.state=="tripura"){ %> selected <%  } %> >Tripura</option>
+                                      <option value="uttar_pradesh" <% if(user_data.state=="uttar_pradesh"){ %> selected <%  } %> >Uttar Pradesh</option>
+                                      <option value="uttarakhand" <% if(user_data.state=="uttarakhand"){ %> selected <%  } %> >Uttarakhand</option>
+                                      <option value="west_bengal" <% if(user_data.state=="west_bengal"){ %> selected <%  } %> >West Bengal</option>
+                                  </select></div>
+                              </div>
+                              
+                              
+                           <!-- <div class="col-md-6 col-12">
+                              <div class="form-group">
+                              
+                                 <img alt="image" src="/uploads/<%-user_data.document %>"
+                                  style="width: 100px !important;">
+                           </div>
+                        </div> -->
+                           <br>
                            <div class="col-md-12 col-12" style="text-align: center;">
                               <button type="submit" class="btn btn-primary">Save Changes</button>
                               <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="closeEmailModal()">Close</button>

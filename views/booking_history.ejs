@@ -1,0 +1,157 @@
+<%- include ("uheader.ejs") %>
+<%- include ("unavbar.ejs") %>
+
+
+
+
+
+       
+      <!-- Main Content -->
+      <div class="main-content">
+        
+
+                    
+           
+
+        <section class="section">
+            <div class="fulls-headings">
+                <h4> <i class="fa fa-th-large" aria-hidden="true"></i>Booking History</h4>
+              </div>
+            <div class="row">
+                
+                <div class="fully-tables">
+                    <div class="table-reponsive box">
+                        <div id="example_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                            <div class="row">
+                                <table id="example" class="table table-striped table-bordered dataTable no-footer" role="grid" aria-describedby="example_info">
+                                    <thead>
+                                        <tr role="row">
+                                            <th style="width: 30px;">Sr. No</th>
+                                            <th style="width: 100px;">Event Title</th>
+                                            <th style="width: 100px;">Event Type</th>
+                                            <th style="width: 100px;">Event Date</th>
+                                            <th style="width: 100px;">Start Time</th>
+                                            <th style="width: 100px;">End Time</th>
+                                            <th style="width: 100px;">Venue Name</th>
+                                            <th style="width: 100px;">Venue Location</th>
+                                            <th style="width: 100px;">Max Participants</th>
+                                            <th style="width: 100px;">Description</th>
+                                            <th style="width: 100px;">Rules and Regulations</th>
+                                            <th style="width: 110px;">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>fsaddf</td>
+                                            <td>fdsafsd</td>
+                                            <td>fasfd</td>
+                                            <td>fasf</td>
+                                            <td>fasf</td>
+                                            <td>fasf</td>
+                                            <td>fasf</td>
+                                            <td>tewte</td>
+                                            <td>zxvxcv</td>
+                                            <td>ZVZV </td>
+                                            <td>
+                                                <div class="dropdown">
+                                                    <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        Payment
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>                            
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+      </div>
+      <footer class="main-footer">
+        <div class="footer-left">
+          Copyright © 2025  <a href="#">Spectrum Sports </a> All rights reserved
+        </div>
+        <div class="footer-right">
+        </div>
+      </footer>
+    </div>
+  </div>
+  <!-- General JS Scripts -->
+  <script src="/assets/js/app.min.js"></script>
+  <!-- JS Libraies -->
+  <script src="/assets/bundles/apexcharts/apexcharts.min.js"></script>
+  <!-- Page Specific JS File -->
+  <script src="/assets/js/page/index.js"></script>
+  <!-- Template JS File -->
+  <script src="/assets/js/scripts.js"></script>
+  <!-- Custom JS File -->
+  <script src="/assets/js/custom.js"></script>
+<!-- CANVAS CHART JS  SCRIPT START  CANVAS CHART JS  SCRIPT START  CANVAS CHART JS  SCRIPT START  -->
+<script>
+
+readmore = true;
+
+
+window.onload = function () {
+
+ DATAPOINTS =  document.getElementById('dataPoints').value; 
+ DATAPOINTS = JSON.parse(DATAPOINTS)
+
+ clientIp =  document.getElementById('clientIp').value; 
+
+ const timestamp = new Date().toString();
+   LastLogin = `From IP- ${clientIp} on ${timestamp} `;
+
+    var halfLength = Math.ceil(LastLogin.length / 4);
+
+    document.getElementById('lastlogin').innerText  =  LastLogin.substring(0, halfLength);
+
+   
+
+var chart = new CanvasJS.Chart("chartContainer", {
+  animationEnabled: true,
+  theme: "light2", // "light1", "light2", "dark1", "dark2"
+  title:{
+    text: "Top Interested Properties"
+  },
+  axisY: {
+    title: "Interest Count"
+  },
+  data: [{        
+    type: "column",  
+    showInLegend: true, 
+    legendMarkerColor: "grey",
+    legendText: "MyRentWish",
+    dataPoints: DATAPOINTS
+  }]
+});
+chart.render();
+
+}
+
+
+
+
+function toggleReadMore() {  
+    var readMoreContent = document.getElementById('readMoreContent');
+
+    // Toggle the display of the read more content
+    if (readmore == true) { 
+       lastlogin.style.display = 'inline';
+       document.getElementById('lastlogin').innerText  =  LastLogin
+       readmore = false; 
+
+    } else {
+      document.getElementById('lastlogin').innerText  =  LastLogin.substring(0, halfLength);  
+      readmore = true;    
+    }
+  }
+</script>
+</body>
+
+
+<!-- index  21 Nov 2019 03:47:04 GMT -->
+</html>
