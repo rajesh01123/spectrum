@@ -91,7 +91,7 @@ router.route('/addevent_name').post(isAuthenticatedAdmin,upload.single('image'),
 
 router.route('/addevent').get(isAuthenticatedAdmin,addevent);
 
-router.route('/event').post(isAuthenticatedAdmin,event);
+router.route('/event').post(isAuthenticatedAdmin,upload.single('image'),event);
 
 router.route('/viewevent').get(isAuthenticatedAdmin,viewevent);
 

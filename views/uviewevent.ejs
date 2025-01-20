@@ -15,38 +15,92 @@
                     <div class="fulls-headings">
                        <h4> <i class="fa fa-th-large" aria-hidden="true"></i>View Event</h4>
                      </div>
-            <div class="row ride-boxes">
-                <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-xs-12"></div>
-              <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                <div class="card">
-                  <div class="card-statistic-4">
-                    <div class="align-items-center justify-content-between">
-                      <div class="row ">
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pr-0 pt-3">
-                          <div class="card-content">
-                            <h5 class="font-15"><%- event_name %></h5>
-                            <h2 class="mb-3 font-14"><%=  %></h2>
-                            <a href="#" class="mb-0">
-                              <p class="mb-0 font-13"><span class="col-green"> Read  More</span></p>
-                              </a>
-                          </div>
-                        </div>
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0">
-                          <div class="banner-img">
-                            <img src="/images/4445205.jpg" style="height: 100px !important;" alt="">
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-xs-12"></div>
-            </div>
+                     <div class="container">
+                      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+                          
+                        <% for( var i= 0; i < event_data.length ; i++ ){ %>
+                          <!-- Total Users Card -->
+                          <a href="/uviewevent_details?event_deatil=<%- event_data[i].id %>">
+                            <div class="col">
+                              <div class="card h-100">
+                                <div class="card-img">
+                                  <img src="/uploads/<%- event_data[i].image %>" alt="Total Users" class="img-fluid" id="fixed-size">
+                                </div>
+                                <div class="card-body text-center">
+                                  <h4 class="card-title"><%- event_data[i].title %></h4>
+                                  <h6 class="card-text"><%- event_data[i].event_type %></h6>
+                                </div>
+                              </div>
+                            </div>
+                          </a>
+                          <% } %>
+
+                         <!-- Total Users Card -->
+                         <!-- <a href="/viewevent_details/">
+                           <div class="col">
+                             <div class="card h-100">
+                               <div class="card-img">
+                                 <img src="../assets/img/banner/rb_414.png" alt="Total Users" id="fixed-size" class="img-fluid">
+                               </div>
+                               <div class="card-body text-center">
+                                 <h4 class="card-title">Total Users</h4>
+                                 <h6 class="card-text">Total</h6>
+                               </div>
+                             </div>
+                           </div>
+                         </a> -->
+                             
+                         <!-- Total Events Card -->
+                         <!-- <a href="/viewevent_details">
+                           <div class="col">
+                             <div class="card h-100 shadow-sm">
+                               <div class="card-img">
+                                 <img src="../assets/img/banner/cricket-player.png" alt="Total Events" id="fixed-size" class="img-fluid">
+                               </div>
+                               <div class="card-body text-center">
+                                 <h4 class="card-title">Total Events</h4>
+                                 <h6 class="card-text">usernum</h6>
+                               </div>
+                             </div>
+                           </div>
+                         </a> -->
+                             
+                         <!-- Total Games Card -->
+                         <!-- <a href="/viewevent_details">
+                           <div class="col">
+                             <div class="card h-100 shadow-sm">
+                               <div class="card-img">
+                                 <img src="../assets/img/banner/33192.jpg" alt="Total Games" class="img-fluid" id="fixed-size">
+                               </div>
+                               <div class="card-body text-center">
+                                 <h4 class="card-title">Total Games</h4>
+                                 <h6 class="card-text">fdfsdfsad</h6>
+                               </div>
+                             </div>
+                           </div>
+                         </a> -->
+                             
+                         <!-- Leader Board Card -->
+                         <!-- <a href="/viewevent_details">
+                           <div class="col">
+                             <div class="card h-100 shadow-sm">
+                               <div class="card-img">
+                                 <img src="../assets/img/banner/banner-12.png" alt="Leader Board" id="fixed-size" class="img-fluid">
+                               </div>
+                               <div class="card-body text-center">
+                                 <h4 class="card-title">Leader Board</h4>
+                                 <h6 id="lastlogin" class="card-text font-11">fsdfsdaf</h6>
+                               </div>
+                             </div>
+                           </div>
+                         </a> -->
+                             
+                     </div>
+                   </div>
           </div>
           </section>
 
-        <section class="section">
+        <!-- <section class="section">
             <div class="row">
                 <div class="fully-tables">
                     <div class="table-reponsive box">
@@ -70,8 +124,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                      <!-- event_data -->
-                                        <!-- <tr>
+                                        <tr>
                                             <td>1</td>
                                             <td>fsaddf</td>
                                             <td>fdsafsd</td>
@@ -90,33 +143,7 @@
                                                     </button>
                                                 </div>
                                             </td>
-                                            
-                                        </tr> -->
-                                        <% for (var i=0; i < event_data.length; i++ ){ %>
-                                        <tr>
-                                          <td><%- i+1 %></td>
-                                          
-                                          <td><%= event_data[i].event_type %></td>
-                                          <td><%- event_data[i].participants %></td>
-                                          <td><%- event_data[i].date %></td>
-                                          <td><%- event_data[i].start_time %></td>
-                                          <td><%- event_data[i].end_time %></td>
-                                          <td><%- event_data[i].venue_name %></td>
-                                          <td><%- event_data[i].venue_location %></td>
-                                          <td><%- event_data[i].description %></td>
-                                          <td><%- event_data[i].rules %></td>
-                                          <td><%= event_data[i].title %></td>
-                                        
-                                         
-                                          <td>
-                                              <div class="dropdown">
-                                                  <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                      Payment
-                                                  </button>
-                                              </div>
-                                          </td>
-                                      </tr>
-                                      <% } %>
+                                        </tr>
                                     </tbody>                            
                                 </table>
                             </div>
@@ -124,7 +151,7 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </section> -->
       </div>
       <footer class="main-footer">
         <div class="footer-left">

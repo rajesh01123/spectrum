@@ -1007,6 +1007,14 @@ table#example thead tr th {
 }
 
 
+#fixed-size {
+    width: 200px;
+    height: 200px;
+    object-fit: contain; /* Keeps the aspect ratio, adding empty space if needed */
+    background-color: #f0f0f0; /* Optional: Adds background for smaller images */
+}
+
+
 
 /*---------------------Active Inactive  Switch ---------------------------*/
 .custom-switch {

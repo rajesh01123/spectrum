@@ -20,6 +20,37 @@
             <input type="hidden" id="clientIp"  value="<%= Data.clientIp %>">
 
             
+            <% if(event_cat){ %>
+            
+            <% for( var i=0; i<event_cat.length; i++){ %>
+            <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <div class="card">
+                <div class="card-statistic-4">
+                  <div class="align-items-center justify-content-between">
+                    <div class="row ">
+                      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pr-0 pt-3">
+                        <div class="card-content wow zoomin">
+                          <h5 class="font-15"><%- event_cat[i].name %></h5>
+                          <h2 class="mb-3 font-14"><%-  %></h2>
+                       
+                          <a href="uviewevent?event_type=<%- event_cat[i].name %>">
+                            <p class="mb-0 font-13"><span class="col-green"> Read  More</span></p>
+                            </a>
+                        </div>
+                      </div>
+                      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0">
+                        <div class="banner-img">
+                          <img src="/uploads/<%- event_cat[i].image %>" alt="">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+            </div>
+            <% } %>
+            <% }else{ %>
             
             <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
               <div class="card">
@@ -51,25 +82,23 @@
                   <div class="align-items-center justify-content-between">
                     <div class="row ">
                       <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pr-0 pt-3">
-                        <div class="card-content wow zoomin">
-                          <h5 class="font-15">whot</h5>
-                          <h2 class="mb-3 font-14"><%= Data.usernum %></h2>
-                       
-                          <a href="uviewevent?event_type=whot">
+                        <div class="card-content">
+                          <h5 class="font-15">Ludo</h5>
+                          <h2 class="mb-3 font-14"><%= Data.propsnum %></h2>
+                          <a href="uviewevent?event_type=ludo" class="mb-0">
                             <p class="mb-0 font-13"><span class="col-green"> Read  More</span></p>
                             </a>
                         </div>
                       </div>
                       <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0">
                         <div class="banner-img">
-                          <img src="/images/2558.jpg" alt="">
+                          <img src="/images/4445205.jpg" style="height: 100px !important;" alt="">
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-              
             </div>
             <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
               <div class="card">
@@ -122,7 +151,9 @@
                 </div>
               </div>
             </div> 
+            <% } %>
           </div>
+          
         </div>
 
         <!-- <div class="row">

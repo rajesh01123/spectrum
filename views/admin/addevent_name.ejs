@@ -33,10 +33,10 @@
         <div class="row">
             <div class="fully-tables">
                 <div class="cards-headers">
-                   <h4> Add Notification </h4>
+                   <h4> Add Games </h4>
                 </div>
 
-                <form action="/admin/addevent_name" method="post" enctype="multipart/form-data">
+                <form action="/admin/addevent_name" method="post" enctype="multipart/form-data" onsubmit="return validateInput()" >
                     <div class="form-group row">
 
                         <% if (output === 'Error in fetching user' || output === 'Failed to Update' ) { %>
@@ -52,8 +52,12 @@
                         
                         <div class="form-group add-admin col-md-12">
                             <label class="control-label" for="name">Event name</label>
-                            <input type="text" name="name" class="form-control required" placeholder="Enter the name" required>
+                            <input type="text" name="name" id="eventName" class="form-control required" placeholder="Enter the name" required>
                         </div>
+                        <div class="form-group add-admin col-md-12">
+                            <p id="error-msg" style="color: red; display: none;">Event name No spaces allowed!</p>
+                        </div>
+                        
                         <div class="form-group add-admin col-md-12">
                             <label class="control-label" for="name">Event image</label>
                             <input type="file" name="image" class="form-control required" placeholder="Enter the name" required>
@@ -70,7 +74,7 @@
         <div class="row">
             <div class="fully-tables">
                 <div class="cards-headers">
-                    <h4> View Notification </h4>
+                    <h4> View Games </h4>
                 </div>
                 <div class="table-reponsive box">
                     <div id="example_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
@@ -124,6 +128,19 @@
 
 <!-- General JS Scripts -->
 <script src="../assets/js/app.min.js"></script>
+
+<script>
+    function validateInput() {
+        var input = document.getElementById("eventName").value;
+        if (/\s/.test(input)) { // Checks if there is any space
+            document.getElementById("error-msg").style.display = "block";
+            return false; // Prevent form submission
+        } else {
+            document.getElementById("error-msg").style.display = "none";
+            return true;
+        }
+    }
+    </script>
 
 <!-- JS Libraies -->
 <script src="../assets/bundles/apexcharts/apexcharts.min.js"></script>

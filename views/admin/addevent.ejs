@@ -19,7 +19,7 @@
           <div class="col-md-12">
               <!-- alert msgs  -->
               <div class="full-forms py-1 px-1">
-                <form action="/admin/event" method="post">
+                <form action="/admin/event" method="post" enctype="multipart/form-data">
                   <div class="form-group row">
                     <% if (output === 'Error in fetching user' || output === 'Failed to Update' ) { %>
                       <div  class="alert alert-danger col-md-12">
@@ -33,7 +33,7 @@
                       <% } %>
 
                     <input type="hidden" name="user_id">
-                      <div class="form-group add-admin col-md-6">
+                      <div class="form-group add-admin col-md-4">
                         <label class="control-label" for="name">Event Type</label>
                         <select name="event_type" class="form-control">
                           <% console.log('event data',event_type); %>
@@ -47,9 +47,13 @@
                            
                         </select>
                       </div>
-                      <div class="form-group add-admin col-md-6">
+                      <div class="form-group add-admin col-md-4">
                         <label class="control-label" for="name">Event Title</label>
                         <input type="text" name="title" placeholder="Enter the Event Title" class="form-control" required>
+                      </div>
+                      <div class="form-group add-admin col-md-4">
+                        <label for="eventDescription" class="form-label"> Event Images</label>
+                        <input type="file" name="image"  class="form-control" required>
                       </div>
 
                       
@@ -77,14 +81,17 @@
                         <label class="control-label" for="name">Max Participants</label>
                         <input type="number" name="participants" placeholder="Enter the number" class="form-control" required>
                       </div>
+                      
                       <div class="form-group add-admin col-md-12">
                         <label for="eventDescription" class="form-label">Description</label>
                         <textarea class="form-control" id="summernote" name="description" rows="4" placeholder="Enter game description" required></textarea>
                       </div>
+                      
                       <div class="form-group add-admin col-md-12">
                         <label for="eventDescription" class="form-label">Rules and Regulations</label>
                         <textarea class="form-control" id="summernote1" name="rules" rows="4" placeholder="Enter game description" required></textarea>
                       </div>
+                      
                     <div class="form-group  add-admin mt-3 col-md-12" style="margin-bottom: 0px;">
                        <input type="submit" name="add" class="btn btn-primary" value="Submit" style="width: 10%;"> 
                     </div> 

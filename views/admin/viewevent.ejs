@@ -20,6 +20,8 @@
                                         <th style="width: 100px;">Event Title</th>
 
                                         <th style="width: 100px;">Event Type</th>
+                                        <th style="width: 100px;">Event Image</th>
+
                                         <th style="width: 100px;">Event Date</th>
                                         <th style="width: 100px;">Start Time</th>
                                         <th style="width: 100px;">End Time</th>
@@ -40,6 +42,8 @@
                                         <td><%- event[i].title %></td>
 
                                         <td><%- event[i].event_type %></td>
+                                        <td><img src="/uploads/<%- event[i].image %>" style="width:35px"></td>
+
                                         <td><%- event[i].date %></td>
                                        
                                         <td><%- event[i].start_time %></td>

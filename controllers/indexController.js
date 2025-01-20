@@ -29,9 +29,32 @@ const home = async(req,res,next)=>{
 }
 
 const dashboard= async(req,res,next)=>{
-  const Data ='';
-  res.render('dashboard',{Data});
+ 
+    const con = await connection();
+    
+    try{
+
+       await con.beginTransaction();
+       const Data='';
+
+       const[event_cat]= await con.query('SELECT * FROM `tbl_event_category` ORDER BY `id` DESC');
+
+       res.render('dashboard',{'event_cat':event_cat, Data });
+    
+    
+      await con.commit();
+    }catch(error){
+      await con.rollback();
+    console.log(error);
+    res.render('shine500');
+    }finally{
+       con.release();
+    
+    }
+    
+    
 }
+
 
 const uviewevent= async(req,res,next)=>{
   
@@ -42,7 +65,7 @@ const uviewevent= async(req,res,next)=>{
        await con.beginTransaction()
        const event_type=req.query.event_type;
        const [event_data]= await con.query('SELECT * FROM `tbl_event` WHERE event_type=?',[event_type]);
-       console.log('eventdata',event_data);
+       console.log('fetch data eventdata',event_data);
        res.render('uviewevent',{'event_data':event_data,'event_name':event_type});
     
     
@@ -58,6 +81,33 @@ const uviewevent= async(req,res,next)=>{
     
     
     }
+
+
+    const uviewevent_details = async(req,res,next)=>{
+  
+      const con = await connection();
+      
+      try{
+  
+         await con.beginTransaction();
+         const event_deatil=req.query.event_deatil;
+         const [event_data]= await con.query('SELECT * FROM `tbl_event` WHERE id=?',[event_deatil]);
+         console.log('fetch details id eventdata',event_data[0]);
+         res.render('uviewevent_details',{'event_data':event_data});
+      
+      
+        await con.commit();
+      }catch(error){
+        await con.rollback();
+      console.log(error);
+      res.render('shine500');
+      }finally{
+         con.release();
+      
+      }
+      
+      
+      }
 
 
   
@@ -676,7 +726,7 @@ res.render('login',{'output':'Logged Out !!'})
 
 
   //--------------------- Export Start ------------------------------------------
-export {uprofile_get, uprofile_post , uchangepass , home , login , login_post , regitation , regitation_post , forgot , forgotpost, otp,otp_verify, resset, resetpost, index ,indexpost, about , games, blog, contactpage , privacypolicy , termscondition, dashboard,logout,uterm,uprivacy, uviewevent, booking_history 
+export {uprofile_get, uprofile_post , uchangepass , home , login , login_post , regitation , regitation_post , forgot , forgotpost, otp,otp_verify, resset, resetpost, index ,indexpost, about , games, blog, contactpage , privacypolicy , termscondition, dashboard,logout,uterm,uprivacy, uviewevent,uviewevent_details, booking_history 
 }
 
 

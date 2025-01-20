@@ -1,0 +1,151 @@
+<%- include ("uheader.ejs") %>
+<%- include ("unavbar.ejs") %>
+
+      <!-- Main Content -->
+      <div class="main-content">
+        
+
+        <section class="section product-detail">
+            <div class="container">
+              <!-- Page Header -->
+              <div class="row mb-4">
+                <div class="col text-center">
+                  <h2 class="page-title"><i class="fa fa-th-large" aria-hidden="true"></i> Event Details</h2>
+                </div>
+              </div>
+          
+              <!-- Product Detail Card -->
+              <div class="row" style="border: 2px solid #000;border-radius: 5px;">
+                <div class="col-md-6">
+                  <!-- Product Image -->
+                  <div class="product-image">
+                    <img src="/uploads/<%- event_data[0].image %>" alt="Event Image" class="img-fluid rounded shadow-sm">
+                  </div>
+                </div>
+                <div class="col-md-6"><br/>
+                  <!-- Product Info -->
+                  <div class="product-info">
+                    <h3 class="product-title"><%- event_data[0].title %></h3>
+                    <p class="product-description"><%- event_data[0].description %></p>
+                    
+                    <!-- Product Details -->
+
+                    <ul class="list-group mb-3">
+                      <li class="list-group-item"><strong>Name:</strong> <%- event_data[0].venue_name %></li>
+                      <li class="list-group-item"><strong>Participants:</strong> <%- event_data[0].participants %></li>
+                      <li class="list-group-item"><strong> Date:</strong> <%- event_data[0].date %></li>
+                      <li class="list-group-item"><strong>Start Time:</strong> <%- event_data[0].start_time %></li>
+                      <li class="list-group-item"><strong> End_time:</strong> <%- event_data[0].start_time %></li>
+                      <li class="list-group-item"><strong> Start Date:</strong> <%- event_data[0].start_time %></li>
+                      <li class="list-group-item"><strong>Location:</strong> <%- event_data[0].venue_location %></li>
+                     
+                    </ul>
+          
+                    <!-- Action Buttons -->
+                    <div class="product-actions">
+                      <a href="/register_event" class="btn btn-primary btn-lg mb-2"><i class="fa fa-check-circle"></i> Register</a>
+                      <a href="/events" class="btn btn-secondary btn-lg"><i class="fa fa-arrow-left"></i> Back to Events</a>
+                    </div>
+                  </div>
+                </div><hr style="border:1px solid #000;width: 100%;">
+                
+                <!-- Additional Information -->
+                <div class="row mt-5" style="padding: 0 30px 0px 30px;">
+                    <div class="col">
+                    <h4>Rules and Regulations</h4>
+                    <p><%- event_data[0].rules %></p>
+                    </div>
+                </div>
+
+              </div>
+            </div>
+          </section>
+          
+
+        
+      </div>
+      <footer class="main-footer">
+        <div class="footer-left">
+          Copyright © 2025  <a href="#">Spectrum Sports </a> All rights reserved
+        </div>
+        <div class="footer-right">
+        </div>
+      </footer>
+    </div>
+  </div>
+  <!-- General JS Scripts -->
+  <script src="/assets/js/app.min.js"></script>
+  <!-- JS Libraies -->
+  <script src="/assets/bundles/apexcharts/apexcharts.min.js"></script>
+  <!-- Page Specific JS File -->
+  <script src="/assets/js/page/index.js"></script>
+  <!-- Template JS File -->
+  <script src="/assets/js/scripts.js"></script>
+  <!-- Custom JS File -->
+  <script src="/assets/js/custom.js"></script>
+<!-- CANVAS CHART JS  SCRIPT START  CANVAS CHART JS  SCRIPT START  CANVAS CHART JS  SCRIPT START  -->
+<script>
+
+readmore = true;
+
+
+window.onload = function () {
+
+ DATAPOINTS =  document.getElementById('dataPoints').value; 
+ DATAPOINTS = JSON.parse(DATAPOINTS)
+
+ clientIp =  document.getElementById('clientIp').value; 
+
+ const timestamp = new Date().toString();
+   LastLogin = `From IP- ${clientIp} on ${timestamp} `;
+
+    var halfLength = Math.ceil(LastLogin.length / 4);
+
+    document.getElementById('lastlogin').innerText  =  LastLogin.substring(0, halfLength);
+
+   
+
+var chart = new CanvasJS.Chart("chartContainer", {
+  animationEnabled: true,
+  theme: "light2", // "light1", "light2", "dark1", "dark2"
+  title:{
+    text: "Top Interested Properties"
+  },
+  axisY: {
+    title: "Interest Count"
+  },
+  data: [{        
+    type: "column",  
+    showInLegend: true, 
+    legendMarkerColor: "grey",
+    legendText: "MyRentWish",
+    dataPoints: DATAPOINTS
+  }]
+});
+chart.render();
+
+}
+
+
+
+
+function toggleReadMore() {  
+    var readMoreContent = document.getElementById('readMoreContent');
+
+    // Toggle the display of the read more content
+    if (readmore == true) { 
+       lastlogin.style.display = 'inline';
+       document.getElementById('lastlogin').innerText  =  LastLogin
+       readmore = false; 
+
+    } else {
+      document.getElementById('lastlogin').innerText  =  LastLogin.substring(0, halfLength);  
+      readmore = true;    
+    }
+  }
+</script>
+</body>
+
+
+<!-- index  21 Nov 2019 03:47:04 GMT -->
+</html>

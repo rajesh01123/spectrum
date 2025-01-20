@@ -653,6 +653,12 @@ const viewevent = async(req,res,next)=>{
 const event=async(req,res,next)=>{
   const con= await connection();
   console.log(req.body);
+  if (req.file) {
+    const image =  req.file.filename ;
+    const imagePath=  req.file.path ;   
+  }
+ 
+   console.log( req.file.filename);
   
   const{event_type,participants,date,start_time,end_time,venue_name,venue_location,description,title,rules}=req.body;
 
@@ -663,9 +669,9 @@ const event=async(req,res,next)=>{
   try{
     await con.beginTransaction();
    
-    await con.query('INSERT INTO `tbl_event`( `event_type`, `participants`, `date`, `start_time`, `end_time`, `venue_name`, `venue_location`, `description`,`title`,`rules`) VALUES ( ?,?,?,?,?,?,?,?,?,? )',[event_type,participants,date,start_time,end_time,venue_name,venue_location,description,title,rules]);
+    await con.query('INSERT INTO `tbl_event`( `event_type`, `participants`, `date`, `start_time`, `end_time`, `venue_name`, `venue_location`, `description`,`title`,`rules`,`image`) VALUES ( ?,?,?,?,?,?,?,?,?,?,? )',[event_type,participants,date,start_time,end_time,venue_name,venue_location,description,title,rules,req.file.filename]);
   
-    const [event_types]= await con.query('SELECT * FROM `tbl_event_category`');
+    const [event_types]= await con.query('SELECT * FROM `tbl_event` ORDER BY `id` DESC');
 
     console.log('event add succees full')
   
