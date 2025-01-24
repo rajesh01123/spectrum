@@ -4,6 +4,13 @@ import connection from '../config.js';
 import { sendTokenAdmin, sendTokenUser } from '../utils/jwtToken.js';
 import { sendOTPFornewPass } from '../middleware/helper.js';
 import upload from '../middleware/upload.js';
+import dotenv from 'dotenv' 
+
+import paypal from 'paypal-rest-sdk';
+// require('dotenv').config({ path: './config.env' }); // Load config.env
+dotenv.config({path:"./config.env"});
+
+// const paypal = require('paypal-rest-sdk');
 
 // import { image } from 'pdfkit';
 import jwt from 'jsonwebtoken';
@@ -16,7 +23,13 @@ import cookieParser from 'cookie-parser';
 
 
  
+const { PAYPAL_MODE, PAYPAL_CLIENT_KEY, PAYPAL_SECRET_KEY } = process.env;
 
+paypal.configure({
+  'mode': PAYPAL_MODE, //sandbox or live
+  'client_id': PAYPAL_CLIENT_KEY,
+  'client_secret': PAYPAL_SECRET_KEY
+});
 
 
 
@@ -693,6 +706,169 @@ const uchangepass = async (req, res, next) => {
 // }
 
 
+// </---------------------event registation--------------------------------\>
+
+
+const event_ragitation = async(req,res,next)=>{
+
+console.log('event registation');
+const con = await connection();
+
+try{
+   await con.beginTransaction()
+
+   res.render('event_regitation', {'output':''});
+  await con.commit();
+}catch(error){
+  await con.rollback();
+console.log(error);
+res.render('shine500');
+}finally{
+   con.release();
+
+}
+
+}
+
+
+
+// </------------------------|  payment detail   |-------------------
+
+
+
+const payProduct = async(req,res)=>{
+
+  try {
+      
+      const create_payment_json = {
+          "intent": "sale",
+          "payer": {
+              "payment_method": "paypal"
+          },
+          "redirect_urls": {
+              "return_url": "http://localhost:3000/success",
+              "cancel_url": "http://localhost:3000/cancel"
+          },
+          "transactions": [{
+              "item_list": {
+                  "items": [{
+                      "name": "Book",
+                      "sku": "001",
+                      "price": "25.00",
+                      "currency": "USD",
+                      "quantity": 1
+                  }]
+              },
+              "amount": {
+                  "currency": "USD",
+                  "total": "25.00"
+              },
+              "description": "Hat for the best team ever"
+          }]
+      };
+
+      paypal.payment.create(create_payment_json, function (error, payment) {
+          if (error) {
+              throw error;
+          } else {
+              for(let i = 0;i < payment.links.length;i++){
+                if(payment.links[i].rel === 'approval_url'){
+                  res.redirect(payment.links[i].href);
+                }
+              }
+          }
+        });
+
+  } catch (error) {
+      console.log(error);
+      res.render('shine500');
+  }
+
+}
+
+// const success = async(req,res,next)=>{
+//   const con = await connection();
+
+//   try{
+//     res.render('succes');
+
+//   }catch(error){
+//     console.log(error);
+//     res.render('shine500');
+
+//   }
+
+// }
+
+
+const success = async (req, res) => {
+  const con = await connection(); // Get MySQL connection pool
+  try {
+    const { paymentId, PayerID } = req.query;
+
+    // Setup PayPal payment execution
+    const execute_payment_json = {
+      payer_id: PayerID,
+      transactions: [{
+        amount: {
+          currency: "USD",
+          total: "25.00" // Same as payment total
+        }
+      }]
+    };
+
+    // Execute PayPal payment
+    paypal.payment.execute(paymentId, execute_payment_json, async function (error, payment) {
+      if (error) {
+        console.error(error);
+        res.status(500).send('Payment execution failed');
+      } else {
+        // Check payment status
+        if (payment.state === 'approved') {
+          // Assuming user details are stored in `req.user`
+          const userDetails = req.user;
+
+          try {
+            // Insert into MySQL database using a promise-based query
+            const result = await con.promise().query(
+              'INSERT INTO `tbl_booking`(`user_name`, `email`, `payment`, `status`, `event_type`, `event_name`) VALUES (?, ?, ?, ?, ?, ?)',
+              [userDetails.user_name, userDetails.email, '25', 'complete', 'game', 'game']
+            );
+            console.log('User data inserted:', result);
+            res.send('Payment successful! User details saved.');
+          } catch (dbError) {
+            console.error('Error inserting user into database:', dbError);
+            res.status(500).send('Database error');
+          }
+        } else {
+          res.send('Payment not approved.');
+        }
+      }
+    });
+  } catch (error) {
+    console.error('Error processing payment:', error);
+    // res.status(500).send('Error processing payment');
+    res.render('shine500');
+  }
+};
+
+const cancel = async(req,res,next)=>{
+  const con = await connection();
+
+  try{
+    res.render('cancel');
+
+  }catch(error){
+    console.log(error);
+    res.render('shine500');
+
+  }
+
+}
+
+
+
+
 
 
 
@@ -726,7 +902,7 @@ res.render('login',{'output':'Logged Out !!'})
 
 
   //--------------------- Export Start ------------------------------------------
-export {uprofile_get, uprofile_post , uchangepass , home , login , login_post , regitation , regitation_post , forgot , forgotpost, otp,otp_verify, resset, resetpost, index ,indexpost, about , games, blog, contactpage , privacypolicy , termscondition, dashboard,logout,uterm,uprivacy, uviewevent,uviewevent_details, booking_history 
+export { uprofile_get, uprofile_post , uchangepass , home , login , login_post , regitation , regitation_post , forgot , forgotpost, otp,otp_verify, resset, resetpost, index ,indexpost, about , games, blog, contactpage , privacypolicy , termscondition, dashboard,logout,uterm,uprivacy, uviewevent,uviewevent_details, booking_history, event_ragitation ,payProduct,success,cancel
 }
 
 

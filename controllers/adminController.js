@@ -660,7 +660,8 @@ const event=async(req,res,next)=>{
  
    console.log( req.file.filename);
   
-  const{event_type,participants,date,start_time,end_time,venue_name,venue_location,description,title,rules}=req.body;
+  const{event_type,participants,date,start_time,end_time,venue_name,venue_location,description,title,rules,price}=req.body;
+  console.log("price",price);
 
 
 
@@ -669,7 +670,7 @@ const event=async(req,res,next)=>{
   try{
     await con.beginTransaction();
    
-    await con.query('INSERT INTO `tbl_event`( `event_type`, `participants`, `date`, `start_time`, `end_time`, `venue_name`, `venue_location`, `description`,`title`,`rules`,`image`) VALUES ( ?,?,?,?,?,?,?,?,?,?,? )',[event_type,participants,date,start_time,end_time,venue_name,venue_location,description,title,rules,req.file.filename]);
+    await con.query('INSERT INTO `tbl_event`( `event_type`, `participants`, `date`, `start_time`, `end_time`, `venue_name`, `venue_location`, `description`,`title`,`rules`,`image`,`price`) VALUES ( ?,?,?,?,?,?,?,?,?,?,?,? )',[event_type,participants,date,start_time,end_time,venue_name,venue_location,description,title,rules,req.file.filename,price]);
   
     const [event_types]= await con.query('SELECT * FROM `tbl_event` ORDER BY `id` DESC');
 
@@ -752,13 +753,15 @@ const editevent = async(req,res,next)=>{
 }
 const edit_event_post = async(req,res,next)=>{
   const con = await connection();
-  const {event_id,event_type,participants,date,start_time,end_time,venue_name,venue_location,description,title,rules}=req.body;
+  const {event_id,event_type,participants,date,start_time,end_time,venue_name,venue_location,description,title,rules,price}=req.body;
+
+  console.log("price",price);
 
 
 
   try{
 
-    await con.query('UPDATE `tbl_event` SET `event_type`=?,`participants`=?,`date`=?,`start_time`=?,`end_time`=?,`venue_name`=?,`venue_location`=?,`description`=?,title=?,rules=? WHERE `id`=?',[event_type,participants,date,start_time,end_time,venue_name,venue_location,description,title,rules,event_id]);
+    await con.query('UPDATE `tbl_event` SET `event_type`=?,`participants`=?,`date`=?,`start_time`=?,`end_time`=?,`venue_name`=?,`venue_location`=?,`description`=?,title=?,rules=?,price=? WHERE `id`=?',[event_type,participants,date,start_time,end_time,venue_name,venue_location,description,title,rules,price,event_id]);
 
     const [event] =await con.query('SELECT * FROM `tbl_event` ');
     
@@ -782,7 +785,7 @@ const edit_event_post = async(req,res,next)=>{
 
 // const eventtype =async(req,res,next)=>{
 
-//   res.render('eventtype',{'output':''});
+//   res.render('eventtype',{'output':''});  
 
 // }
 

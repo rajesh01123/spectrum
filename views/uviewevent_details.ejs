@@ -35,15 +35,22 @@
                       <li class="list-group-item"><strong>Participants:</strong> <%- event_data[0].participants %></li>
                       <li class="list-group-item"><strong> Date:</strong> <%- event_data[0].date %></li>
                       <li class="list-group-item"><strong>Start Time:</strong> <%- event_data[0].start_time %></li>
-                      <li class="list-group-item"><strong> End_time:</strong> <%- event_data[0].start_time %></li>
-                      <li class="list-group-item"><strong> Start Date:</strong> <%- event_data[0].start_time %></li>
+                      <li class="list-group-item"><strong> End_time:</strong> <%- event_data[0].End_time %></li>
+                      <li class="list-group-item"><strong> Participants price:</strong> <%- event_data[0].price %></li>
+                      <!-- <li class="list-group-item"><strong> Start Date:</strong> <%- //event_data[0].start_time %></li> -->
                       <li class="list-group-item"><strong>Location:</strong> <%- event_data[0].venue_location %></li>
+                     
+
                      
                     </ul>
           
                     <!-- Action Buttons -->
                     <div class="product-actions">
-                      <a href="/register_event" class="btn btn-primary btn-lg mb-2"><i class="fa fa-check-circle"></i> Register</a>
+                      <form action="pay" method="post">
+                        <input type="submit" name="submit" value="submit" class="btn btn-primary btn-lg mb-2">
+                     
+                      </form>   
+                      <!-- <a href="/event_regitation" class="btn btn-primary btn-lg mb-2"><i class="fa fa-check-circle"></i> Register</a> -->
                       <a href="/events" class="btn btn-secondary btn-lg"><i class="fa fa-arrow-left"></i> Back to Events</a>
                     </div>
                   </div>

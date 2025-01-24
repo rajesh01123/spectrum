@@ -3,7 +3,7 @@ import {isAuthenticatedUser} from '../middleware/auth.js' ;
 
 
 
-import { home, index, about, games, blog, contactpage, uviewevent, booking_history, privacypolicy, termscondition, indexpost, login, regitation, regitation_post, login_post, resset, forgot, forgotpost, otp, otp_verify, resetpost, dashboard, logout, uterm, uprivacy, uprofile_get, uprofile_post, uchangepass, uviewevent_details } from '../controllers/indexController.js';
+import { home, index, about, games, blog, contactpage, uviewevent, booking_history, privacypolicy, termscondition, indexpost, login, regitation, regitation_post, login_post, resset, forgot, forgotpost, otp, otp_verify, resetpost, dashboard, logout, uterm, uprivacy, uprofile_get, uprofile_post, uchangepass, uviewevent_details, event_ragitation, payProduct, success, cancel } from '../controllers/indexController.js';
 import upload from '../middleware/upload.js';
 
 
@@ -46,9 +46,13 @@ router.route('/dashboard').get(isAuthenticatedUser,dashboard);
 
 router.route('/booking_history').get(isAuthenticatedUser,booking_history);
 
+router.route('/event_regitation').get(isAuthenticatedUser, event_ragitation);
+
 router.route('/uviewevent').get(isAuthenticatedUser,uviewevent);
 
 router.route('/uviewevent_details').get(isAuthenticatedUser,uviewevent_details);
+
+
 
 
 
@@ -92,6 +96,15 @@ router.route('/logout').get(logout);
 router.route('/user_term').get(uterm);
 
 router.route('/user_privacy').get(uprivacy);
+
+router.route('/pay').post(isAuthenticatedUser,payProduct);
+
+router.route('/succes').get(isAuthenticatedUser , success);
+
+router.route('/cancel').get(isAuthenticatedUser , cancel);
+
+
+
 
 
 

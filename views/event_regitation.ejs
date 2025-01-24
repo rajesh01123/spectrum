@@ -1,11 +1,11 @@
-<%- include ("header.ejs") %>
-<%- include ("navbar.ejs") %>
+<%- include ("uheader.ejs") %>
+<%- include ("unavbar.ejs") %>
 
-<style>
+<!-- <style>
   .form-group.add-admin {
     margin-bottom: 0px !important;
 }
-</style>
+</style> -->
 
 <!-- Main Content -->
  <div class="main-content">
@@ -33,20 +33,20 @@
                       <% } %>
 
                     <input type="hidden" name="user_id">
-                      <div class="form-group add-admin col-md-4">
+                      <!-- <div class="form-group add-admin col-md-4">
                         <label class="control-label" for="name">Event Type</label>
                         <select name="event_type" class="form-control">
-                          <% console.log('event data',event_type); %>
+                          
                             <option value="">Select your type</option>
-                            <% for(var j = 0; j<event_type.length; j++ ){ %>
+                            <% //for(var j = 0; j<event_type.length; j++ ){ %>
                              
-                            <option value="<%- event_type[j].name %>"><%- event_type[j].name %></option>
+                            <option value="<%- //event_type[j].name %>"><%- //event_type[j].name %></option>
                            
                             
-                            <% } %>
+                            <% //} %>
                            
                         </select>
-                      </div>
+                      </div> -->
                       <div class="form-group add-admin col-md-4">
                         <label class="control-label" for="name">Event Title</label>
                         <input type="text" name="title" placeholder="Enter the Event Title" class="form-control" required>
@@ -68,10 +68,6 @@
                       <div class="form-group add-admin col-md-4">
                         <label class="control-label" for="name">End Time</label>
                         <input type="time" name="end_time" class="form-control required" required>
-                      </div>
-                      <div class="form-group add-admin col-md-4">
-                        <label class="control-label" for="name">Participant's Price</label>
-                        <input type="number" name="price" placeholder="Enter  Participant's Price" class="form-control" required>
                       </div>
                       <div class="form-group add-admin col-md-4">
                         <label class="control-label" for="name">Venue Name</label>
@@ -119,15 +115,15 @@
     </div>
   </div>
   <!-- General JS Scripts -->
-  <script src="../assets/js/app.min.js"></script>
+  <script src="assets/js/app.min.js"></script>
   <!-- JS Libraies -->
-  <script src="../assets/bundles/apexcharts/apexcharts.min.js"></script>
+  <script src="assets/bundles/apexcharts/apexcharts.min.js"></script>
   <!-- Page Specific JS File -->
-  <script src="../assets/js/page/index.js"></script>
+  <script src="assets/js/page/index.js"></script>
   <!-- Template JS File -->
-  <script src="../assets/js/scripts.js"></script>
+  <script src="assets/js/scripts.js"></script>
   <!-- Custom JS File -->
-  <script src="../assets/js/custom.js"></script>
+  <script src="assets/js/custom.js"></script>
 </body>
 
 
