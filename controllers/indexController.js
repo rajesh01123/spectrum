@@ -25,12 +25,22 @@ import cookieParser from 'cookie-parser';
  
 const { PAYPAL_MODE, PAYPAL_CLIENT_KEY, PAYPAL_SECRET_KEY } = process.env;
 
+console.log('paypal mode',PAYPAL_MODE);
+
 paypal.configure({
   'mode': PAYPAL_MODE, //sandbox or live
   'client_id': PAYPAL_CLIENT_KEY,
   'client_secret': PAYPAL_SECRET_KEY
 });
 
+
+paypal.payment.list({ count: 1 }, function (error, payments) {
+  if (error) {
+    console.error("❌ PayPal API Authentication Failed:", error.response);
+  } else {
+    console.log("✅ PayPal API Connected Successfully!");
+  }
+});
 
 
 
@@ -736,119 +746,99 @@ res.render('shine500');
 
 
 
-const payProduct = async(req,res)=>{
-
+const payProduct = async (req, res, next) => {
   try {
-      
-      const create_payment_json = {
-          "intent": "sale",
-          "payer": {
-              "payment_method": "paypal"
-          },
-          "redirect_urls": {
-              "return_url": "http://localhost:3000/success",
-              "cancel_url": "http://localhost:3000/cancel"
-          },
-          "transactions": [{
-              "item_list": {
-                  "items": [{
-                      "name": "Book",
-                      "sku": "001",
-                      "price": "25.00",
-                      "currency": "USD",
-                      "quantity": 1
-                  }]
-              },
-              "amount": {
-                  "currency": "USD",
-                  "total": "25.00"
-              },
-              "description": "Hat for the best team ever"
-          }]
-      };
-
-      paypal.payment.create(create_payment_json, function (error, payment) {
-          if (error) {
-              throw error;
-          } else {
-              for(let i = 0;i < payment.links.length;i++){
-                if(payment.links[i].rel === 'approval_url'){
-                  res.redirect(payment.links[i].href);
-                }
-              }
-          }
-        });
-
-  } catch (error) {
-      console.log(error);
-      res.render('shine500');
-  }
-
-}
-
-// const success = async(req,res,next)=>{
-//   const con = await connection();
-
-//   try{
-//     res.render('succes');
-
-//   }catch(error){
-//     console.log(error);
-//     res.render('shine500');
-
-//   }
-
-// }
-
-
-const success = async (req, res) => {
-  const con = await connection(); // Get MySQL connection pool
-  try {
-    const { paymentId, PayerID } = req.query;
-
-    // Setup PayPal payment execution
-    const execute_payment_json = {
-      payer_id: PayerID,
+    const create_payment_json = {
+      intent: "sale",
+      payer: { payment_method: "paypal" },
+      redirect_urls: {
+        return_url: "http://localhost:3000/success",
+        cancel_url: "http://localhost:3000/cancel"
+      },
       transactions: [{
-        amount: {
-          currency: "USD",
-          total: "25.00" // Same as payment total
-        }
+        item_list: { items: [{ name: "Book", sku: "001", price: "25.00", currency: "USD", quantity: 1 }] },
+        amount: { currency: "USD", total: "25.00" },
+        description: "Hat for the best team ever"
       }]
     };
 
-    // Execute PayPal payment
-    paypal.payment.execute(paymentId, execute_payment_json, async function (error, payment) {
-      if (error) {
-        console.error(error);
-        res.status(500).send('Payment execution failed');
-      } else {
-        // Check payment status
-        if (payment.state === 'approved') {
-          // Assuming user details are stored in `req.user`
-          const userDetails = req.user;
+    console.log(" Sending PayPal Payment Request...");
 
-          try {
-            // Insert into MySQL database using a promise-based query
-            const result = await con.promise().query(
-              'INSERT INTO `tbl_booking`(`user_name`, `email`, `payment`, `status`, `event_type`, `event_name`) VALUES (?, ?, ?, ?, ?, ?)',
-              [userDetails.user_name, userDetails.email, '25', 'complete', 'game', 'game']
-            );
-            console.log('User data inserted:', result);
-            res.send('Payment successful! User details saved.');
-          } catch (dbError) {
-            console.error('Error inserting user into database:', dbError);
-            res.status(500).send('Database error');
+    paypal.payment.create(create_payment_json, function (error, payment) {
+      if (error) {
+        console.error(" PayPal Payment Creation Error:", error.response);
+        return res.status(500).send("PayPal payment failed.");
+      } else {
+        console.log(" Payment Created Successfully:", payment);
+
+        for (let i = 0; i < payment.links.length; i++) {
+          if (payment.links[i].rel === "approval_url") {
+            console.log("🔗 Redirecting to:", payment.links[i].href);
+            return res.redirect(payment.links[i].href);
           }
-        } else {
-          res.send('Payment not approved.');
         }
       }
     });
+
   } catch (error) {
-    console.error('Error processing payment:', error);
-    // res.status(500).send('Error processing payment');
-    res.render('shine500');
+    console.error("Error in payProduct function:", error);
+    res.status(500).send("Internal server error.");
+  }
+};
+
+
+
+
+const success = async (req, res) => {
+  const con = await connection(); // MySQL connection
+  try {
+    const { paymentId, PayerID } = req.query;
+
+    console.log(" Payment Successful, Executing Payment...");
+
+    const execute_payment_json = {
+      payer_id: PayerID,
+      transactions: [{ amount: { currency: "USD", total: "25.00" } }]
+    };
+
+    paypal.payment.execute(paymentId, execute_payment_json, async function (error, payment) {
+      if (error) {
+        console.error(" PayPal Payment Execution Error:", error.response);
+        return res.status(500).send("Payment execution failed.");
+      } else {
+        console.log("Payment Executed Successfully:", payment);
+
+        if (payment.state === "approved") {
+          console.log("Payment Approved! Saving user details to database...");
+
+          const userDetails = req.user; // Ensure req.user is not undefined
+          if (!userDetails) {
+            console.error(" User details missing in request!");
+            return res.status(400).send("User details are missing.");
+          }
+
+          try {
+            const [result] = await con.promise().query(
+              "INSERT INTO `tbl_booking` (`user_name`, `email`, `payment`, `status`, `event_type`, `event_name`) VALUES (?, ?, ?, ?, ?, ?)",
+              [userDetails.user_name, userDetails.email, "25", "complete", "game", "game"]
+            );
+
+            console.log("✅ User data inserted into database:", result);
+            res.send("Payment successful! User details saved.");
+          } catch (dbError) {
+            console.error(" Database Insert Error:", dbError);
+            res.status(500).send("Database error.");
+          }
+        } else {
+          console.log(" Payment Not Approved");
+          res.send("Payment not approved.");
+        }
+      }
+    });
+
+  } catch (error) {
+    console.error("❌ Error Processing Payment:", error);
+    res.status(500).send("Internal server error.");
   }
 };
 
@@ -865,6 +855,21 @@ const cancel = async(req,res,next)=>{
   }
 
 }
+
+
+// const success = async(req,res,next)=>{
+//   const con = await connection();
+
+//   try{
+//     res.render('succes');
+
+//   }catch(error){
+//     console.log(error);
+//     res.render('shine500');
+
+//   }
+
+// }
 
 
 

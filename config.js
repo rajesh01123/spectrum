@@ -6,7 +6,7 @@ const pool = mysql.createPool({
   password: 'Kil@123456',
   // password: '',
 
-  port: '3306',
+  // port: '3306',
   database: 'spectrum',
   waitForConnections: true, // Enable queueing
   connectionLimit: 100, // Set an appropriate limit

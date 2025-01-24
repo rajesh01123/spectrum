@@ -23,7 +23,9 @@
             <% if(event_cat){ %>
             
             <% for( var i=0; i<event_cat.length; i++){ %>
+              
             <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+              <a href="uviewevent?event_type=<%- event_cat[i].name %>">
               <div class="card">
                 <div class="card-statistic-4">
                   <div class="align-items-center justify-content-between">
@@ -32,10 +34,8 @@
                         <div class="card-content wow zoomin">
                           <h5 class="font-15"><%- event_cat[i].name %></h5>
                           <h2 class="mb-3 font-14"><%-  %></h2>
-                       
-                          <a href="uviewevent?event_type=<%- event_cat[i].name %>">
                             <p class="mb-0 font-13"><span class="col-green"> Read  More</span></p>
-                            </a>
+                            
                         </div>
                       </div>
                       <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pl-0">
@@ -47,8 +47,10 @@
                   </div>
                 </div>
               </div>
+            </a>
               
             </div>
+          
             <% } %>
             <% }else{ %>
             
