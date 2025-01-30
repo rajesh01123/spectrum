@@ -318,7 +318,7 @@ const login_post=async(req,res,next)=>{
 
     }else if(user.password != password){
 
-      res.render('login',{'output':'user password wrong'});
+      res.render('login',{'output':'wrong_password'});
     
     }else{
 

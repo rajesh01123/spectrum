@@ -70,16 +70,26 @@
                     <div class="contact_form bg-light">
                         <div id="message">
                             <h1>Login</h1>
-                            <% if(output){%>
+                            <% if(output=='envalid user'){%>
+                                <p style="color: red; font-size: 16px; font-weight: bold; text-align: center; background: #ffe6e6; padding: 10px; border: 1px solid red; border-radius: 5px;">
+                                    ⚠️ Invalid user! Please check your credentials and try again.
+                                </p>
+                            <
+                           
 
-                            <p><%= output %></p>
 
-
-                          <%  }else{ %>
+                          <%  }else if (output=='wrong_password'){ %>
                             
-                            <p>Please enter your email and password</p>
+                            <p style="color: red; font-size: 16px; font-weight: bold; text-align: center; background: #ffe6e6; padding: 10px; border: 1px solid red; border-radius: 5px;">
+                                ❌ Wrong password! Please try again.
+                            </p>
                         
-                            <% } %>
+                            <% }else{ %>
+                                <p style="color: #555555; font-size: 16px; font-weight: normal; text-align: center; background: #e0f7fa; padding: 10px; border: 1px solid #26c6da; border-radius: 5px;">
+                                    📧 Please enter your email and password to continue.
+                                </p>
+
+                         <%   } %>
                         </div>
                        
                         <form id="contactform" class="" action="login" name="contactform" method="post">
