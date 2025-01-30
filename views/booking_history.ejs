@@ -9,17 +9,30 @@
       <!-- Main Content -->
       <div class="main-content">
         
-
+       
                     
            
 
         <section class="section">
+
+          <% if (output === 'Error in fetching user' || output === 'Failed to Update' ) { %>
+            <div  class="alert alert-danger">
+                <%= output %>
+            </div>
+            <% }else if(output===''){
+            } else { %>
+            <div class="alert alert-success mb-1">
+                <%= output %>
+            </div>                                   
+            <% } %>
             <div class="fulls-headings">
                 <h4> <i class="fa fa-th-large" aria-hidden="true"></i>Booking History</h4>
               </div>
             <div class="row">
                 
                 <div class="fully-tables">
+               
+                  
                     <div class="table-reponsive box">
                         <div id="example_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
                             <div class="row">
@@ -29,38 +42,33 @@
                                             <th style="width: 30px;">Sr. No</th>
                                             <th style="width: 100px;">Event Title</th>
                                             <th style="width: 100px;">Event Type</th>
-                                            <th style="width: 100px;">Event Date</th>
-                                            <th style="width: 100px;">Start Time</th>
-                                            <th style="width: 100px;">End Time</th>
-                                            <th style="width: 100px;">Venue Name</th>
-                                            <th style="width: 100px;">Venue Location</th>
-                                            <th style="width: 100px;">Max Participants</th>
-                                            <th style="width: 100px;">Description</th>
-                                            <th style="width: 100px;">Rules and Regulations</th>
-                                            <th style="width: 110px;">Action</th>
+                                            <th style="width: 100px;">Event payment</th>
+                                            <th style="width: 100px;">status</th>
+                                           
+                                            
                                         </tr>
                                     </thead>
                                     <tbody>
+                                      <% for(var i=0; i< booking_data.length; i++) {%>
                                         <tr>
-                                            <td>1</td>
-                                            <td>fsaddf</td>
-                                            <td>fdsafsd</td>
-                                            <td>fasfd</td>
-                                            <td>fasf</td>
-                                            <td>fasf</td>
-                                            <td>fasf</td>
-                                            <td>fasf</td>
-                                            <td>tewte</td>
-                                            <td>zxvxcv</td>
-                                            <td>ZVZV </td>
-                                            <td>
+                                            <td><%- i+1  %></td>
+                                            <td><%- booking_data[i].event_name %></td>
+                                            <td><%- booking_data[i].event_type %></td>
+                                            <td><%- booking_data[i].payment %></td>
+                                            <td><%- booking_data[i].status %></td>
+                                           
+                                            
+                                           
+                                            
+                                            <!-- <td>
                                                 <div class="dropdown">
                                                     <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                         Payment
                                                     </button>
                                                 </div>
-                                            </td>
+                                            </td> -->
                                         </tr>
+                                        <% } %>
                                     </tbody>                            
                                 </table>
                             </div>
@@ -90,6 +98,9 @@
   <!-- Custom JS File -->
   <script src="/assets/js/custom.js"></script>
 <!-- CANVAS CHART JS  SCRIPT START  CANVAS CHART JS  SCRIPT START  CANVAS CHART JS  SCRIPT START  -->
+
+
+
 <script>
 
 readmore = true;

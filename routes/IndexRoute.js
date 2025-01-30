@@ -3,7 +3,7 @@ import {isAuthenticatedUser} from '../middleware/auth.js' ;
 
 
 
-import { home, index, about, games, blog, contactpage, uviewevent, booking_history, privacypolicy, termscondition, indexpost, login, regitation, regitation_post, login_post, resset, forgot, forgotpost, otp, otp_verify, resetpost, dashboard, logout, uterm, uprivacy, uprofile_get, uprofile_post, uchangepass, uviewevent_details, event_ragitation, payProduct, verify_payment,  } from '../controllers/indexController.js';
+import { home, index, about, games, blog, contactpage, uviewevent, booking_history, privacypolicy, termscondition, indexpost, login, regitation, regitation_post, login_post, resset, forgot, forgotpost, otp, otp_verify, resetpost, dashboard, logout, uterm, uprivacy, uprofile_get, uprofile_post, uchangepass, uviewevent_details, event_ragitation, payProduct, verify_payment, book_pay,  } from '../controllers/indexController.js';
 import upload from '../middleware/upload.js';
 
 // payProduct, success, cancel
@@ -47,6 +47,8 @@ router.route('/termscondition').get(termscondition)
 router.route('/dashboard').get(isAuthenticatedUser,dashboard);
 
 router.route('/booking_history').get(isAuthenticatedUser,booking_history);
+router.route('/booking_pay').get(isAuthenticatedUser,book_pay);
+
 
 router.route('/event_regitation').get(isAuthenticatedUser, event_ragitation);
 

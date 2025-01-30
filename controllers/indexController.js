@@ -135,8 +135,34 @@ const uviewevent= async(req,res,next)=>{
 
 
 const booking_history= async(req,res,next)=>{
-  const Data ='';
-  res.render('booking_history',{Data});
+
+  const con = await connection();
+  const u_id =  req.user.u_id; // Ensure correct user ID
+  console.log('user_id',u_id);
+  try {
+     
+      const [booking_data] = await con.query(
+          'SELECT * FROM `tbl_booking` WHERE `user_id`=? ORDER BY `id` DESC',[u_id]
+      );
+      const data=booking_data[0];
+      // console.log('Bookingsingle Data:', data);
+       
+      // console.log('Booking Data:', booking_data);
+      const Data ='';
+      
+      res.render('booking_history', {
+          'booking_data': booking_data,
+          Data,
+          'output': 'User event booking successful'
+        
+      });
+
+  } catch (error) {
+     
+      console.log(error);
+      res.render('shine500');
+  } 
+  
 }
 
 
@@ -323,7 +349,7 @@ const regitation_post = async (req, res, next) => {
 
   const con = await connection();
 
-  console.log(req.body);
+  // console.log(req.body);
   if (req.file) {
    const image =  req.file.filename ;
     const imagePath=  req.file.path ;   
@@ -437,7 +463,7 @@ const forgotpost = async(req,res,next)=>{
 
    const user_detail=data[0];
 
-   console.log(data);
+  //  console.log(data);
 
    console.log(data.length);
 
@@ -513,7 +539,7 @@ const otp_verify = async(req,res,next)=>{
 
   const {email,otp}=req.body;
 
-  console.log("body",req.body);
+  // console.log("body",req.body);
 
 
   try{
@@ -625,7 +651,7 @@ const uprofile_post =async(req,res,next)=>{
 
   const con = await connection();
 
-  console.log(req.body);
+  // console.log(req.body);
 
   const {u_id, user_name, email, contact, password, address, gender, birthday_date, state, disability}=req.body;
 
@@ -643,7 +669,7 @@ const uprofile_post =async(req,res,next)=>{
 
     const [user_dataa]= await con.query('SELECT * FROM `tbl_user` WHERE u_id= ? ',[u_id] );
     const user_data=user_dataa[0];
-    console.log('userdaat',user_dataa);
+    // console.log('userdaat',user_dataa);
 
 
   res.render('uprofile',{'user_data':user_data,'output':'user profile update successfully '});
@@ -762,7 +788,7 @@ const payProduct = async (req, res, next) => {
       payment_capture: 1, // Auto capture payment
     };
 
-    console.log(" Order Options:", options);
+    // console.log(" Order Options:", options);
 
     // Ensure Razorpay instance is initialized
     if (!razorpay) {
@@ -784,10 +810,17 @@ const payProduct = async (req, res, next) => {
 
 
 const verify_payment = async (req, res, next) => {
+  const con = await connection();
   try {
     console.log("🔍 Verifying Payment...");
+    console.log("verfication data...",req.body);
 
-    const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
+    const { razorpay_order_id, razorpay_payment_id, razorpay_signature, event_name , event_type ,amount} = req.body;
+    const {u_id, user_name, email} =req.user;
+    // console.log('user details',req.user);
+    // console.log('user id',u_id);
+
+    
 
     
 
@@ -814,8 +847,29 @@ const verify_payment = async (req, res, next) => {
     console.log(" Received Signature:", razorpay_signature);
 
     if (generated_signature === razorpay_signature) {
-      console.log("Payment Verified Successfully");
-      return res.json({ status: "success", message: "Payment verified successfully" });
+
+      try {
+        // Insert payment details into the database
+        await con.query(
+           "INSERT INTO `tbl_booking`(`user_id`,`user_name`, `eamil`, `payment`, `status`, `event_type`, `event_name`, `order_id`, `payment_id`) VALUES (?,?,?,?,?,?,?,?,?)",
+            [u_id, user_name, email, amount, "success", event_type, event_name, razorpay_order_id, razorpay_payment_id]
+        );
+
+        // console.log("Payment Verified Successfully");
+        // res.render('booking_history',{output:'payment success'});
+        return res.json({
+          status: "success",
+          message: "Payment verified successfully",
+          event_name,
+          event_type
+      });
+    } catch (error) {
+        console.error("Database Insertion Error:", error);
+        return res.status(500).json({ status: "failure", message: "Database error" });
+    }
+
+      
+      
     } else {
       console.log(" Payment Verification Failed");
       return res.status(400).json({ status: "failure", message: "Payment verification failed" });
@@ -824,6 +878,34 @@ const verify_payment = async (req, res, next) => {
     console.error(" Error in Payment Verification:", error);
     res.status(500).json({ status: "error", message: "Internal Server Error" });
   }
+};
+
+
+const book_pay = async (req, res, next) => {
+  const con = await connection();
+  const u_id = req.user.u_id; // Ensure correct user ID
+
+  try {
+     
+      const [booking_data] = await con.query(
+          'SELECT * FROM `tbl_booking` WHERE `user_id`=? ORDER BY `id` DESC',[u_id]
+      );
+      const data=booking_data[0];
+      // console.log('Bookingsingle Data:', data);
+       
+      // console.log('Booking Data:', booking_data);
+
+      
+      res.render('booking_history', {
+          'booking_data': booking_data,
+          'output': 'User event booking successful'
+      });
+
+  } catch (error) {
+     
+      console.log(error);
+      res.render('shine500');
+  } 
 };
   
 
@@ -997,7 +1079,7 @@ res.render('login',{'output':'Logged Out !!'})
 
 
   //--------------------- Export Start ------------------------------------------
-export { uprofile_get, uprofile_post , uchangepass , home , login , login_post , regitation , regitation_post , forgot , forgotpost, otp,otp_verify, resset, resetpost, index ,indexpost, about , games, blog, contactpage , privacypolicy , termscondition, dashboard,logout,uterm,uprivacy, uviewevent,uviewevent_details, booking_history, event_ragitation,payProduct,verify_payment
+export { uprofile_get, uprofile_post , uchangepass , home , login , login_post , regitation , regitation_post , forgot , forgotpost, otp,otp_verify, resset, resetpost, index ,indexpost, about , games, blog, contactpage , privacypolicy , termscondition, dashboard,logout,uterm,uprivacy, uviewevent,uviewevent_details, booking_history, event_ragitation,payProduct,verify_payment ,book_pay
 }
 
 //,success,cancel

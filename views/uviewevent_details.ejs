@@ -49,6 +49,9 @@
           
                    
                     <div class="product-actions">
+                      <input type="hidden" name="event_type" id="event_type" value="<%- event_data[0].event_type %>">
+                      <input type="hidden" name="event_name" id="event_name" value="<%- event_data[0].title %>">
+                      
                       <input type="hidden" name="price" id="ammount" value="<%- event_data[0].price %>">
                       <input type="submit" name="submit" id="pay-btn" value="pay" class="btn btn-primary btn-lg mb-2">
                     
@@ -85,8 +88,11 @@
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
   <script>
     document.getElementById("pay-btn").addEventListener("click", async function () {
-      console.log(" Creating Order...");
+      console.log("Creating Order...");
       const amount = document.getElementById("ammount").value;
+      const event_type = document.getElementById("event_type").value;
+      const event_name = document.getElementById("event_name").value;
+  
       try {
         const response = await fetch("create-order", {
           method: "POST",
@@ -95,10 +101,10 @@
         });
   
         const order = await response.json();
-        console.log(" Order Created:", order);
+        console.log("Order Created:", order);
   
         if (!order.id) {
-          console.error(" Order ID is missing. Check Backend API!");
+          console.error("Order ID is missing. Check Backend API!");
           return;
         }
   
@@ -110,27 +116,46 @@
           description: "Demo Test Transaction",
           order_id: order.id, // Ensure order ID is not undefined
           handler: async function (response) {
-            console.log(" Payment Successful:", response);
-  
-            const verifyResponse = await fetch("verify-payment", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify(response),
-            });
-  
-            const result = await verifyResponse.json();
-            console.log("🔍 Payment Verification Response:", result);
-            alert(result.message);
-          },
+            console.log("Payment Successful:", response);
+        
+            // ✅ Merge response properties
+            const updatedResponse = {
+                ...response,
+                event_name: event_name,
+                event_type: event_type,
+                amount: amount * 100
+            };
+        
+            try {
+                const verifyResponse = await fetch("verify-payment", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(updatedResponse),
+                });
+        
+                const result = await verifyResponse.json();
+                console.log("ttttttt Payment Verification Response:", result);
+        
+                if (result.status === "success") {
+                    // ✅ Redirect to booking history page with query params (optional)
+                    window.location.href = `/booking_pay`;
+                } else {
+                    alert("Payment verification failed. Please try again.");
+                }
+            } catch (error) {
+                console.log("Error verifying payment:", error);
+                alert("Something went wrong. Please try again.");
+            }
+        },
           theme: { color: "#3399cc" },
         };
   
-        console.log(" Razorpay Options:", options);
+        console.log("Razorpay Options:", options);
   
         var rzp = new Razorpay(options);
         rzp.open();
       } catch (error) {
-        console.error(" Error Creating Order:", error);
+        console.error("Error Creating Order:", error);
       }
     });
   </script>
