@@ -30,7 +30,7 @@
                     
                     <!-- Product Details -->
                      <!--  -->
-                    <%  console.log('end time ', event_data[0].end_time) %>
+                    <%  //console.log('end time ', event_data[0].end_time) %>
                      
 
                     <ul class="list-group mb-3">
@@ -47,13 +47,11 @@
                      
                     </ul>
           
-                    <!-- Action Buttons -->
+                   
                     <div class="product-actions">
-                      <form action="pay" method="post">
-                        <input type="submit" name="submit" value="submit" class="btn btn-primary btn-lg mb-2">
-                     
-                      </form>   
-                      <!-- <a href="/event_regitation" class="btn btn-primary btn-lg mb-2"><i class="fa fa-check-circle"></i> Register</a> -->
+                      <input type="hidden" name="price" id="ammount" value="<%- event_data[0].price %>">
+                      <input type="submit" name="submit" id="pay-btn" value="pay" class="btn btn-primary btn-lg mb-2">
+                    
                       <a href="/events" class="btn btn-secondary btn-lg"><i class="fa fa-arrow-left"></i> Back to Events</a>
                     </div>
                   </div>
@@ -83,6 +81,98 @@
       </footer>
     </div>
   </div>
+
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  <script>
+    document.getElementById("pay-btn").addEventListener("click", async function () {
+      console.log(" Creating Order...");
+      const amount = document.getElementById("ammount").value;
+      try {
+        const response = await fetch("create-order", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ amount: amount * 100, currency: "INR" }), // ₹500
+        });
+  
+        const order = await response.json();
+        console.log(" Order Created:", order);
+  
+        if (!order.id) {
+          console.error(" Order ID is missing. Check Backend API!");
+          return;
+        }
+  
+        var options = {
+          key: "rzp_test_BUD9Yk5SbLIolX",
+          amount: order.amount,
+          currency: order.currency,
+          name: "CISS",
+          description: "Demo Test Transaction",
+          order_id: order.id, // Ensure order ID is not undefined
+          handler: async function (response) {
+            console.log(" Payment Successful:", response);
+  
+            const verifyResponse = await fetch("verify-payment", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(response),
+            });
+  
+            const result = await verifyResponse.json();
+            console.log("🔍 Payment Verification Response:", result);
+            alert(result.message);
+          },
+          theme: { color: "#3399cc" },
+        };
+  
+        console.log(" Razorpay Options:", options);
+  
+        var rzp = new Razorpay(options);
+        rzp.open();
+      } catch (error) {
+        console.error(" Error Creating Order:", error);
+      }
+    });
+  </script>
+  
+
+
+  <!-- <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+  document.getElementById("pay-btn").addEventListener("click", async function () {
+    const response = await fetch("create-order", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ amount: 50000000, currency: "INR" }), // ₹500
+    });
+
+    const order = await response.json();
+
+    var options = {
+      key: "rzp_test_BUD9Yk5SbLIolX",
+      amount: order.amount,
+      currency: order.currency,
+      name: "ciss",
+      description: " demo Test Transaction",
+      order_id: order.id,
+      handler: async function (response) {
+        console.log("Payment Successful:", response);
+        const verifyResponse = await fetch("verify-payment", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(response),
+        });
+
+        const result = await verifyResponse.json();
+        alert(result.message);
+      },
+      theme: { color: "#3399cc" },
+    };
+
+    var rzp = new Razorpay(options);
+    rzp.open();
+  });
+</script> -->
   <!-- General JS Scripts -->
   <script src="/assets/js/app.min.js"></script>
   <!-- JS Libraies -->

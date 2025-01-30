@@ -6,41 +6,39 @@ import { sendOTPFornewPass } from '../middleware/helper.js';
 import upload from '../middleware/upload.js';
 import dotenv from 'dotenv' 
 
-import paypal from 'paypal-rest-sdk';
-// require('dotenv').config({ path: './config.env' }); // Load config.env
+
+
 dotenv.config({path:"./config.env"});
 
-// const paypal = require('paypal-rest-sdk');
+import Razorpay from 'razorpay'
 
-// import { image } from 'pdfkit';
+import crypto from 'crypto'
+
+
+
 import jwt from 'jsonwebtoken';
 import cookieParser from 'cookie-parser';
-// import { image } from 'pdfkit';
 
 
-
-// Middleware to verify token
-
-
- 
-const { PAYPAL_MODE, PAYPAL_CLIENT_KEY, PAYPAL_SECRET_KEY } = process.env;
-
-console.log('paypal mode',PAYPAL_MODE);
-
-paypal.configure({
-  'mode': PAYPAL_MODE, //sandbox or live
-  'client_id': PAYPAL_CLIENT_KEY,
-  'client_secret': PAYPAL_SECRET_KEY
+const { key_id, key_secret } = process.env;
+const razorpay = new Razorpay({
+  key_id: key_id, // Replace with actual key
+  key_secret: key_secret, // Replace with actual secret
 });
 
+const options = {
+  amount: 500000, // ₹500 in paise
+  currency: "INR",
+  receipt: "order_rcptid_" + Date.now(),
+  payment_capture: 1, // Auto capture payment
+};
 
-paypal.payment.list({ count: 1 }, function (error, payments) {
-  if (error) {
-    console.error("❌ PayPal API Authentication Failed:", error.response);
-  } else {
-    console.log("✅ PayPal API Connected Successfully!");
-  }
-});
+// razorpay.orders.create(options)
+//   .then(order => console.log("Order Created:", order))
+//   .catch(error => console.error("Error Creating Order:", error));
+
+
+
 
 
 
@@ -115,7 +113,7 @@ const uviewevent= async(req,res,next)=>{
          await con.beginTransaction();
          const event_deatil=req.query.event_deatil;
          const [event_data]= await con.query('SELECT * FROM `tbl_event` WHERE id=?',[event_deatil]);
-         console.log('fetch details id eventdata',event_data[0]);
+        //  console.log('fetch details id eventdata',event_data[0]);
          res.render('uviewevent_details',{'event_data':event_data});
       
       
@@ -740,121 +738,213 @@ res.render('shine500');
 
 }
 
+// </------------------------|  payment detail   |-------------------
+
+
+const payProduct = async (req, res, next) => {
+  try {
+    const { amount, currency } = req.body; // Amount in paise (e.g., ₹10 = 1000 paise)
+
+    // console.log(" Received Payment Request");
+    // console.log(" Amount:", amount);
+    // console.log(" Currency:", currency || "INR");
+
+    // Validate amount
+    if (!amount || isNaN(amount) || amount <= 0) {
+      console.error(" Invalid amount:", amount);
+      return res.status(400).json({ error: "Invalid amount. Please provide a valid amount in paise." });
+    }
+
+    const options = {
+      amount: parseInt(amount), // Ensure it's an integer
+      currency: currency || "INR",
+      receipt: "order_rcptid_" + Date.now(),
+      payment_capture: 1, // Auto capture payment
+    };
+
+    console.log(" Order Options:", options);
+
+    // Ensure Razorpay instance is initialized
+    if (!razorpay) {
+      console.error(" Razorpay instance is not initialized.");
+      return res.status(500).json({ error: "Server error: Razorpay is not initialized." });
+    }
+
+    // Create Razorpay order
+    const order = await razorpay.orders.create(options); // Await the order creation
+    // console.log(" Order Created:", order);
+
+    res.json(order); // Return the order here
+  } catch (error) {
+    console.error(" Error Creating Order:", error);
+    res.status(500).json({ error: error.message });
+  }
+};
+
+
+
+const verify_payment = async (req, res, next) => {
+  try {
+    console.log("🔍 Verifying Payment...");
+
+    const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
+
+    
+
+    console.log(" Received Data:", { razorpay_order_id, razorpay_payment_id, razorpay_signature });
+
+    if (!razorpay_order_id || !razorpay_payment_id || !razorpay_signature) {
+      console.log(" Missing Payment Details");
+      return res.status(400).json({ status: "failure", message: "Invalid payment details received" });
+    }
+
+    const key_secret = process.env.key_secret; //  Corrected
+    console.log(" Razorpay Key Secret:", key_secret ? "Loaded" : " Missing");
+
+    if (!key_secret) {
+      return res.status(500).json({ status: "error", message: "Razorpay key secret is missing" });
+    }
+
+    const generated_signature = crypto
+      .createHmac("sha256", key_secret)
+      .update(`${razorpay_order_id}|${razorpay_payment_id}`)
+      .digest("hex");
+
+    console.log(" Generated Signature:", generated_signature);
+    console.log(" Received Signature:", razorpay_signature);
+
+    if (generated_signature === razorpay_signature) {
+      console.log("Payment Verified Successfully");
+      return res.json({ status: "success", message: "Payment verified successfully" });
+    } else {
+      console.log(" Payment Verification Failed");
+      return res.status(400).json({ status: "failure", message: "Payment verification failed" });
+    }
+  } catch (error) {
+    console.error(" Error in Payment Verification:", error);
+    res.status(500).json({ status: "error", message: "Internal Server Error" });
+  }
+};
+  
+
+
+
+
 
 
 // </------------------------|  payment detail   |-------------------
 
 
 
-const payProduct = async (req, res, next) => {
-  try {
-    const create_payment_json = {
-      intent: "sale",
-      payer: { payment_method: "paypal" },
-      redirect_urls: {
-        return_url: "http://localhost:3000/success",
-        cancel_url: "http://localhost:3000/cancel"
-      },
-      transactions: [{
-        item_list: { items: [{ name: "Book", sku: "001", price: "25.00", currency: "USD", quantity: 1 }] },
-        amount: { currency: "USD", total: "25.00" },
-        description: "Hat for the best team ever"
-      }]
-    };
+// const payProduct = async (req, res, next) => {
+//   try {
+//     const create_payment_json = {
+//       intent: "sale",
+//       payer: { payment_method: "paypal" },
+//       redirect_urls: {
+//         return_url: "http://localhost:3000/success",
+//         cancel_url: "http://localhost:3000/cancel"
+//       },
+//       transactions: [{
+//         item_list: { items: [{ name: "Book", sku: "001", price: "25.00", currency: "USD", quantity: 1 }] },
+//         amount: { currency: "USD", total: "25.00" },
+//         description: "Hat for the best team ever"
+//       }]
+//     };
 
-    console.log(" Sending PayPal Payment Request...");
+//     console.log(" Sending PayPal Payment Request...");
 
-    paypal.payment.create(create_payment_json, function (error, payment) {
-      if (error) {
-        console.error(" PayPal Payment Creation Error:", error.response);
-        return res.status(500).send("PayPal payment failed.");
-      } else {
-        console.log(" Payment Created Successfully:", payment);
+//     paypal.payment.create(create_payment_json, function (error, payment) {
+//       if (error) {
+//         console.error(" PayPal Payment Creation Error:", error.response);
+//         return res.status(500).send("PayPal payment failed.");
+//       } else {
+//         console.log(" Payment Created Successfully:", payment);
 
-        for (let i = 0; i < payment.links.length; i++) {
-          if (payment.links[i].rel === "approval_url") {
-            console.log("🔗 Redirecting to:", payment.links[i].href);
-            return res.redirect(payment.links[i].href);
-          }
-        }
-      }
-    });
+//         for (let i = 0; i < payment.links.length; i++) {
+//           if (payment.links[i].rel === "approval_url") {
+//             console.log("🔗 Redirecting to:", payment.links[i].href);
+//             return res.redirect(payment.links[i].href);
+//           }
+//         }
+//       }
+//     });
 
-  } catch (error) {
-    console.error("Error in payProduct function:", error);
-    res.status(500).send("Internal server error.");
-  }
-};
-
-
+//   } catch (error) {
+//     console.error("Error in payProduct function:", error);
+//     res.status(500).send("Internal server error.");
+//   }
+// };
 
 
-const success = async (req, res) => {
-  const con = await connection(); // MySQL connection
-  try {
-    const { paymentId, PayerID } = req.query;
 
-    console.log(" Payment Successful, Executing Payment...");
 
-    const execute_payment_json = {
-      payer_id: PayerID,
-      transactions: [{ amount: { currency: "USD", total: "25.00" } }]
-    };
+// const success = async (req, res) => {
+//   const con = await connection(); // MySQL connection
+//   try {
+//     const { paymentId, PayerID } = req.query;
 
-    paypal.payment.execute(paymentId, execute_payment_json, async function (error, payment) {
-      if (error) {
-        console.error(" PayPal Payment Execution Error:", error.response);
-        return res.status(500).send("Payment execution failed.");
-      } else {
-        console.log("Payment Executed Successfully:", payment);
+//     console.log(" Payment Successful, Executing Payment...");
 
-        if (payment.state === "approved") {
-          console.log("Payment Approved! Saving user details to database...");
+//     const execute_payment_json = {
+//       payer_id: PayerID,
+//       transactions: [{ amount: { currency: "USD", total: "25.00" } }]
+//     };
 
-          const userDetails = req.user; // Ensure req.user is not undefined
-          if (!userDetails) {
-            console.error(" User details missing in request!");
-            return res.status(400).send("User details are missing.");
-          }
+//     paypal.payment.execute(paymentId, execute_payment_json, async function (error, payment) {
+//       if (error) {
+//         console.error(" PayPal Payment Execution Error:", error.response);
+//         return res.status(500).send("Payment execution failed.");
+//       } else {
+//         console.log("Payment Executed Successfully:", payment);
 
-          try {
-            const [result] = await con.promise().query(
-              "INSERT INTO `tbl_booking` (`user_name`, `email`, `payment`, `status`, `event_type`, `event_name`) VALUES (?, ?, ?, ?, ?, ?)",
-              [userDetails.user_name, userDetails.email, "25", "complete", "game", "game"]
-            );
+//         if (payment.state === "approved") {
+//           console.log("Payment Approved! Saving user details to database...");
 
-            console.log("✅ User data inserted into database:", result);
-            res.send("Payment successful! User details saved.");
-          } catch (dbError) {
-            console.error(" Database Insert Error:", dbError);
-            res.status(500).send("Database error.");
-          }
-        } else {
-          console.log(" Payment Not Approved");
-          res.send("Payment not approved.");
-        }
-      }
-    });
+//           const userDetails = req.user; // Ensure req.user is not undefined
+//           if (!userDetails) {
+//             console.error(" User details missing in request!");
+//             return res.status(400).send("User details are missing.");
+//           }
 
-  } catch (error) {
-    console.error("❌ Error Processing Payment:", error);
-    res.status(500).send("Internal server error.");
-  }
-};
+//           try {
+//             const [result] = await con.promise().query(
+//               "INSERT INTO `tbl_booking` (`user_name`, `email`, `payment`, `status`, `event_type`, `event_name`) VALUES (?, ?, ?, ?, ?, ?)",
+//               [userDetails.user_name, userDetails.email, "25", "complete", "game", "game"]
+//             );
 
-const cancel = async(req,res,next)=>{
-  const con = await connection();
+//             console.log("✅ User data inserted into database:", result);
+//             res.send("Payment successful! User details saved.");
+//           } catch (dbError) {
+//             console.error(" Database Insert Error:", dbError);
+//             res.status(500).send("Database error.");
+//           }
+//         } else {
+//           console.log(" Payment Not Approved");
+//           res.send("Payment not approved.");
+//         }
+//       }
+//     });
 
-  try{
-    res.render('cancel');
+//   } catch (error) {
+//     console.error("❌ Error Processing Payment:", error);
+//     res.status(500).send("Internal server error.");
+//   }
+// };
 
-  }catch(error){
-    console.log(error);
-    res.render('shine500');
+// const cancel = async(req,res,next)=>{
+//   const con = await connection();
 
-  }
+//   try{
+//     res.render('cancel');
 
-}
+//   }catch(error){
+//     console.log(error);
+//     res.render('shine500');
+
+//   }
+
+// }
 
 
 // const success = async(req,res,next)=>{
@@ -907,8 +997,10 @@ res.render('login',{'output':'Logged Out !!'})
 
 
   //--------------------- Export Start ------------------------------------------
-export { uprofile_get, uprofile_post , uchangepass , home , login , login_post , regitation , regitation_post , forgot , forgotpost, otp,otp_verify, resset, resetpost, index ,indexpost, about , games, blog, contactpage , privacypolicy , termscondition, dashboard,logout,uterm,uprivacy, uviewevent,uviewevent_details, booking_history, event_ragitation ,payProduct,success,cancel
+export { uprofile_get, uprofile_post , uchangepass , home , login , login_post , regitation , regitation_post , forgot , forgotpost, otp,otp_verify, resset, resetpost, index ,indexpost, about , games, blog, contactpage , privacypolicy , termscondition, dashboard,logout,uterm,uprivacy, uviewevent,uviewevent_details, booking_history, event_ragitation,payProduct,verify_payment
 }
+
+//,success,cancel
 
 
          
