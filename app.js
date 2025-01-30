@@ -88,6 +88,9 @@ app.get('/api/hello', (req, res) => {
 
 console.log(`the rk`)
 console.log(`the rj`)
+console.log(`the rj`)
+console.log(`are you running`)
+
 
 
 
