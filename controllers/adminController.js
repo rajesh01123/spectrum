@@ -1385,6 +1385,36 @@ const deletenotify = async(req,res,next)=>{
 
 }
 
+// booking details 
+
+const booking= async(req,res,next)=>{
+
+  const con = await connection();
+ 
+  try {
+     
+      const [booking_data] = await con.query(
+          'SELECT * FROM `tbl_booking` ORDER BY `id` DESC',
+      );
+      
+      const Data ='';
+      
+      res.render('booking', {
+          'booking_data': booking_data,
+          Data,
+          'output': ''
+        
+      });
+
+  } catch (error) {
+     
+      console.log(error);
+      res.render('admin/kilvish500', {'output':'Internal Server Error'});
+
+  } 
+  
+}
+
 
 
 
@@ -1394,7 +1424,7 @@ const deletenotify = async(req,res,next)=>{
 
 
 //--------------------- Export Start ------------------------------------------
-export { homePage, loginPage , loginAdmin , logout , Profile , ProfilePost , updateadminpic , changepass ,forgotpassword,sendotp,otpverify,resetpassword, addUser,  adduserpost, viewUsers ,viewUser , viewUserPost , deletuser , addgame , addgame_post , viewmatch ,edite_match , edit_game_post , deletematch  ,getevent_name, addevent_name ,deletevent_name, event,editevent , vieweventcat , edit_event_post, deletevent, pandp, notify,tandc,TermsConditions,deletTerm,privacyPolicy,deleteprivacy,addevent, viewevent,notifypost,deletenotify, }
+export { homePage, loginPage , loginAdmin , logout , Profile , ProfilePost , updateadminpic , changepass ,forgotpassword,sendotp,otpverify,resetpassword, addUser,  adduserpost, viewUsers ,viewUser , viewUserPost , deletuser , addgame , addgame_post , viewmatch ,edite_match , edit_game_post , deletematch  ,getevent_name, addevent_name ,deletevent_name, event,editevent , vieweventcat , edit_event_post, deletevent, pandp, notify,tandc,TermsConditions,deletTerm,privacyPolicy,deleteprivacy,addevent, viewevent,notifypost,deletenotify,booking }
 
 
          

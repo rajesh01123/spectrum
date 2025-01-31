@@ -79,7 +79,7 @@
                       </div>
                       <div class="form-group add-admin col-md-4">
                         <label class="control-label" for="name">Venue Location</label>
-                        <input type="text" name="venue_location" class="form-control " required>
+                        <input type="text" id="locationInput" name="venue_location" placeholder="Enter the Location " class="form-control " required>
                       </div>
                       <div class="form-group add-admin col-md-4">
                         <label class="control-label" for="name">Max Participants</label>
@@ -142,6 +142,15 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.js"></script>
 
 <!-- Page specific script -->
+<script>
+  function initAutocomplete() {
+      var input = document.getElementById("locationInput");
+      var autocomplete = new google.maps.places.Autocomplete(input);
+  }
+
+  // Initialize autocomplete when page loads
+  window.onload = initAutocomplete;
+</script>
 <script>
     $(function () {
       // Summernote

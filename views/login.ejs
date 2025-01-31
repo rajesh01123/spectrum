@@ -36,7 +36,14 @@
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+<style>
 
+    .contact_form .form-control {
+        color: #161515;
+        border: 1px solid #0a0a0a;
+
+    }
+</style>
 </head>
 
 <body class="host_version">
@@ -69,9 +76,9 @@
                 <div class="col-xl-6 col-md-12 col-sm-12" style="border: 1px solid #3e4095ad;border-radius: 10px;box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);">
                     <div class="contact_form bg-light">
                         <div id="message">
-                            <h1>Login</h1>
+                            <h1> Login</h1>
                             <% if(output=='envalid user'){%>
-                                <p style="color: red; font-size: 16px; font-weight: bold; text-align: center; background: #ffe6e6; padding: 10px; border: 1px solid red; border-radius: 5px;">
+                                <p style="color: red; font-size: 16px; font-weight: bold; text-align: center; background: #ffe6e6; padding: 10px; border-radius: 5px;">
                                     ⚠️ Invalid user! Please check your credentials and try again.
                                 </p>
                             <
@@ -80,13 +87,13 @@
 
                           <%  }else if (output=='wrong_password'){ %>
                             
-                            <p style="color: red; font-size: 16px; font-weight: bold; text-align: center; background: #ffe6e6; padding: 10px; border: 1px solid red; border-radius: 5px;">
+                            <p style="color: red; font-size: 16px; font-weight: bold; text-align: center; background: #ffe6e6; padding: 10px;  border-radius: 5px;">
                                 ❌ Wrong password! Please try again.
                             </p>
                         
                             <% }else{ %>
                                 <p style="color: #555555; font-size: 16px; font-weight: normal; text-align: center; background: #e0f7fa; padding: 10px; border: 1px solid #26c6da; border-radius: 5px;">
-                                    📧 Please enter your email and password to continue.
+                                    📧 Please Enter your Email and Password to continue.
                                 </p>
 
                          <%   } %>

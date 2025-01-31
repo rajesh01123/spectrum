@@ -225,7 +225,15 @@
   <script src="../assets/js/custom.js"></script>
     <script src="../assets/js/text-editor.js"></script>
 
+    <script>
+      function initAutocomplete() {
+          var input = document.getElementById("locationInput");
+          var autocomplete = new google.maps.places.Autocomplete(input);
+      }
 
+      // Initialize autocomplete when page loads
+      window.onload = initAutocomplete;
+  </script>
 
    
 </body>
@@ -365,7 +373,7 @@
                                  <div class="form-group">
                                  <label>Address</label>
                                     
-                                 <input name="address"  type="text" class="form-control" value="<%- user_data.address %>">
+                                 <input name="address" id="locationInput"  type="text" class="form-control" value="<%- user_data.address %>">
                                  </div>
                               </div>
 
@@ -446,3 +454,12 @@
   }
 
   </script>
+  <script>
+   function initAutocomplete() {
+       var input = document.getElementById("locationInput");
+       var autocomplete = new google.maps.places.Autocomplete(input);
+   }
+
+   // Initialize autocomplete when page loads
+   window.onload = initAutocomplete;
+</script>

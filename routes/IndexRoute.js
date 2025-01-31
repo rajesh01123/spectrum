@@ -47,6 +47,7 @@ router.route('/termscondition').get(termscondition)
 router.route('/dashboard').get(isAuthenticatedUser,dashboard);
 
 router.route('/booking_history').get(isAuthenticatedUser,booking_history);
+
 router.route('/booking_pay').get(isAuthenticatedUser,book_pay);
 
 

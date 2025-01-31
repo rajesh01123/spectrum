@@ -36,6 +36,14 @@
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <style>
+        .contact_form .form-control {
+            color: #161515;
+            border: 1px solid #0a0a0a;
+    
+        }
+
+    </style>
 
 </head>
 
@@ -71,9 +79,13 @@
                         <div id="message">
                             <img src="admin_assets\images\logo.png" >
                             <% if(!output){%>
-                            <p>please enter your otp </p>
+                                <p style="color: #555555; font-size: 16px; border: 1px solid #26c6da; font-weight: normal; text-align: center; background: #e0f7fa; padding: 10px;  border-radius: 5px;">
+
+                                    📧 please enter your otp </p>
                             <% }else{ %>
-                                <p><%= output  %> </p>
+                                <p style="color: red; font-size: 16px; font-weight: bold; text-align: center; background: #ffe6e6; padding: 10px;  border-radius: 5px;">
+                                    ❌ Wrong OTP !! Please try again.
+                                </p>
 
                             <% } %>
                         </div>
