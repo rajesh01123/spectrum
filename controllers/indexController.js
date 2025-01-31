@@ -815,7 +815,7 @@ const verify_payment = async (req, res, next) => {
     console.log("🔍 Verifying Payment...");
     console.log("verfication data...",req.body);
 
-    const { razorpay_order_id, razorpay_payment_id, razorpay_signature, event_name , event_type ,amount} = req.body;
+    const { razorpay_order_id, razorpay_payment_id, razorpay_signature, event_name , event_type, event_id ,amount} = req.body;
     const {u_id, user_name, email} =req.user;
     // console.log('user details',req.user);
     // console.log('user id',u_id);
@@ -851,8 +851,8 @@ const verify_payment = async (req, res, next) => {
       try {
         // Insert payment details into the database
         await con.query(
-           "INSERT INTO `tbl_booking`(`user_id`,`user_name`, `email`, `payment`, `status`, `event_type`, `event_name`, `order_id`, `payment_id`) VALUES (?,?,?,?,?,?,?,?,?)",
-            [u_id, user_name, email, amount, "success", event_type, event_name, razorpay_order_id, razorpay_payment_id]
+           "INSERT INTO `tbl_booking`(`user_id`,`event_id`,`user_name`, `email`, `payment`, `status`, `event_type`, `event_name`, `order_id`, `payment_id`) VALUES (?,?,?,?,?,?,?,?,?,?)",
+            [u_id, event_id, user_name, email, amount, "success", event_type, event_name, razorpay_order_id, razorpay_payment_id]
         );
 
         // console.log("Payment Verified Successfully");

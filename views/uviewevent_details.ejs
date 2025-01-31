@@ -51,6 +51,7 @@
                     <div class="product-actions">
                       <input type="hidden" name="event_type" id="event_type" value="<%- event_data[0].event_type %>">
                       <input type="hidden" name="event_name" id="event_name" value="<%- event_data[0].title %>">
+                      <input type="hidden" name="event_name" id="event_id" value="<%- event_data[0].id %>">
                       
                       <input type="hidden" name="price" id="ammount" value="<%- event_data[0].price %>">
                       <input type="submit" name="submit" id="pay-btn" value="pay" class="btn btn-primary btn-lg mb-2">
@@ -92,6 +93,8 @@
       const amount = document.getElementById("ammount").value;
       const event_type = document.getElementById("event_type").value;
       const event_name = document.getElementById("event_name").value;
+      const event_id = document.getElementById("event_id").value;
+
   
       try {
         const response = await fetch("create-order", {
@@ -123,6 +126,7 @@
                 ...response,
                 event_name: event_name,
                 event_type: event_type,
+                event_id:event_id,
                 amount: amount 
             };
         
