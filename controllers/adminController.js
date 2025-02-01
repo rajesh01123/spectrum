@@ -6,7 +6,7 @@ const con = await connection();
 import * as path from 'path';
 
 import upload from '../middleware/upload.js';
-
+import axios from 'axios';
 
 import {hashPassword, comparePassword, sendWelcomeMsg , responsetoQuery , sendOTPFornewPass ,sendNotification} from '../middleware/helper.js'
 import { response } from 'express';
@@ -651,6 +651,7 @@ const viewevent = async(req,res,next)=>{
 
 
 const event=async(req,res,next)=>{
+
   const con= await connection();
   console.log(req.body);
   if (req.file) {
@@ -663,14 +664,35 @@ const event=async(req,res,next)=>{
   const{event_type,participants,date,start_time,end_time,venue_name,venue_location,description,title,rules,price}=req.body;
   console.log("price",price);
 
-
+const API_KEY = process.env.map_key;
+console.log('apikey = ',API_KEY);
+     const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(venue_location)}&key=${API_KEY}`;
+ 
+     
 
 
 
   try{
     await con.beginTransaction();
-   
-    await con.query('INSERT INTO `tbl_event`( `event_type`, `participants`, `date`, `start_time`, `end_time`, `venue_name`, `venue_location`, `description`,`title`,`rules`,`image`,`price`) VALUES ( ?,?,?,?,?,?,?,?,?,?,?,? )',[event_type,participants,date,start_time,end_time,venue_name,venue_location,description,title,rules,req.file.filename,price]);
+    try {
+      const response = await axios.get(url);
+      if (response.data.status === "OK") {
+          const location = response.data.results[0].geometry.location;
+          const lat = location.lat;
+          const lon = location.lng;
+          console.log("Latitude:", location.lat);
+          console.log("Longitude:", location.lng);
+      } else {
+          console.log("Error:", response.data.status);
+      }
+  } catch (error) {
+      console.error("Error fetching location:", error);
+  }
+    const response = await axios.get(url);
+    const location = response.data.results[0].geometry.location;
+    const lat = location.lat;
+    const lon = location.lng;
+    await con.query('INSERT INTO `tbl_event`( `event_type`, `participants`, `date`, `start_time`, `end_time`, `venue_name`, `venue_location`, `description`,`title`,`rules`,`image`,`price`,`lat`,`lon`) VALUES ( ?,?,?,?,?,?,?,?,?,?,?,?,?,? )',[event_type,participants,date,start_time,end_time,venue_name,venue_location,description,title,rules,req.file.filename,price,lat,lon]);
   
     const [event_types]= await con.query('SELECT * FROM `tbl_event` ORDER BY `id` DESC');
 

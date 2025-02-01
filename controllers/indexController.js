@@ -4,7 +4,8 @@ import connection from '../config.js';
 import { sendTokenAdmin, sendTokenUser } from '../utils/jwtToken.js';
 import { sendOTPFornewPass } from '../middleware/helper.js';
 import upload from '../middleware/upload.js';
-import dotenv from 'dotenv' 
+import dotenv from 'dotenv' ;
+import axios from 'axios'; //get let long
 
 
 
@@ -84,9 +85,12 @@ const uviewevent= async(req,res,next)=>{
     try{
 
        await con.beginTransaction()
+       const u_id = req.user.u_id;
        const event_type=req.query.event_type;
        const [event_data]= await con.query('SELECT * FROM `tbl_event` WHERE event_type=?',[event_type]);
-       console.log('fetch data eventdata',event_data);
+   
+
+      //  console.log('fetch data eventdata',event_data);
        res.render('uviewevent',{'event_data':event_data,'event_name':event_type});
     
     
@@ -134,36 +138,7 @@ const uviewevent= async(req,res,next)=>{
   
 
 
-const booking_history= async(req,res,next)=>{
 
-  const con = await connection();
-  const u_id =  req.user.u_id; // Ensure correct user ID
-  console.log('user_id',u_id);
-  try {
-     
-      const [booking_data] = await con.query(
-          'SELECT * FROM `tbl_booking` WHERE `user_id`=? ORDER BY `id` DESC',[u_id]
-      );
-      const data=booking_data[0];
-      // console.log('Bookingsingle Data:', data);
-       
-      // console.log('Booking Data:', booking_data);
-      const Data ='';
-      
-      res.render('booking_history', {
-          'booking_data': booking_data,
-          Data,
-          'output': 'User event booking successful'
-        
-      });
-
-  } catch (error) {
-     
-      console.log(error);
-      res.render('shine500');
-  } 
-  
-}
 
 
 const index = async(req,res,next)=>{
@@ -880,6 +855,43 @@ const verify_payment = async (req, res, next) => {
   }
 };
 
+const booking_history= async(req,res,next)=>{
+
+  const con = await connection();
+  const u_id =  req.user.u_id; // Ensure correct user ID
+  console.log('user_id',u_id);
+  try {
+     
+    const [booking_data] = await con.query(
+      `SELECT b.*, e.*
+       FROM tbl_booking AS b
+       LEFT JOIN tbl_event AS e 
+       ON b.event_id = e.id
+       WHERE b.user_id = ?
+       ORDER BY b.id DESC`, 
+      [u_id]
+  );
+      // const data=booking_data[0];
+      // console.log('Bookingsingle Data:', data);
+       
+      console.log('Booking Data:', booking_data);
+      const Data ='';
+      
+      res.render('booking_history', {
+          'booking_data': booking_data,
+          Data,
+          'output': 'User event booking successful'
+        
+      });
+
+  } catch (error) {
+     
+      console.log(error);
+      res.render('shine500');
+  } 
+  
+}
+
 
 const book_pay = async (req, res, next) => {
   const con = await connection();
@@ -887,10 +899,20 @@ const book_pay = async (req, res, next) => {
 
   try {
      
+      // const [booking_data] = await con.query(
+      //     'SELECT * FROM `tbl_booking` WHERE `user_id`=? ORDER BY `id` DESC',[u_id]
+      // );
+
       const [booking_data] = await con.query(
-          'SELECT * FROM `tbl_booking` WHERE `user_id`=? ORDER BY `id` DESC',[u_id]
-      );
-      const data=booking_data[0];
+        `SELECT b.*, e.*
+         FROM tbl_booking AS b
+         LEFT JOIN tbl_event AS e 
+         ON b.event_id = e.id
+         WHERE b.user_id = ?
+         ORDER BY b.id DESC`, 
+        [u_id]
+    );
+      // const data=booking_data[0];
       // console.log('Bookingsingle Data:', data);
        
       // console.log('Booking Data:', booking_data);
@@ -916,13 +938,101 @@ const book_pay = async (req, res, next) => {
 
 // </------------------------|  payment detail   |-------------------
 
+    const myevents = async(req,res,next)=>{
+      const con = await connection();
+      const u_id = req.user.u_id; // Ensure correct user ID
+    
+      try {
+         
+        const [books_event] = await con.query(
+          `SELECT b.*, e.*
+           FROM tbl_booking AS b
+           LEFT JOIN tbl_event AS e 
+           ON b.event_id = e.id
+           WHERE b.user_id = ?
+           ORDER BY b.id DESC`, 
+          [u_id]
+      );
+
+      console.log('books_events',books_event);
+          
+         
+      const Data ='';
+          
+          res.render('myevents', {
+              'books_event': books_event,
+               Data,
+              'output': ''
+          });
+    
+      } catch (error) {
+         
+          console.log(error);
+          res.render('shine500');
+      } 
+    }
 
 
 
 
 
+ const chekin = async(req,res,next)=>{
+
+  const con = await connection();
+
+  try{
+
+    console.log(req.body);
+
+    // const { current_lat, current_lon, event_lat, event_lon, event_address, event_date } = req.body;
+    
+    // Convert strings to numbers
+    const { current_lat, current_lon, event_lat, event_lon } = req.body || {}; 
+
+if (!current_lat || !current_lon || !event_lat || !event_lon) {
+    console.error("Missing latitude or longitude values!");
+} else {
+    const lat1 = parseFloat(current_lat);
+    const lon1 = parseFloat(current_lon);
+    const lat2 = parseFloat(event_lat);
+    const lon2 = parseFloat(event_lon);
+
+    if (isNaN(lat1) || isNaN(lon1) || isNaN(lat2) || isNaN(lon2)) {
+        console.error("Invalid latitude/longitude values received!");
+    } else {
+        function getDistanceFromLatLonInMeters(lat1, lon1, lat2, lon2) {
+            const R = 6371000; // Radius of the Earth in meters
+            const dLat = (lat2 - lat1) * Math.PI / 180;
+            const dLon = (lon2 - lon1) * Math.PI / 180;
+
+            const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                      Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                      Math.sin(dLon / 2) * Math.sin(dLon / 2);
+
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+            return R * c; // Distance in meters
+        }
+
+        const distance = getDistanceFromLatLonInMeters(lat1, lon1, lat2, lon2);
+        console.log(`Distance: ${distance.toFixed(2)} meters`);
+
+        
+    }
+}
+
+   
 
 
+
+
+  }catch(error){
+    console.log(error);
+     res.render('shine500');
+
+  }
+
+ }
 
 
 
@@ -955,7 +1065,7 @@ res.render('login',{'output':'Logged Out !!'})
 
 
   //--------------------- Export Start ------------------------------------------
-export { uprofile_get, uprofile_post , uchangepass , home , login , login_post , regitation , regitation_post , forgot , forgotpost, otp,otp_verify, resset, resetpost, index ,indexpost, about , games, blog, contactpage , privacypolicy , termscondition, dashboard,logout,uterm,uprivacy, uviewevent,uviewevent_details, booking_history, event_ragitation,payProduct,verify_payment ,book_pay
+export { uprofile_get, uprofile_post , uchangepass , home , login , login_post , regitation , regitation_post , forgot , forgotpost, otp,otp_verify, resset, resetpost, index ,indexpost, about , games, blog, contactpage , privacypolicy , termscondition, dashboard,logout,uterm,uprivacy, uviewevent,uviewevent_details, booking_history, event_ragitation,payProduct,verify_payment ,book_pay,myevents,chekin
 }
 
 //,success,cancel

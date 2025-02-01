@@ -40,10 +40,14 @@
                                     <thead>
                                         <tr role="row">
                                             <th style="width: 30px;">Sr. No</th>
-                                            <th style="width: 100px;">Event Title</th>
+                                            <!-- <th style="width: 100px;">Event Title</th> -->
+                                            <th style="width: 100px;">Event Name</th>
+
                                             <th style="width: 100px;">Event Type</th>
                                             <th style="width: 100px;">Event payment</th>
                                             <th style="width: 100px;">status</th>
+                                            <th style="width: 100px;">Action</th>
+
                                             <th style="width: 100px;">Action</th>
 
                                            
@@ -54,17 +58,32 @@
                                       <% for(var i=0; i< booking_data.length; i++) {%>
                                         <tr>
                                             <td><%- i+1  %></td>
+                                            <!-- <td><%- //booking_data[i].title %></td> -->
+
                                             <td><%- booking_data[i].event_name %></td>
                                             <td><%- booking_data[i].event_type %></td>
                                             <td><%- booking_data[i].payment %></td>
                                             <td><%- booking_data[i].status %></td>
+                                            <td id="lon"></td>
+
                                             <td>
                                               <div class="dropdown">
                                                   <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                       Action
                                                   </button>
                                                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                      <a class="dropdown-item" href="edit_event?eventID=<%-  %>">Check IN</a>
+                                                    <form method="post" action="chekin">
+                                                      <input type="hidden" id="lat" name="current_lat">
+                                                      <input type="hidden" id="long" name="current_lon">
+                                                      <input type="hidden"  name="event_address" value="<%-booking_data[i].venue_location  %>">
+                                                      <input type="hidden"  name="event_lat" value="<%-booking_data[i].lat  %>">
+                                                      <input type="hidden"  name="event_lon" value="<%-booking_data[i].lon  %>">
+                                                      
+                                                      <input type="hidden"  name="event_date" value="<%-booking_data[i].date  %>">
+                                                       
+                                                      <input type="submit" class="dropdown-item" value="chekh in">
+                                                    </form>
+                                                      
                                                       <a class="dropdown-item delete-user-link" onclick="deleteit('<%-  %>')"  data-user-id="1">Delete</a>
                                                   </div>
                                               </div>
@@ -114,6 +133,8 @@
 
 
 <script>
+
+ 
 
 readmore = true;
 
@@ -172,7 +193,42 @@ function toggleReadMore() {
       readmore = true;    
     }
   }
+
+  
 </script>
+
+<script>
+  function getLocation() { 
+      navigator.geolocation.getCurrentPosition(async (position) => {
+          let lat = position.coords.latitude;
+          let lon = position.coords.longitude;
+          
+          // Your Google Maps API key (make sure it's valid)
+          let apiKey = "AIzaSyCv9Q8xCsuO1dbraoQn1e6RfNRNyDRj8p4";
+          let url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lon}&key=${apiKey}`;
+      
+          let response = await fetch(url);
+          let data = await response.json();
+          const address = data.results[0].formatted_address;
+
+          // Setting lat and lon values in the hidden input fields
+          document.getElementById("lat").value = lat;
+          document.getElementById("long").value = lon;
+
+          // Logging lat and lon to the console
+          console.log("Latitude:", lat);
+          console.log("Longitude:", lon);
+          console.log("Address:", address);
+      }, (error) => {
+          console.error("Error getting location:", error);
+      });
+  }
+
+  // Call the getLocation function to fetch the location when the page loads
+  window.onload = getLocation;
+</script>
+
+
 </body>
 
 

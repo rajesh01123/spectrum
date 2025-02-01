@@ -16,7 +16,7 @@
     "@babel/node": "^7.22.19",
     "@babel/preset-env": "^7.23.3",
     "apify-client": "^2.8.4",
-    "axios": "^1.6.3",
+    "axios": "^1.7.9",
     "bcryptjs": "^2.4.3",
     "canvas": "^2.11.2",
     "cheerio": "^1.0.0-rc.12",
